@@ -26,27 +26,27 @@ const ToDoDetailView = () => {
 
 	return (
 		<Container>
-			<Header>
-				{isView && (
-					<IconButton onClick={controller.closePage}>
-						<SysIcon name={'arrowBack'} />
+			<Body>
+				<Header>
+					{isView && (
+						<IconButton onClick={controller.closePage}>
+							<SysIcon name={'arrowBack'} />
+						</IconButton>
+					)}
+					<Typography variant="h5" sx={{ flexGrow: 1 }}>
+						{isCreate ? 'Adicionar Item' : isEdit ? 'Editar Item' : controller.document.title}
+					</Typography>
+					<IconButton
+						onClick={!isView ? controller.closePage : () => controller.changeToEdit(controller.document._id || '')}>
+						{!isView ? <SysIcon name={'close'} /> : <SysIcon name={'edit'} />}
 					</IconButton>
-				)}
-				<Typography variant="h5" sx={{ flexGrow: 1 }}>
-					{isCreate ? 'Adicionar Item' : isEdit ? 'Editar Item' : controller.document.title}
-				</Typography>
-				<IconButton
-					onClick={!isView ? controller.closePage : () => controller.changeToEdit(controller.document._id || '')}>
-					{!isView ? <SysIcon name={'close'} /> : <SysIcon name={'edit'} />}
-				</IconButton>
-			</Header>
-			<SysForm
-				mode={state as 'create' | 'view' | 'edit'}
-				schema={controller.schema}
-				doc={controller.document}
-				onSubmit={controller.onSubmit}
-				loading={controller.loading}>
-				<Body>
+				</Header>
+				<SysForm
+					mode={state as 'create' | 'view' | 'edit'}
+					schema={controller.schema}
+					doc={controller.document}
+					onSubmit={controller.onSubmit}
+					loading={controller.loading}>
 					<FormColumn>
 						<SysTextField name="title" placeholder="Ex.: Item XX" />
 						<SysSelectField name="type" placeholder="Selecionar" />
@@ -61,16 +61,16 @@ const ToDoDetailView = () => {
 							max={200}
 						/>
 					</FormColumn>
-				</Body>
-				<Footer>
-					{!isView && (
-						<Button variant="outlined" startIcon={<SysIcon name={'close'} />} onClick={controller.closePage}>
-							Cancelar
-						</Button>
-					)}
-					<SysFormButton>Salvar</SysFormButton>
-				</Footer>
-			</SysForm>
+					<Footer>
+						{!isView && (
+							<Button variant="outlined" startIcon={<SysIcon name={'close'} />} onClick={controller.closePage}>
+								Cancelar
+							</Button>
+						)}
+						<SysFormButton>Salvar</SysFormButton>
+					</Footer>
+				</SysForm>
+			</Body>
 		</Container>
 	);
 };

@@ -30,22 +30,18 @@ const ToDoDetailStyles: IToDoDetailStyles = {
 	}),
 	Body: styled(Box)(({ theme }) => ({
 		display: 'flex',
-		flexDirection: 'row',
+		flexDirection: 'column',
 		justifyContent: 'flex-start',
 		alignItems: 'flex-start',
-		width: '100%',
-		gap: '64px',
-		[theme.breakpoints.down('md')]: {
-			flexDirection: 'column',
-			gap: sysSizing.spacingFixedMd
-		}
+		maxwidth: '600px',
+		gap: sysSizing.spacingFixedMd
 	})),
 	Footer: styled(Box)({
 		display: 'flex',
 		flexDirection: 'row',
 		justifyContent: 'flex-end',
 		alignItems: 'center',
-		width: '100%',
+		maxwidth: '600px',
 		gap: sysSizing.spacingRemMd,
 		marginTop: '40px'
 	}),
