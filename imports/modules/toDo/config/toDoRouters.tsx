@@ -7,18 +7,18 @@ export const toDoRouterList: (IRoute | null)[] = [
 		path: '/toDo/:screenState/:toDoId',
 		component: ToDoContainer,
 		isProtected: true,
-		resources: [Recurso.EXAMPLE_VIEW]
+		resources: [Recurso.TODO_VIEW]
 	},
 	{
 		path: '/toDo/:screenState',
 		component: ToDoContainer,
 		isProtected: true,
-		resources: [Recurso.EXAMPLE_CREATE]
+		resources: [Recurso.TODO_CREATE]
 	},
 	{
 		path: '/toDo',
 		component: ToDoContainer,
 		isProtected: true,
-		resources: [Recurso.EXAMPLE_VIEW]
+		resources: [Recurso.TODO_VIEW]
 	}
 ];

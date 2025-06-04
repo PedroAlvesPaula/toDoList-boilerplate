@@ -22,13 +22,7 @@ const ToDoDetailView = () => {
 	const isView = state === 'view';
 	const isEdit = state === 'edit';
 	const isCreate = state === 'create';
-  const {
-    Container,
-    Body,
-    Header,
-    Footer,
-    FormColumn
-  } = ToDoDetailStyles;
+	const { Container, Body, Header, Footer, FormColumn } = ToDoDetailStyles;
 
 	return (
 		<Container>
@@ -56,7 +50,7 @@ const ToDoDetailView = () => {
 					<FormColumn>
 						<SysTextField name="title" placeholder="Ex.: Item XX" />
 						<SysSelectField name="type" placeholder="Selecionar" />
-						<SysRadioButton name="typeMulti" childrenAlignment="row" size="small" />
+						<SysRadioButton name="isPrivate" childrenAlignment="row" size="small" />
 						<SysTextField
 							name="description"
 							placeholder="Acrescente informações sobre o item (3 linhas)"
@@ -66,12 +60,6 @@ const ToDoDetailView = () => {
 							showNumberCharactersTyped
 							max={200}
 						/>
-						<SysUploadFile name="files" />
-						<SysSlider name="slider" />
-						<SysLocationField name="address" />
-					</FormColumn>
-					<FormColumn>
-						<SysCheckBox name="check" childrenAlignment="row" />
 					</FormColumn>
 				</Body>
 				<Footer>

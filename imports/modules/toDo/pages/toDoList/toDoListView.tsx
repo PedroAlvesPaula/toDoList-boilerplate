@@ -7,22 +7,17 @@ import { ToDoListControllerContext } from './toDoListController';
 import { useNavigate } from 'react-router-dom';
 import { ComplexTable } from '/imports/ui/components/ComplexTable/ComplexTable';
 import DeleteDialog from '/imports/ui/appComponents/showDialog/custom/deleteDialog/deleteDialog';
-import { SysAppLayoutContext } from '/imports/app/appLayout';
+import AppLayoutContext from '/imports/app/appLayoutProvider/appLayoutContext';
 import ToDoListStyles from './toDoListStyles';
 import SysTextField from '/imports/ui/components/sysFormFields/sysTextField/sysTextField';
 import { SysSelectField } from '/imports/ui/components/sysFormFields/sysSelectField/sysSelectField';
 import SysIcon from '/imports/ui/components/sysIcon/sysIcon';
 
-
 const ToDoListView = () => {
 	const controller = React.useContext(ToDoListControllerContext);
-	const sysLayoutContext = React.useContext(SysAppLayoutContext);
+	const sysLayoutContext = React.useContext(AppLayoutContext);
 	const navigate = useNavigate();
-  const {
-    Container,
-    LoadingContainer,
-    SearchContainer
-  } = ToDoListStyles;
+	const { Container, LoadingContainer, SearchContainer } = ToDoListStyles;
 
 	const options = [{ value: '', label: 'Nenhum' }, ...(controller.schema.type.options?.() ?? [])];
 

@@ -2,7 +2,7 @@ import { ElementType } from 'react';
 import { styled } from '@mui/material/styles';
 import Box, { BoxProps } from '@mui/material/Box';
 import { sysSizing } from '/imports/ui/materialui/styles';
-import {SysSectionPaddingXY} from "/imports/ui/layoutComponents/sysLayoutComponents";
+import { SysSectionPaddingXY } from '/imports/ui/layoutComponents/sysLayoutComponents';
 
 interface IToDoDetailStyles {
 	Container: ElementType<BoxProps>;
@@ -16,8 +16,9 @@ const ToDoDetailStyles: IToDoDetailStyles = {
 	Container: styled(SysSectionPaddingXY)(() => ({
 		display: 'flex',
 		flexDirection: 'column',
-		justifyContent: 'flex-start',
-		alignItems: 'flex-start',
+		justifyContent: 'center',
+		alignItems: 'center',
+		width: '100vw',
 		gap: sysSizing.spacingFixedMd
 	})),
 	Header: styled(Box)({

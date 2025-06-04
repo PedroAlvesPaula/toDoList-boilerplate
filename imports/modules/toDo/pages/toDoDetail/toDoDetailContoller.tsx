@@ -7,7 +7,7 @@ import { toDoApi } from '../../api/toDoApi';
 import { IToDo } from '../../api/toDoSch';
 import { ISchema } from '/imports/typings/ISchema';
 import { IMeteorError } from '/imports/typings/BoilerplateDefaultTypings';
-import { SysAppLayoutContext } from '/imports/app/appLayout';
+import AppLayoutContext from '/imports/app/appLayoutProvider/appLayoutContext';
 
 interface IToDoDetailContollerContext {
 	closePage: () => void;
@@ -25,7 +25,7 @@ export const ToDoDetailControllerContext = createContext<IToDoDetailContollerCon
 const ToDoDetailController = () => {
 	const navigate = useNavigate();
 	const { id, state } = useContext(ToDoModuleContext);
-	const { showNotification } = useContext(SysAppLayoutContext);
+	const { showNotification } = useContext(AppLayoutContext);
 
 	const { document, loading } = useTracker(() => {
 		const subHandle = !!id ? toDoApi.subscribe('toDoDetail', { _id: id }) : null;
