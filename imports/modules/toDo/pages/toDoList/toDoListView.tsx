@@ -19,11 +19,11 @@ const ToDoListView = () => {
 	const navigate = useNavigate();
 	const { Container, LoadingContainer, SearchContainer } = ToDoListStyles;
 
-	const options = [{ value: '', label: 'Nenhum' }, ...(controller.schema.type.options?.() ?? [])];
+	const options = [{ value: '', label: 'Nenhum' }, ...(controller.schema.state.options?.() ?? [])];
 
 	return (
 		<Container>
-			<Typography variant="h5">Lista de Itens</Typography>
+			<Typography variant="h5">Lista de tarefas</Typography>
 			<SearchContainer>
 				<SysTextField
 					name="search"

@@ -14,15 +14,15 @@ export const toDoSch: ISchema<IToDo> = {
 		defaultValue: '',
 		optional: true
 	},
-	type: {
+	state: {
 		type: String,
-		label: 'Categoria',
+		label: 'Estágio',
 		defaultValue: '',
 		optional: false,
 		options: () => [
-			{ value: 'Categoria A', label: 'Categoria A' },
-			{ value: 'Categoria B', label: 'Categoria B' },
-			{ value: 'Categoria C', label: 'Categoria C' }
+			{ value: 'Cadastrada', label: 'Cadastrada' },
+			{ value: 'Em andamento', label: 'Em andamento' },
+			{ value: 'Concluida', label: 'Concluída' }
 		]
 	},
 	isPrivate: {
@@ -39,6 +39,6 @@ export const toDoSch: ISchema<IToDo> = {
 export interface IToDo extends IDoc {
 	title: string;
 	description: string;
-	type: string;
-	isPrivate: string;
+	state: string;
+	isPrivate: boolean;
 }

@@ -34,7 +34,7 @@ const ToDoDetailView = () => {
 						</IconButton>
 					)}
 					<Typography variant="h5" sx={{ flexGrow: 1 }}>
-						{isCreate ? 'Adicionar Item' : isEdit ? 'Editar Item' : controller.document.title}
+						{isCreate ? 'Adicionar tarefa' : isEdit ? 'Editar tarefa' : controller.document.title}
 					</Typography>
 					<IconButton
 						onClick={!isView ? controller.closePage : () => controller.changeToEdit(controller.document._id || '')}>
@@ -49,17 +49,16 @@ const ToDoDetailView = () => {
 					loading={controller.loading}>
 					<FormColumn>
 						<SysTextField name="title" placeholder="Ex.: Item XX" />
-						<SysSelectField name="type" placeholder="Selecionar" />
-						<SysRadioButton name="isPrivate" childrenAlignment="row" size="small" />
+						{state === 'edit' && <SysSelectField name="state" placeholder="Selecionar" />}
 						<SysTextField
 							name="description"
 							placeholder="Acrescente informações sobre o item (3 linhas)"
 							multiline
 							rows={3}
-							maxRows={3}
 							showNumberCharactersTyped
 							max={200}
 						/>
+						<SysRadioButton name="isPrivate" childrenAlignment="row" size="small" />
 					</FormColumn>
 					<Footer>
 						{!isView && (
