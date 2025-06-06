@@ -20,18 +20,23 @@ export const toDoSch: ISchema<IToDo> = {
 		defaultValue: '',
 		optional: false,
 		options: () => [
-			{ value: 'Cadastrada', label: 'Cadastrada' },
-			{ value: 'Em andamento', label: 'Em andamento' },
-			{ value: 'Concluida', label: 'Concluída' }
-		]
+			{ value: 'cadastrada', label: 'cadastrada' },
+			{ value: 'em andamento', label: 'em andamento' },
+			{ value: 'concluida', label: 'concluida' }
+		],
+		visibilityFunction(doc) {
+			console.log('Dentro do state', doc);
+			if (doc.state === 'create') return false;
+			return true;
+		}
 	},
 	isPrivate: {
-		type: Boolean,
+		type: String,
 		label: 'Tarefa pessoal?',
 		optional: false,
 		options: () => [
-			{ value: true, label: 'Sim' },
-			{ value: false, label: 'Não' }
+			{ value: 'sim', label: 'Sim' },
+			{ value: 'nao', label: 'Não' }
 		]
 	}
 };
@@ -40,5 +45,5 @@ export interface IToDo extends IDoc {
 	title: string;
 	description: string;
 	state: string;
-	isPrivate: boolean;
+	isPrivate: String;
 }
