@@ -9,11 +9,7 @@ import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
 import { SysSelectField } from '/imports/ui/components/sysFormFields/sysSelectField/sysSelectField';
 import { SysRadioButton } from '/imports/ui/components/sysFormFields/sysRadioButton/sysRadioButton';
-import { SysCheckBox } from '/imports/ui/components/sysFormFields/sysCheckBoxField/sysCheckBoxField';
 import SysFormButton from '/imports/ui/components/sysFormFields/sysFormButton/sysFormButton';
-import { SysUploadFile } from '/imports/ui/components/sysFormFields/sysUploadFile/sysUploadFile';
-import SysSlider from '/imports/ui/components/sysFormFields/sysSlider/sysSliderField';
-import { SysLocationField } from '/imports/ui/components/sysFormFields/sysLocationField/sysLocationField';
 import SysIcon from '/imports/ui/components/sysIcon/sysIcon';
 
 const ToDoDetailView = () => {
@@ -43,13 +39,31 @@ const ToDoDetailView = () => {
 				</Header>
 				<SysForm
 					mode={state as 'create' | 'view' | 'edit'}
-					schema={controller.schema}
+					schema={
+						state === 'edit'
+							? controller.schema
+							: {
+									...controller.schema,
+									state: {
+										type: String,
+										label: 'Estágio',
+										defaultValue: 'cadastrada',
+										readOnly: true,
+										optional: false,
+										options: () => [
+											{ value: 'cadastrada', label: 'cadastrada' },
+											{ value: 'em andamento', label: 'em andamento' },
+											{ value: 'concluida', label: 'concluida' }
+										]
+									}
+								}
+					}
 					doc={controller.document}
 					onSubmit={controller.onSubmit}
 					loading={controller.loading}>
 					<FormColumn>
 						<SysTextField name="title" placeholder="Ex.: Item XX" />
-						{state === 'edit' && <SysSelectField name="state" placeholder="Selecionar" />}
+						<SysSelectField name="state" placeholder="Selecionar" />
 						<SysTextField
 							name="description"
 							placeholder="Acrescente informações sobre o item (3 linhas)"
