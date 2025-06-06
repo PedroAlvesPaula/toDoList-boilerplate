@@ -6,6 +6,8 @@ import { useTracker } from 'meteor/react-meteor-data';
 import { ISchema } from '/imports/typings/ISchema';
 import { IToDo } from '../../api/toDoSch';
 import { toDoApi } from '../../api/toDoApi';
+import { IMeteorError } from '/imports/typings/IMeteorError';
+import { ShowNotification } from '/imports/ui/appComponents/showNotification/showNotification';
 
 interface IInitialConfig {
 	sortProperties: { field: string; sortAscending: boolean };
@@ -38,8 +40,8 @@ const initialConfig = {
 const ToDoListController = () => {
 	const [config, setConfig] = React.useState<IInitialConfig>(initialConfig);
 
-	const { title, type, typeMulti } = toDoApi.getSchema();
-	const toDoSchReduzido = { title, type, typeMulti, createdat: { type: Date, label: 'Criado em' } };
+	const { title, state, isPrivate } = toDoApi.getSchema();
+	const toDoSchReduzido = { title, state, isPrivate, createdat: { type: Date, label: 'Criado em' } };
 	const navigate = useNavigate();
 
 	const { sortProperties, filter } = config;
@@ -66,6 +68,24 @@ const ToDoListController = () => {
 
 	const onDeleteButtonClick = useCallback((row: any) => {
 		toDoApi.remove(row);
+	}, []);
+
+	const onChandgeStateButtonClick = useCallback((doc: IToDo) => {
+		toDoApi.update(doc, (e: IMeteorError) => {
+			if (e) {
+				ShowNotification({
+					type: 'error',
+					title: 'Operação não realizada!',
+					message: `Erro ao realizar a operação: ${e.reason}`
+				});
+			} else {
+				ShowNotification({
+					type: 'success',
+					title: 'Operação realizada!',
+					message: 'O estágio da tarefa foi atualizado com sucesso com sucesso!'
+				});
+			}
+		});
 	}, []);
 
 	const onChangeTextField = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
@@ -102,7 +122,8 @@ const ToDoListController = () => {
 			schema: toDoSchReduzido,
 			loading,
 			onChangeTextField,
-			onChangeCategory: onSelectedCategory
+			onChangeCategory: onSelectedCategory,
+			onChandgeStateButtonClick: onChandgeStateButtonClick
 		}),
 		[toDos, loading]
 	);
