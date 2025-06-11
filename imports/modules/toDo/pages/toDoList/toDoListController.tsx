@@ -130,12 +130,12 @@ const ToDoListController = () => {
 				...prev,
 				filter: {
 					...prev.filter,
-					type: { $ne: null }
+					state: { $ne: null }
 				}
 			}));
 			return;
 		}
-		setConfig((prev) => ({ ...prev, filter: { ...prev.filter, type: value } }));
+		setConfig((prev) => ({ ...prev, filter: { ...prev.filter, state: value } }));
 	}, []);
 
 	const providerValues: IToDoListContollerContext = useMemo(
