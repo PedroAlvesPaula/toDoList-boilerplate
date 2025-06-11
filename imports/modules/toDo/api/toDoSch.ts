@@ -25,7 +25,6 @@ export const toDoSch: ISchema<IToDo> = {
 			{ value: 'concluida', label: 'concluida' }
 		],
 		visibilityFunction(doc) {
-			console.log('Dentro do state', doc);
 			if (doc.state === 'create') return false;
 			return true;
 		}
