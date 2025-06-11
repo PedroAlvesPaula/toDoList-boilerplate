@@ -5,16 +5,16 @@ import UserProfile from './userprofile/config';
 import toDo from './toDo/config';
 
 const pages: Array<IRoute | null> = [
-	...Example.pagesRouterList,
-	...Aniversario.pagesRouterList,
-	...UserProfile.pagesRouterList,
+	// ...Example.pagesRouterList,
+	// ...Aniversario.pagesRouterList,
+	// ...UserProfile.pagesRouterList,
 	...toDo.pagesRouterList
 ];
 
 const menuItens: Array<IAppMenu | null> = [
-	...Example.pagesMenuItemList,
-	...Aniversario.pagesMenuItemList,
-	...UserProfile.pagesMenuItemList,
+	// ...Example.pagesMenuItemList,
+	// ...Aniversario.pagesMenuItemList,
+	// ...UserProfile.pagesMenuItemList,
 	...toDo.pagesMenuItemList
 ];
 
