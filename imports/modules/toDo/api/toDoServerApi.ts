@@ -39,6 +39,10 @@ class ToDoServerApi extends ProductServerBase<IToDo> {
 			});
 		});
 
+		this.addPublication('toDoCount', (filter = {}) => {
+			return this.defaultCounterCollectionPublication(filter, 'toDo');
+		});
+
 		// this.addRestEndpoint(
 		// 	'view',
 		// 	(params, options) => {
