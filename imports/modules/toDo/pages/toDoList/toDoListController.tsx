@@ -24,6 +24,8 @@ interface IToDoListContollerContext {
 	loading: boolean;
 	onChangeTextField: (event: React.ChangeEvent<HTMLInputElement>) => void;
 	onChangeCategory: (event: React.ChangeEvent<HTMLInputElement>) => void;
+	onChangeStateButtonClick: (doc: IToDo) => void;
+	onResetStateClick: (doc: Partial<IToDo>) => void;
 }
 
 export const ToDoListControllerContext = React.createContext<IToDoListContollerContext>(
@@ -70,7 +72,10 @@ const ToDoListController = () => {
 		toDoApi.remove(row);
 	}, []);
 
-	const onChandgeStateButtonClick = useCallback((doc: IToDo) => {
+	const onChangeStateButtonClick = useCallback((doc: IToDo) => {
+		if (doc.state === 'cadastrada') doc.state = 'em andamento';
+		else if (doc.state === 'em andamento') doc.state = 'concluida';
+
 		toDoApi.update(doc, (e: IMeteorError) => {
 			if (e) {
 				ShowNotification({
@@ -83,6 +88,25 @@ const ToDoListController = () => {
 					type: 'success',
 					title: 'Operação realizada!',
 					message: 'O estágio da tarefa foi atualizado com sucesso com sucesso!'
+				});
+			}
+		});
+	}, []);
+
+	const onResetStateClick = useCallback((doc: Partial<IToDo>) => {
+		doc.state = 'cadastrada';
+		toDoApi.update(doc, (e: IMeteorError) => {
+			if (e) {
+				ShowNotification({
+					type: 'error',
+					title: 'Operação não realizada!',
+					message: `Erro ao realizar a operação: ${e.reason}`
+				});
+			} else {
+				ShowNotification({
+					type: 'success',
+					title: 'Operação realizada!',
+					message: 'O estágio da tarefa foi resetado com sucesso!'
 				});
 			}
 		});
@@ -123,7 +147,8 @@ const ToDoListController = () => {
 			loading,
 			onChangeTextField,
 			onChangeCategory: onSelectedCategory,
-			onChandgeStateButtonClick: onChandgeStateButtonClick
+			onChangeStateButtonClick: onChangeStateButtonClick,
+			onResetStateClick: onResetStateClick
 		}),
 		[toDos, loading]
 	);
