@@ -37,7 +37,7 @@ const ToDoDetailController = () => {
 	}, [id]);
 
 	const closePage = useCallback(() => {
-		navigate(-1);
+		navigate('/toDo');
 	}, []);
 	const changeToEdit = useCallback((id: string) => {
 		navigate(`/toDo/edit/${id}`);
@@ -51,7 +51,7 @@ const ToDoDetailController = () => {
 				showNotification({
 					type: 'success',
 					title: 'Operação realizada!',
-					message: `O exemplo foi ${selectedAction === 'update' ? 'atualizado' : 'cadastrado'} com sucesso!`
+					message: `A tarefa foi ${selectedAction === 'update' ? 'atualizado' : 'cadastrado'} com sucesso!`
 				});
 			} else {
 				showNotification({
