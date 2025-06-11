@@ -164,7 +164,7 @@ export class ServerApiBase<Doc extends IDoc> {
 		this.initApiRest();
 		this.registerPublications(options);
 		this.registerAllMethods();
-		
+
 		// this.createAPIRESTForAudioFields();
 		// this.createAPIRESTForIMGFields();
 		// this.createAPIRESTThumbnailForIMGFields(sharp);

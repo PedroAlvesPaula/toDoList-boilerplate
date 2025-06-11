@@ -58,7 +58,7 @@ export const SysRadioButton: React.FC<ISysRadioProps> = ({
 	defaultValue = refObject?.current.value || schema?.defaultValue;
 	showLabelAdornment = showLabelAdornment ?? (!!schema && !!schema?.optional);
 
-	const [valueState, setValueState] = useState<string>(defaultValue || '');
+	const [valueState, setValueState] = useState<String>(defaultValue || '');
 	const [visibleState, setVisibleState] = useState<boolean>(refObject?.current.isVisible ?? true);
 	const [errorState, setErrorState] = useState<string | undefined>(error);
 	const [optionsState, setOptionsState] = useState<Array<IOption> | undefined>(options);
