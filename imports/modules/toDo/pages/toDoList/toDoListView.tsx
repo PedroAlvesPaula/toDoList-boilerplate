@@ -13,6 +13,8 @@ import SysTextField from '/imports/ui/components/sysFormFields/sysTextField/sysT
 import { SysSelectField } from '/imports/ui/components/sysFormFields/sysSelectField/sysSelectField';
 import SysIcon from '/imports/ui/components/sysIcon/sysIcon';
 
+const renderIcon = () => console.log('deuCerto');
+
 const ToDoListView = () => {
 	const controller = React.useContext(ToDoListControllerContext);
 	const sysLayoutContext = React.useContext(AppLayoutContext);
@@ -33,7 +35,7 @@ const ToDoListView = () => {
 				/>
 				<SysSelectField
 					name="Category"
-					label="Categoria"
+					label="Estágio"
 					options={options}
 					placeholder="Selecionar"
 					onChange={controller.onChangeCategory}
@@ -52,6 +54,18 @@ const ToDoListView = () => {
 						onRowClick={(row) => navigate('/toDo/view/' + row.id)}
 						searchPlaceholder={'Pesquisar exemplo'}
 						onEdit={(row) => navigate('/toDo/edit/' + row._id)}
+						actions={[
+							{
+								icon: <SysIcon name="arrowForward" />,
+								label: 'avancarEstado',
+								onClick: controller.onChangeStateButtonClick
+							},
+							{
+								icon: <SysIcon name="refresh" />,
+								label: 'resetar estado',
+								onClick: controller.onResetStateClick
+							}
+						]}
 						onDelete={(row) => {
 							DeleteDialog({
 								showDialog: sysLayoutContext.showDialog,
