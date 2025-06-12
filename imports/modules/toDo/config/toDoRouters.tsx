@@ -17,7 +17,7 @@ export const toDoRouterList: (IRoute | null)[] = [
 		resources: [Recurso.TODO_CREATE]
 	},
 	{
-		path: '/toDo',
+		path: '/toDo/tasks',
 		component: ToDoContainer,
 		isProtected: true,
 		resources: [Recurso.TODO_VIEW]
