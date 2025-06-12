@@ -57,12 +57,12 @@ const ToDoListView = () => {
 						actions={[
 							{
 								icon: <SysIcon name="arrowForward" />,
-								label: 'avancarEstado',
+								label: 'avançar estágio',
 								onClick: controller.onChangeStateButtonClick
 							},
 							{
 								icon: <SysIcon name="refresh" />,
-								label: 'resetar estado',
+								label: 'resetar estágio',
 								onClick: controller.onResetStateClick
 							}
 						]}
