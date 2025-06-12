@@ -4,19 +4,19 @@ import { Recurso } from './recurso';
 
 export const userProfileRouterList: (IRoute | null)[] = [
 	{
-		path: '/userprofile/:screenState/:userprofileId',
+		path: '/userProfile/:screenState/:userprofileId',
 		component: UserProfileContainer,
 		isProtected: true,
 		resources: [Recurso.USUARIO_VIEW]
 	},
 	{
-		path: '/userprofile/:screenState',
+		path: '/userProfile/:screenState',
 		component: UserProfileContainer,
 		isProtected: true,
 		resources: [Recurso.USUARIO_VIEW]
 	},
 	{
-		path: '/userprofile',
+		path: '/userProfile',
 		component: UserProfileContainer,
 		isProtected: true,
 		resources: [Recurso.USUARIO_VIEW]
