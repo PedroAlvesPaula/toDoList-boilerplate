@@ -6,17 +6,15 @@
 import React from 'react';
 import { Link, NavigateFunction } from 'react-router-dom';
 import Container from '@mui/material/Container';
-import TextField from '/imports/ui/components/SimpleFormFields/TextField/TextField';
 import Button from '@mui/material/Button';
 import { userprofileApi } from '../../../modules/userprofile/api/userProfileApi';
 import SimpleForm from '/imports/ui/components/SimpleForm/SimpleForm';
+import SysTextField from '../../../ui/components/sysFormFields/sysTextField/sysTextField';
 
 import { signUpStyle } from './signUpStyle';
 import Box from '@mui/material/Box';
 import { IUserProfile } from '/imports/modules/userprofile/api/userProfileSch';
 import schema from './signUpSchema';
-import { Password } from '@mui/icons-material';
-import { parse } from 'path';
 
 interface ISignUp {
 	showNotification: (options?: Object) => void;
@@ -52,8 +50,6 @@ export const SignUp = (props: ISignUp) => {
 			}
 		};
 
-		console.log('SignUp data:', data);
-
 		userprofileApi.registrarUserProfileNoMeteor(data, (err, r) => {
 			if (err) {
 				console.log('Login err', err);
@@ -70,6 +66,8 @@ export const SignUp = (props: ISignUp) => {
 						title: 'Cadastrado com sucesso!',
 						description: 'Registro de usuário realizado em nossa base de dados!'
 					});
+
+				props.navigate('/signIn');
 			}
 		});
 	};
@@ -80,7 +78,7 @@ export const SignUp = (props: ISignUp) => {
 				<h2>Crie sua conta e aproveite!</h2>
 			</Box>
 			<SimpleForm schema={schema} onSubmit={handleSubmit}>
-				<TextField
+				<SysTextField
 					id="Username"
 					label="Nome do usuario"
 					fullWidth
@@ -88,8 +86,8 @@ export const SignUp = (props: ISignUp) => {
 					type="text"
 					placeholder="Digite seu nome"
 				/>
-				<TextField id="Email" label="Email" fullWidth name="email" type="email" placeholder="Digite um email" />
-				<TextField
+				<SysTextField id="Email" label="Email" fullWidth name="email" type="email" placeholder="Digite um email" />
+				<SysTextField
 					id="dateOfBirth"
 					label="Data de nascimento"
 					fullWidth
@@ -97,8 +95,15 @@ export const SignUp = (props: ISignUp) => {
 					type="date"
 					placeholder="00/00/0000"
 				/>
-				<TextField id="Gender" label="Gênero" fullWidth name="gender" type="text" placeholder="Masculino | Feminino" />
-				<TextField
+				<SysTextField
+					id="Gender"
+					label="Gênero"
+					fullWidth
+					name="gender"
+					type="text"
+					placeholder="Masculino | Feminino"
+				/>
+				<SysTextField
 					id="CompanyWorks"
 					label="Empresa onde trabalha"
 					fullWidth
@@ -107,8 +112,15 @@ export const SignUp = (props: ISignUp) => {
 					placeholder="ex: Synergia"
 				/>
 				{/* Genero */}
-				<TextField id="ProfileImage" label="Imagem de perfil" fullWidth name="profileImage" type="file" />
-				<TextField id="Senha" label="Senha" fullWidth name="password" placeholder="Digite uma senha" type="password" />
+				<SysTextField id="ProfileImage" label="Imagem de perfil" fullWidth name="profileImage" type="file" />
+				<SysTextField
+					id="Senha"
+					label="Senha"
+					fullWidth
+					name="password"
+					placeholder="Digite uma senha"
+					type="password"
+				/>
 
 				<Box sx={signUpStyle.containerButtonOptions}>
 					<Button color={'primary'} variant={'outlined'} id="submit">

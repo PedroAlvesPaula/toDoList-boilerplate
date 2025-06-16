@@ -32,7 +32,11 @@ const SysLabelView: React.FC<ISysLabelView> = ({
 	showTooltip,
 	tooltipMessage,
 	tooltipPosition,
-	sxMap
+	sxMap = {
+		container: { marginTop: '8px' },
+		header: {},
+		helpIcon: {}
+	}
 }) => {
 	return (
 		<Container sx={sxMap?.container}>
