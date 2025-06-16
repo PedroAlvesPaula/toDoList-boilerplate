@@ -13,9 +13,8 @@ import { nanoid } from 'nanoid';
 import User = Meteor.User;
 
 interface IUserProfileEstendido extends IUserProfile {
-	password?: string;
+	profile: {};
 }
-
 /**
  * Return Logged User if exists.
  * @return {Object} Logged User
@@ -30,17 +29,17 @@ export const getUserServer = async (connection?: { id: string } | null): IUserPr
 
 		if (userProfile) {
 			return userProfile;
-		}
-		const d = new Date();
-		const simpleDate = `${d.getFullYear()}${d.getMonth() + 1}${d.getDay()}`;
-		const id = connection && connection.id ? simpleDate + connection.id : nanoid();
+			const d = new Date();
+			const simpleDate = `${d.getFullYear()}${d.getMonth() + 1}${d.getDay()}`;
+			const id = connection && connection.id ? simpleDate + connection.id : nanoid();
 
-		return {
-			email: '',
-			username: '',
-			_id: id,
-			roles: [EnumUserRoles.PUBLICO]
-		};
+			return {
+				email: '',
+				username: '',
+				_id: id,
+				roles: [EnumUserRoles.PUBLICO]
+			};
+		}
 	} catch (e) {
 		const d = new Date();
 		const simpleDate = `${d.getFullYear()}${d.getMonth() + 1}${d.getDay()}`;
@@ -83,6 +82,8 @@ class UserProfileServerApi extends ProductServerBase<IUserProfile> {
 				}
 			}
 		});
+
+		this.registerMethod('registrarUserProfileNoMeteor', this.registrarUserProfileNoMeteor.bind(this));
 
 		this.registerMethod('sendResetPasswordEmail', async (userData: IUserProfile) => {
 			check(userData, Object);
@@ -142,9 +143,10 @@ class UserProfileServerApi extends ProductServerBase<IUserProfile> {
 		if (Meteor.isServer) {
 			if (userprofile.password) {
 				userprofile._id = await Accounts.createUser({
-					username: userprofile.email,
+					username: userprofile.username,
 					password: userprofile.password,
-					email: userprofile.email
+					email: userprofile.email,
+					profile: userprofile.profile
 				});
 			} else {
 				userprofile._id = await Accounts.createUser({
@@ -221,7 +223,8 @@ class UserProfileServerApi extends ProductServerBase<IUserProfile> {
 								profile: {
 									name: dataObj.username,
 									email: dataObj.email
-								}
+								},
+								'emails.0.verified': true
 							}
 						}
 					);
@@ -229,14 +232,14 @@ class UserProfileServerApi extends ProductServerBase<IUserProfile> {
 					insertId = userProfile._id;
 
 					await Meteor.users.updateAsync(
-						{ _id: dataObj._id },
+						{ _id: dataObj._id || insertId },
 						{
 							$set: {
 								profile: {
 									name: dataObj.username,
 									email: dataObj.email
 								},
-								roles: dataObj.roles
+								'emails.0.verified': true
 							}
 						}
 					);
@@ -345,11 +348,12 @@ class UserProfileServerApi extends ProductServerBase<IUserProfile> {
 		}
 	};
 
-	async beforeInsert(docObj: IUserProfile, context: IContext) {
-		return super.beforeInsert(docObj, context);
+	beforeInsert(docObj: IUserProfile, context: IContext) {
+		// return super.beforeInsert(docObj, context);
+		return true;
 	}
 
-	async afterInsert(doc: IUserProfileEstendido, _context: IContext) {
+	afterInsert(doc: IUserProfileEstendido, _context: IContext) {
 		if (Meteor.isServer) {
 			if (doc.password) {
 				Accounts.sendVerificationEmail(doc._id!);
@@ -373,11 +377,11 @@ class UserProfileServerApi extends ProductServerBase<IUserProfile> {
 			if (docObj && docObj.roles) delete docObj.roles;
 		}
 
-		return await super.beforeUpdate(docObj, context);
+		return await this.beforeUpdate(docObj, context);
 	}
 
 	async beforeRemove(docObj: IUserProfile, context: IContext) {
-		super.beforeRemove(docObj, context);
+		this.beforeRemove(docObj, context);
 		Meteor.users.remove({ _id: docObj._id });
 		return true;
 	}

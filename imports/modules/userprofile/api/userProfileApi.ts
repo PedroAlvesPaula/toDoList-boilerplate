@@ -10,19 +10,25 @@ import { IMeteorError } from '/imports/typings/BoilerplateDefaultTypings';
 class UserProfileApi extends OfflineBaseApi {
 	constructor() {
 		super('userprofile', userProfileSch);
-		this.insertNewUser = this.insertNewUser.bind(this);
+		this.registrarUserProfileNoMeteor = this.registrarUserProfileNoMeteor.bind(this);
 		this.noImagePath = `${Meteor.absoluteUrl()}images/wireframe/user_no_photo.png`;
 		// @ts-ignore
 		userprofileData.collectionInstance = this.collectionInstance; //create globalvar userprofileData
 	}
 
-	insertNewUser(
-		userData: { username: string; email: string; password?: string },
+	registrarUserProfileNoMeteor(
+		userData: {
+			username: string;
+			email: string;
+			password?: string;
+			profile: { dateOfBirth?: string; gender?: string; companyWorks?: string; profileImage?: string };
+		},
 		callback = (e: Error, r: any) => {
 			console.log(e, r);
 		}
 	) {
-		this.callMethod('insert', userData, callback);
+		console.log('User api:', userData);
+		this.callMethod('registrarUserProfileNoMeteor', userData, callback);
 	}
 
 	changeUserStatus(id: string, callback = (e: IMeteorError, r: any) => {}) {

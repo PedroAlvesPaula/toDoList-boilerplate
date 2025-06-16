@@ -14,27 +14,31 @@
 
  */
 
+import { Padding } from '@mui/icons-material';
+import shadows from '@mui/material/styles/shadows';
+
 export const signUpStyle = {
 	containerSignUp: {
 		width: '100%',
-		maxWidth: 400
+		maxWidth: 400,
+		marginTop: 64
 	},
 	labelRegisterSystem: {
 		textAlign: 'center',
 		display: 'flex',
 		flexDirection: 'column',
 		justifyContent: 'center',
-		alignItems: 'center'
-	},
-	imageLogo: {
-		maxWidth: 100
+		alignItems: 'center',
+		Padding: '16px'
 	},
 	containerButtonOptions: {
 		display: 'flex',
 		flexDirection: 'row',
-		justifyContent: 'space-around'
+		justifyContent: 'space-around',
+		margin: '16px 0'
 	},
 	containerRouterSignIn: {
-		color: '#444'
+		color: '#444',
+		textAlign: 'center'
 	}
 };

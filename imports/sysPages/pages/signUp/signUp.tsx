@@ -14,6 +14,9 @@ import SimpleForm from '/imports/ui/components/SimpleForm/SimpleForm';
 import { signUpStyle } from './signUpStyle';
 import Box from '@mui/material/Box';
 import { IUserProfile } from '/imports/modules/userprofile/api/userProfileSch';
+import schema from './signUpSchema';
+import { Password } from '@mui/icons-material';
+import { parse } from 'path';
 
 interface ISignUp {
 	showNotification: (options?: Object) => void;
@@ -24,10 +27,34 @@ interface ISignUp {
 export const SignUp = (props: ISignUp) => {
 	const { showNotification } = props;
 
-	const handleSubmit = (doc: { email: string; password: string }) => {
-		const { email, password } = doc;
+	const handleSubmit = (doc: {
+		email: string;
+		password: string;
+		username: string;
+		dateOfBirth: Date;
+		gender: string;
+		companyWorks: string;
+		profileImage?: string;
+	}) => {
+		const { email, password, username, dateOfBirth, gender, companyWorks, profileImage } = doc;
 
-		userprofileApi.insertNewUser({ email, username: email, password }, (err, r) => {
+		const parsedDateOfBirth = dateOfBirth ? new Date(dateOfBirth) : undefined;
+
+		const data = {
+			email,
+			password,
+			username,
+			profile: {
+				dateOfBirth: parsedDateOfBirth ? parsedDateOfBirth.toISOString() : undefined,
+				gender,
+				companyWorks,
+				profileImage
+			}
+		};
+
+		console.log('SignUp data:', data);
+
+		userprofileApi.registrarUserProfileNoMeteor(data, (err, r) => {
 			if (err) {
 				console.log('Login err', err);
 				showNotification &&
@@ -50,25 +77,39 @@ export const SignUp = (props: ISignUp) => {
 	return (
 		<Container style={signUpStyle.containerSignUp}>
 			<Box sx={signUpStyle.labelRegisterSystem}>
-				<img src="/images/wireframe/logo.png" style={signUpStyle.imageLogo} />
-				{'Cadastrar no sistema'}
+				<h2>Crie sua conta e aproveite!</h2>
 			</Box>
-			<SimpleForm
-				schema={{
-					email: {
-						type: String,
-						label: 'Email',
-						optional: false
-					},
-					password: {
-						type: String,
-						label: 'Senha',
-						optional: false
-					}
-				}}
-				onSubmit={handleSubmit}>
+			<SimpleForm schema={schema} onSubmit={handleSubmit}>
+				<TextField
+					id="Username"
+					label="Nome do usuario"
+					fullWidth
+					name="username"
+					type="text"
+					placeholder="Digite seu nome"
+				/>
 				<TextField id="Email" label="Email" fullWidth name="email" type="email" placeholder="Digite um email" />
+				<TextField
+					id="dateOfBirth"
+					label="Data de nascimento"
+					fullWidth
+					name="dateOfBirth"
+					type="date"
+					placeholder="00/00/0000"
+				/>
+				<TextField id="Gender" label="Gênero" fullWidth name="gender" type="text" placeholder="Masculino | Feminino" />
+				<TextField
+					id="CompanyWorks"
+					label="Empresa onde trabalha"
+					fullWidth
+					name="companyWorks"
+					type="text"
+					placeholder="ex: Synergia"
+				/>
+				{/* Genero */}
+				<TextField id="ProfileImage" label="Imagem de perfil" fullWidth name="profileImage" type="file" />
 				<TextField id="Senha" label="Senha" fullWidth name="password" placeholder="Digite uma senha" type="password" />
+
 				<Box sx={signUpStyle.containerButtonOptions}>
 					<Button color={'primary'} variant={'outlined'} id="submit">
 						Cadastrar

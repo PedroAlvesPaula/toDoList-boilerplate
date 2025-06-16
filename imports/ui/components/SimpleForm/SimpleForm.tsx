@@ -552,8 +552,23 @@ class SimpleForm extends Component<ISimpleFormProps> {
 		return fielsWithError.length === 0;
 	};
 
-	onSubmitForm = (event: React.FormEvent, ...others: any[]) => {
+	onSubmitForm = async (event: React.FormEvent, ...others: any[]) => {
 		const docResult = this.docValue;
+		docResult.dateOfBirth = new Date(docResult.dateOfBirth);
+
+		const fileInput = (event.currentTarget as HTMLFormElement).querySelector('input[type="file"]');
+		const file = fileInput?.files?.[0];
+
+		if (file) {
+			const img64 = await new Promise((resolve, reject) => {
+				const reader = new FileReader();
+				reader.onloadend = () => resolve(reader.result);
+				reader.onerror = reject;
+				reader.readAsDataURL(file);
+			});
+			docResult.profileImage = img64;
+		}
+
 		if (this.props.submitVisibleFields) {
 			const visibleFiedls = Object.keys(this.fields);
 			Object.keys(docResult).forEach((field) => {

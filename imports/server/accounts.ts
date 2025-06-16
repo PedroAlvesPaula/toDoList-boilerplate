@@ -125,42 +125,43 @@ Meteor.startup(() => {
 	Accounts.emailTemplates.verifyEmail.subject = () => {
 		return settings.name;
 	};
-	Accounts.emailTemplates.verifyEmail.html = (user, url) => {
-		const urlWithoutHash = url.replace('#/', '');
-		const userData = userprofileServerApi.findOne({ _id: user._id }) || {};
-		const email =
-			`${
-				`<p>Olá ${userData.username || 'usuário'},</p>` +
-				'<p>Seja bem vindo ao &nbsp;<strong>MeteorReactBase-MUI</strong>.</p>' +
-				'<p>Para confirmar seu cadastro clique no link abaixo:</p>' +
-				'<p><ins><a href='
-			}${urlWithoutHash}>${urlWithoutHash}</a></ins></p>` +
-			'<p>Ficamos felizes com o seu cadastro.</p>' +
-			'<p><br/>Equipe <b>MeteorReactBase-MUI</b></p>';
-		const footer = `Essa mensagem foi gerada automaticamente!`;
-		return getHTMLEmailTemplate('Confirmação do cadastro', email, footer);
-	};
+
+	// Accounts.emailTemplates.verifyEmail.html = (user, url) => {
+	// 	const urlWithoutHash = url.replace('#/', '');
+	// 	const userData = userprofileServerApi.findOne({ _id: user._id }) || {};
+	// 	const email =
+	// 		`${
+	// 			`<p>Olá ${userData.username || 'usuário'},</p>` +
+	// 			'<p>Seja bem vindo ao &nbsp;<strong>MeteorReactBase-MUI</strong>.</p>' +
+	// 			'<p>Para confirmar seu cadastro clique no link abaixo:</p>' +
+	// 			'<p><ins><a href='
+	// 		}${urlWithoutHash}>${urlWithoutHash}</a></ins></p>` +
+	// 		'<p>Ficamos felizes com o seu cadastro.</p>' +
+	// 		'<p><br/>Equipe <b>MeteorReactBase-MUI</b></p>';
+	// 	const footer = `Essa mensagem foi gerada automaticamente!`;
+	// 	return getHTMLEmailTemplate('Confirmação do cadastro', email, footer);
+	// };
 
 	Accounts.emailTemplates.enrollAccount.subject = () => {
 		return settings.name;
 	};
 
-	Accounts.emailTemplates.enrollAccount.html = (user, url) => {
-		const urlWithoutHash = url.replace('#/', '');
-		const userData = userprofileServerApi.findOne({ _id: user._id }) || {};
+	// Accounts.emailTemplates.enrollAccount.html = (user, url) => {
+	// 	const urlWithoutHash = url.replace('#/', '');
+	// 	const userData = userprofileServerApi.findOne({ _id: user._id }) || {};
 
-		const email =
-			`${
-				`<p>Olá ${userData.username || 'usuário'},</p>` +
-				'<p>Seja bem vindo ao &nbsp;<strong>MeteorReactBase-MUI</strong>.</p>' +
-				'<p>Para concluir seu cadastro clique no link abaixo e informe uma senha:</p>' +
-				'<p><ins><a href='
-			}${urlWithoutHash}>${urlWithoutHash}</a></ins></p>` +
-			'<p>Ficamos felizes com o seu cadastro.</p>' +
-			'<p><br/>Equipe <b>MeteorReactBase-MUI</b></p>';
-		const footer = `Essa mensagem foi gerada automaticamente!`;
-		return getHTMLEmailTemplate('Conclua o seu cadastro', email, footer);
-	};
+	// 	const email =
+	// 		`${
+	// 			`<p>Olá ${userData.username || 'usuário'},</p>` +
+	// 			'<p>Seja bem vindo ao &nbsp;<strong>MeteorReactBase-MUI</strong>.</p>' +
+	// 			'<p>Para concluir seu cadastro clique no link abaixo e informe uma senha:</p>' +
+	// 			'<p><ins><a href='
+	// 		}${urlWithoutHash}>${urlWithoutHash}</a></ins></p>` +
+	// 		'<p>Ficamos felizes com o seu cadastro.</p>' +
+	// 		'<p><br/>Equipe <b>MeteorReactBase-MUI</b></p>';
+	// 	const footer = `Essa mensagem foi gerada automaticamente!`;
+	// 	return getHTMLEmailTemplate('Conclua o seu cadastro', email, footer);
+	// };
 
 	// endregion
 
@@ -221,27 +222,27 @@ Meteor.startup(() => {
 		forbidClientAccountCreation: false // impede que um usuário seja criado pelo cliente
 	});
 
-	Accounts.validateLoginAttempt(({ user, allowed }: { user: Meteor.User; allowed: boolean }) => {
-		if (!allowed) return allowed;
+	// Accounts.validateLoginAttempt(({ user, allowed }: { user: Meteor.User; allowed: boolean }) => {
+	// 	if (!allowed) return allowed;
 
-		// ################################ FACEBOOK ################################################
-		if (user.services.facebook) {
-			user.profile = {
-				name: user.services.facebook.name,
-				email: user.services.facebook.email
-			};
-			return validateLoginFacebook(user);
-		} else if (user.services.google) {
-			// ################################ GOOGLE ################################################
-			user.profile = {
-				name: user.services.google.name,
-				email: user.services.google.email
-			};
-			return validateLoginGoogle(user);
-		}
-		if (!user || !user.emails || !user.emails[0].verified) {
-			throw new Meteor.Error('Email ñao verificado', `Este email ainda não foi verificado!`);
-		}
-		return true;
-	});
+	// 	// ################################ FACEBOOK ################################################
+	// 	if (user.services.facebook) {
+	// 		user.profile = {
+	// 			name: user.services.facebook.name,
+	// 			email: user.services.facebook.email
+	// 		};
+	// 		return validateLoginFacebook(user);
+	// 	} else if (user.services.google) {
+	// 		// ################################ GOOGLE ################################################
+	// 		user.profile = {
+	// 			name: user.services.google.name,
+	// 			email: user.services.google.email
+	// 		};
+	// 		return validateLoginGoogle(user);
+	// 	}
+	// 	if (!user || !user.emails || !user.emails[0].verified) {
+	// 		throw new Meteor.Error('Email ñao verificado', `Este email ainda não foi verificado!`);
+	// 	}
+	// 	return true;
+	// });
 });

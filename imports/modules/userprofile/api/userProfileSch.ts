@@ -4,13 +4,6 @@ import { ISchema } from '../../../typings/ISchema';
 import User = Meteor.User;
 
 export const userProfileSch: ISchema<IUserProfile> = {
-	photo: {
-		type: String,
-		label: 'Photo',
-		defaultValue: '',
-		optional: true,
-		isImage: true
-	},
 	username: {
 		type: String,
 		label: 'Username',
@@ -29,54 +22,41 @@ export const userProfileSch: ISchema<IUserProfile> = {
 			return undefined;
 		}
 	},
-	phone: {
+	password: {
 		type: String,
-		label: 'Telefone',
-		defaultValue: '',
-		optional: true,
-		mask: '(##) ####-####'
+		label: 'Senha',
+		optional: false
 	},
-	roles: {
-		type: [String],
-		label: 'Perfil de acesso',
-		defaultValue: [],
-		optional: true,
-		options: () => [
-			{
-				value: ['Administrador'],
-				label: 'Admnistrador'
-			},
-			{
-				value: ['Usuario'],
-				label: 'Usuário'
-			}
-		]
+	dateOfBirth: {
+		type: Date,
+		label: 'Data de nascimento',
+		optional: false
 	},
-	status: {
-		type: [String],
-		label: 'Status',
-		defaultValue: 'disabled',
-		optional: true,
-		options: () => [
-			{
-				value: 'active',
-				label: 'Ativo'
-			},
-			{
-				value: 'disabled',
-				label: 'Desativado'
-			}
-		]
+	gender: {
+		type: String,
+		label: 'Gênero',
+		optional: false
+	},
+	companyWorks: {
+		type: String,
+		label: 'Empresa onde trabalha',
+		optional: false
+	},
+	profileImage: {
+		type: String,
+		label: 'Imagem de perfil',
+		optional: true
 	}
 };
 
 export interface IUserProfile extends IDoc {
-	photo?: string;
-	phone?: string;
 	username: string;
 	email: string;
-	roles?: string[];
-	status?: string;
+	password: string;
+	dateOfBirth: Date;
+	gender: string;
+	companyWorks: string;
+	profileImage?: string;
 }
 
 export interface IMeteorUser extends User {
@@ -99,7 +79,11 @@ export interface IMeteorUser extends User {
 		verified: boolean; // Email verificado ou não
 	}>;
 	profile?: {
-		name: string; // Nome do perfil
-		email: string; // Email no perfil
+		username: string;
+		email: string;
+		dateOfBirth: Date;
+		gender: string;
+		companyWorks: string;
+		profileImage?: string;
 	};
 }

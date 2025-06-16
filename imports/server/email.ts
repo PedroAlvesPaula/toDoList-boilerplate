@@ -8,13 +8,13 @@ const configureMailServer = () => {
 };
 
 export const getHTMLEmailTemplate = (title = settings.name, text = 'Message', footer) => {
-	SSR.compileTemplate('htmlEmail', Assets.getText('templateEmail.html'));
-	const email = SSR.render('htmlEmail', {
-		title,
-		text,
-		footer
-	});
-	return email;
+	// SSR.compileTemplate('htmlEmail', Assets.getText('templateEmail.html'));
+	// const email = SSR.render('htmlEmail', {
+	// 	title,
+	// 	text,
+	// 	footer
+	// });
+	// return email;
 };
 
 function sendEmail(to, from, subject, msg, attachments = [], callback) {
