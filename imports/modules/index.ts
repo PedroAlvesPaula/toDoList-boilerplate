@@ -7,14 +7,14 @@ import toDo from './toDo/config';
 const pages: Array<IRoute | null> = [
 	// ...Example.pagesRouterList,
 	// ...Aniversario.pagesRouterList,
-	// ...UserProfile.pagesRouterList,
+	...UserProfile.pagesRouterList,
 	...toDo.pagesRouterList
 ];
 
 const menuItens: Array<IAppMenu | null> = [
 	// ...Example.pagesMenuItemList,
 	// ...Aniversario.pagesMenuItemList,
-	// ...UserProfile.pagesMenuItemList,
+	...UserProfile.pagesMenuItemList,
 	...toDo.pagesMenuItemList
 ];
 
