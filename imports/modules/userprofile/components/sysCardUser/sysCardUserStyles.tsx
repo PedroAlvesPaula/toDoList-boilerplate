@@ -15,20 +15,21 @@ interface ISysCardUserStyled {
 const SysCardUserStyled: ISysCardUserStyled = {
 	Container: styled(Box)(({ theme }) => ({
 		width: '100%',
-		height: '100vh',
 		display: 'flex',
 		flexDirection: 'column',
-		alignItems: 'center'
+		alignItems: 'center',
+		marginTop: '32px'
 	})),
 
 	PaperContainer: styled(Paper)(({ theme }) => ({
-		maxWidth: 500,
-		minWidth: 320,
+		minWidth: 450,
 		margin: 'auto',
 		m: 4,
 		p: 3,
 		borderRadius: 3,
-		backgroundColor: 'red'
+		[theme.breakpoints.down('sm')]: {
+			minWidth: '90%'
+		}
 	})),
 	TableContainer: styled(Box)(({ theme }) => ({
 		display: 'flex',
@@ -37,10 +38,10 @@ const SysCardUserStyled: ISysCardUserStyled = {
 		gap: 2
 	})),
 	RowTable: styled(TableRow)(({ theme }) => ({
-		width: '100%'
+		width: '100%',
+		justifyContent: 'space-around'
 	})),
 	CellTable: styled(TableCell)(({ theme }) => ({
-		alignItems: 'center',
 		width: '100%'
 	}))
 };
