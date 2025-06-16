@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import { IDefaultContainerProps } from '../../typings/BoilerplateDefaultTypings';
 import { useParams } from 'react-router-dom';
 import UserProfileListController from '../../modules/userprofile/pages/UserProfileList/userProfileListController';
-import ExampleDetailController from '../example/pages/exampleDetail/exampleDetailContoller';
+import UserProfileDetailController from '../userprofile/pages/UserProfileDetail/userProfileDetailController';
 import AuthContext, { IAuthContext } from '/imports/app/authProvider/authContext';
 
 export interface IUserProfileModuleContext {
@@ -23,7 +23,10 @@ export default (props: IDefaultContainerProps) => {
 
 	const renderPage = () => {
 		if (!!!state || !validState.includes(state)) return <UserProfileListController />;
-		return <ExampleDetailController />;
+		if (state === 'edit' || state === 'create') {
+			return <UserProfileDetailController mode={state} id={id} />;
+		}
+		return <UserProfileListController />;
 	};
 
 	const providerValue = {

@@ -1,54 +1,47 @@
 import React from 'react';
-import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
+import Box, { BoxProps } from '@mui/material/Box';
 import { styled } from '@mui/material/styles';
-import { sysShadows, sysSizing } from '../../../../ui/materialui/styles';
+import { PaperProps, TableCell, TableCellProps, TableRow, TableRowProps } from '@mui/material';
+import Paper from '@mui/material/Paper';
 
 interface ISysCardUserStyled {
-	Container: React.ElementType;
-	ActionBox: React.ElementType;
-	Status: React.ElementType;
+	Container: React.ElementType<BoxProps>;
+	PaperContainer: React.ElementType<PaperProps>;
+	TableContainer: React.ElementType<BoxProps>;
+	RowTable: React.ElementType<TableRowProps>;
+	CellTable: React.ElementType<TableCellProps>;
 }
 
 const SysCardUserStyled: ISysCardUserStyled = {
 	Container: styled(Box)(({ theme }) => ({
 		width: '100%',
-		backgroundColor: theme.palette.background.default,
-		borderRadius: sysSizing.radiusSm,
-		padding: sysSizing.spacingFixedMd,
-		boxShadow: sysShadows.shadow2,
-		display: 'grid',
-		gap: '0.75rem 1.25rem',
-		gridTemplateColumns: '2fr 1fr 2fr 140px 64px',
-		gridTemplateAreas: '"name roles email status actions"',
-		alignItems: 'center',
-		[theme.breakpoints.down('lg')]: {
-			gridTemplateColumns: '2fr 1fr 64px',
-			gridTemplateAreas: '"name roles actions" "email status status"'
-		},
-		[theme.breakpoints.down('sm')]: {
-			gridTemplateColumns: '1fr 1fr 64px',
-			gridTemplateAreas: '"name name actions" "email email email" "roles status status"'
-		},
-		'& > p': {
-			wordBreak: 'break-all'
-		}
-	})),
-	ActionBox: styled(Box)(({ theme }) => ({
-		gridArea: 'actions',
+		height: '100vh',
 		display: 'flex',
-		justifyContent: 'end',
-		gap: sysSizing.spacingFixedMd,
-		'> svg': {
-			cursor: 'pointer',
-			color: theme.palette.sysAction?.primaryIcon
-		}
+		flexDirection: 'column',
+		alignItems: 'center'
 	})),
-	Status: styled(Typography)(({ theme }) => ({
-		gridArea: 'status',
-		[theme.breakpoints.down('sm')]: {
-			justifySelf: 'end'
-		}
+
+	PaperContainer: styled(Paper)(({ theme }) => ({
+		maxWidth: 500,
+		minWidth: 320,
+		margin: 'auto',
+		m: 4,
+		p: 3,
+		borderRadius: 3,
+		backgroundColor: 'red'
+	})),
+	TableContainer: styled(Box)(({ theme }) => ({
+		display: 'flex',
+		flexDirection: 'column',
+		alignItems: 'center',
+		gap: 2
+	})),
+	RowTable: styled(TableRow)(({ theme }) => ({
+		width: '100%'
+	})),
+	CellTable: styled(TableCell)(({ theme }) => ({
+		alignItems: 'center',
+		width: '100%'
 	}))
 };
 

@@ -32,8 +32,8 @@ const UserProfileLisView = () => {
 	];
 
 	return (
-		<Container>
-			<Typography variant="h5">Lista de usuários</Typography>
+		<>
+			{/* <Typography variant="h5">Lista de usuários</Typography>
 			<Filters>
 				<TextField
 					name="userSearch"
@@ -58,17 +58,16 @@ const UserProfileLisView = () => {
 					}}
 					options={options}
 				/>
-			</Filters>
+			</Filters> */}
 			{list &&
 				list?.map((user) => {
 					return (
 						<SysCardUser
 							key={user._id}
 							username={user.username}
-							roles={user.roles}
 							email={user.email}
-							status={user.status}
 							userId={user._id!}
+							
 						/>
 					);
 				})}
@@ -79,7 +78,7 @@ const UserProfileLisView = () => {
 				fixed={true}
 				onClick={onAddButtonClick}
 			/>
-		</Container>
+		</>
 	);
 };
 
