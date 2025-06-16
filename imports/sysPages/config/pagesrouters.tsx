@@ -24,13 +24,13 @@ export const pagesRouterList: (IRoute | null)[] = [
 		resources: [SysFormTestPageResources.SYSFORMTESTS_VIEW]
 	},
 	{
-		path: '/signin',
+		path: '/signIn',
 		component: SignInPage,
 		isProtected: false,
 		templateVariant: 'None'
 	},
 	{
-		path: '/signup',
+		path: '/signUp',
 		component: SignUp,
 		isProtected: false,
 		templateVariant: 'None'
