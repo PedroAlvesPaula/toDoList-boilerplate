@@ -38,37 +38,37 @@ export const SysCardUser: React.FC<ISysCardUserProps> = ({ ...props }: ISysCardU
 					<Table>
 						<TableBody>
 							<RowTable>
-								<CellTable>
+								<CellTable align="center">
 									<EmailIcon fontSize="large" />
 								</CellTable>
-								<CellTable>
+								<CellTable align="center">
 									<Typography variant="body1">{email}</Typography>
 								</CellTable>
 							</RowTable>
 
 							<RowTable>
-								<CellTable>
+								<CellTable align="center">
 									<CakeIcon fontSize="large" />
 								</CellTable>
-								<CellTable>
+								<CellTable align="center">
 									<Typography variant="body1">Aniversario</Typography>
 								</CellTable>
 							</RowTable>
 
 							<RowTable>
-								<CellTable>
+								<CellTable align="center">
 									<WcIcon fontSize="large" />
 								</CellTable>
-								<CellTable>
+								<CellTable align="center">
 									<Typography variant="body1">Gender</Typography>
 								</CellTable>
 							</RowTable>
 
 							<RowTable>
-								<CellTable>
+								<CellTable align="center">
 									<BusinessIcon fontSize="large" />
 								</CellTable>
-								<CellTable>
+								<CellTable align="center">
 									<Typography variant="body1">Empresa</Typography>
 								</CellTable>
 							</RowTable>

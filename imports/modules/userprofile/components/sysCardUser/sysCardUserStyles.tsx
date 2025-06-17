@@ -39,11 +39,9 @@ const SysCardUserStyled: ISysCardUserStyled = {
 	})),
 	RowTable: styled(TableRow)(({ theme }) => ({
 		width: '100%',
-		justifyContent: 'space-around'
+		justifyContent: 'space-between'
 	})),
-	CellTable: styled(TableCell)(({ theme }) => ({
-		width: '100%'
-	}))
+	CellTable: styled(TableCell)(({ theme }) => ({}))
 };
 
 export default SysCardUserStyled;
