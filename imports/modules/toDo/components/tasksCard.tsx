@@ -20,10 +20,10 @@ interface TasksCardProps {
 export const TasksCard: React.FC<TasksCardProps> = ({ tasks, onDelete, onEdit, onChangeState, onResetState }) => {
 	const { ButtonToClick } = tasksCardStyles;
 	return (
-		<Box>
+		<Box sx={{ width: '95%' }}>
 			{tasks.map((task, index) => (
 				<React.Fragment key={task._id}>
-					<ListItem>
+					<ListItem alignItems="flex-start">
 						<ListItemAvatar>
 							<AssignmentIcon fontSize="large" sx={{ color: 'rgb(103, 104, 242)' }} />
 						</ListItemAvatar>
@@ -40,33 +40,44 @@ export const TasksCard: React.FC<TasksCardProps> = ({ tasks, onDelete, onEdit, o
 									</Typography>
 								</React.Fragment>
 							}
+							sx={{ display: 'inline' }}
 						/>
 
-						<Tooltip title="Deletar tarefa">
-							<ButtonToClick onClick={() => onDelete && onDelete(task)} disabled={!onDelete}>
-								<DeleteIcon />
-							</ButtonToClick>
-						</Tooltip>
+						<>
+							<Tooltip title="Deletar tarefa">
+								<ButtonToClick onClick={() => onDelete && onDelete(task)}>
+									<DeleteIcon />
+								</ButtonToClick>
+							</Tooltip>
 
-						<Tooltip title="Editar tarefa">
-							<ButtonToClick onClick={() => onEdit && onEdit(task)} disabled={!onEdit}>
-								<EditIcon />
-							</ButtonToClick>
-						</Tooltip>
+							<Tooltip title="Editar tarefa">
+								<ButtonToClick onClick={() => onEdit && onEdit(task)}>
+									<EditIcon />
+								</ButtonToClick>
+							</Tooltip>
 
-						<Tooltip title="Resetar tarefa">
-							<ButtonToClick onClick={() => onResetState && onResetState(task)} disabled={!onResetState}>
-								<RestartAltIcon />
-							</ButtonToClick>
-						</Tooltip>
+							<Tooltip title="Resetar tarefa">
+								<span>
+									<ButtonToClick
+										onClick={() => onResetState && onResetState(task)}
+										disabled={task.state === 'cadastrada' ? true : false}>
+										<RestartAltIcon />
+									</ButtonToClick>
+								</span>
+							</Tooltip>
 
-						<Tooltip title="Avançar 1 estado">
-							<ButtonToClick onClick={() => onChangeState && onChangeState(task)} disabled={!onChangeState}>
-								<ArrowForwardIosIcon />
-							</ButtonToClick>
-						</Tooltip>
+							<Tooltip title="Avançar 1 estado">
+								<span>
+									<ButtonToClick
+										onClick={() => onChangeState && onChangeState(task)}
+										disabled={task.state === 'concluida' ? true : false}>
+										<ArrowForwardIosIcon />
+									</ButtonToClick>
+								</span>
+							</Tooltip>
+						</>
 					</ListItem>
-					<Divider variant="inset" component="li" />
+					<Divider variant="inset" component="li" sx={{ listStyle: 'none' }} />
 				</React.Fragment>
 			))}
 		</Box>
