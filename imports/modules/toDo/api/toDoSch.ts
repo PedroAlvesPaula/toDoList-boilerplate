@@ -45,4 +45,5 @@ export interface IToDo extends IDoc {
 	description: string;
 	state: string;
 	isPrivate: String;
+	owner: String;
 }
