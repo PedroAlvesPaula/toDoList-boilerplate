@@ -39,9 +39,7 @@ class ToDoServerApi extends ProductServerBase<IToDo> {
 			});
 		});
 
-		this.addPublication('toDoCount', (filter = {}) => {
-			return this.defaultCounterCollectionPublication(filter, 'toDo');
-		});
+		this.registerMethod('countTasks', this.countTasks.bind(this));
 
 		// this.addRestEndpoint(
 		// 	'view',
@@ -71,6 +69,10 @@ class ToDoServerApi extends ProductServerBase<IToDo> {
 		// 	},
 		// 	['get']
 		// );
+	}
+
+	public async countTasks(state: string): Promise<number> {
+		return this.countDocuments({ state: { $eq: state } });
 	}
 }
 
