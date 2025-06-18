@@ -220,8 +220,8 @@ export class ServerApiBase<Doc extends IDoc> {
 	/**
 	 * @returns {String} - Return the number of documents from a collection.
 	 */
-	async countDocuments() {
-		return await this.getCollectionInstance().find().countAsync();
+	async countDocuments(filter = {}) {
+		return await this.getCollectionInstance().find(filter).countAsync();
 	}
 
 	//**AUXS METHODS**
