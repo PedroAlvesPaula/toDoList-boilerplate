@@ -37,7 +37,7 @@ const ToDoDetailController = () => {
 	}, [id]);
 
 	const closePage = useCallback(() => {
-		navigate('/toDo');
+		navigate('/toDo/tasks');
 	}, []);
 	const changeToEdit = useCallback((id: string) => {
 		navigate(`/toDo/edit/${id}`);
