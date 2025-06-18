@@ -12,6 +12,8 @@ import SysIcon from '../../../ui/components/sysIcon/sysIcon';
 import AuthContext, { IAuthContext } from '/imports/app/authProvider/authContext';
 import AppLayoutContext from '/imports/app/appLayoutProvider/appLayoutContext';
 
+import { Meteor } from 'meteor/meteor';
+
 const SignInPage: React.FC = () => {
 	const { showNotification } = useContext(AppLayoutContext);
 	const { user, signIn } = useContext<IAuthContext>(AuthContext);
@@ -24,10 +26,10 @@ const SignInPage: React.FC = () => {
 			showNotification({
 				type: 'error',
 				title: 'Erro ao tentar logar',
-				message: 'Email ou senha inválidos',
+				message: 'Email ou senha inválidos'
 			});
 		});
-;	};
+	};
 
 	const handleForgotPassword = () => navigate('/password-recovery');
 
@@ -58,10 +60,10 @@ const SignInPage: React.FC = () => {
 								<Typography variant="link">Esqueci minha senha</Typography>
 							</Button>
 							<Box />
-							<SysFormButton variant="contained" color="primary" endIcon={<SysIcon name={'arrowForward'} />}>
-								Entrar
-							</SysFormButton>
 						</FormWrapper>
+						<SysFormButton variant="contained" color="primary" endIcon={<SysIcon name={'arrowForward'} />}>
+							Entrar
+						</SysFormButton>
 					</SysForm>
 				</FormContainer>
 
