@@ -148,6 +148,14 @@ class UserProfileServerApi extends ProductServerBase<IUserProfile> {
 					email: userprofile.email,
 					profile: userprofile.profile
 				});
+				Meteor.users.updateAsync(
+					{ _id: userprofile._id },
+					{
+						$set: {
+							'emails.0.verified': true
+						}
+					}
+				);
 			} else {
 				userprofile._id = await Accounts.createUser({
 					username: userprofile.email,
