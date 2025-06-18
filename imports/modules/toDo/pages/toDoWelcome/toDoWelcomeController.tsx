@@ -9,7 +9,6 @@ interface IToDoWelcomeControllerContext {
 	registeredTasks: number;
 	inProgressTasks: number;
 	completedTasks: number;
-	name: string;
 }
 
 const toDoWelcomeControlerContext = React.createContext<IToDoWelcomeControllerContext>(
@@ -19,19 +18,18 @@ const toDoWelcomeControlerContext = React.createContext<IToDoWelcomeControllerCo
 export const ToDoWelcomeController = () => {
 	const countTasks = (state: any) => {
 		const subHandle = toDoApi.subscribe('toDoCount', state);
-		return subHandle?.ready() ? toDoApi.find({}).count() : 0;
+		return toDoApi.find({ state: { $eq: state } }).count();
 	};
 
-	const registeredTasks = countTasks({ state: 'registered' });
-	const inProgressTasks = countTasks({ state: 'inProgress' });
-	const completedTasks = countTasks({ state: 'completed' });
+	const registeredTasks = countTasks('cadastrada');
+	const inProgressTasks = countTasks('em andamento');
+	const completedTasks = countTasks('councluida');
 
 	const providerValues: IToDoWelcomeControllerContext = useMemo(
 		() => ({
 			registeredTasks,
 			inProgressTasks,
-			completedTasks,
-			name: 'pedro'
+			completedTasks
 		}),
 		[registeredTasks, inProgressTasks, completedTasks]
 	);
