@@ -19,27 +19,27 @@ export const AppRouterSwitch: React.FC = React.memo(() => {
 	useEffect(() => {
 		subjectRouter.next({ pathname: location.pathname, params, user });
 	}, [location, params, user]);
-	
-	const getProtectedRouteElement = (route: IRoute) => {
-		if(!route.isProtected) return <ScreenRouteRender {...route} />;
-		if (!isLoggedIn) return <ScreenRouteRender component={SignInPage} templateVariant="None" />;
-		
-		const hasAccess = segurancaApi.podeAcessarRecurso(getUser(), ...(route.resources || []));
-		return hasAccess ? <ScreenRouteRender {...route} /> : <ScreenRouteRender component={SignInPage} templateVariant="None" />;
-	};
-	
-	if (!sysRoutes.checkIfRouteExists(location.pathname)) return <NotFound />;	
 
-	if (userLoading) return <SysLoading size="large" label="Carregando..." />;
-	
+	const getProtectedRouteElement = (route: IRoute) => {
+		if (!route.isProtected) return <ScreenRouteRender {...route} />;
+		if (!isLoggedIn) return <ScreenRouteRender component={SignInPage} templateVariant="None" />;
+
+		const hasAccess = segurancaApi.podeAcessarRecurso(getUser(), ...(route.resources || []));
+		return hasAccess ? (
+			<ScreenRouteRender {...route} />
+		) : (
+			<ScreenRouteRender component={SignInPage} templateVariant="None" />
+		);
+	};
+
+	if (!sysRoutes.checkIfRouteExists(location.pathname)) return <NotFound />;
+
+	// if (userLoading) return <SysLoading size="large" label="Carregando..." />;
+
 	return (
 		<Routes>
 			{sysRoutes.getRoutes().map((route) => (
-				<Route
-					key={route.path}
-					path={route.path as string}
-					element={getProtectedRouteElement(route)}
-				/>
+				<Route key={route.path} path={route.path as string} element={getProtectedRouteElement(route)} />
 			))}
 		</Routes>
 	);
