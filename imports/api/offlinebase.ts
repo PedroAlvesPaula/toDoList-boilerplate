@@ -446,8 +446,11 @@ class PersistentMinimongoStorage {
 }
 
 export class OfflineBaseApi extends ApiBase {
+	public collectionName: string;
+
 	constructor(apiName, apiSch, options) {
 		super(apiName, apiSch, options);
+		this.collectionName = apiName;
 		this.subscribe = this.subscribe.bind(this);
 		this.findOne = this.findOne.bind(this);
 		this.find = this.find.bind(this);
