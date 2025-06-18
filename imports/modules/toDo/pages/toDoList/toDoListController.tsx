@@ -7,7 +7,7 @@ import { ISchema } from '/imports/typings/ISchema';
 import { IToDo } from '../../api/toDoSch';
 import { toDoApi } from '../../api/toDoApi';
 import { IMeteorError } from '/imports/typings/IMeteorError';
-import { ShowNotification } from '/imports/ui/appComponents/showNotification/showNotification';
+import AppLayoutContext from '/imports/app/appLayoutProvider/appLayoutContext';
 
 interface IInitialConfig {
 	sortProperties: { field: string; sortAscending: boolean };
@@ -51,6 +51,8 @@ const ToDoListController = () => {
 		[sortProperties.field]: sortProperties.sortAscending ? 1 : -1
 	};
 
+	const { showNotification } = React.useContext(AppLayoutContext);
+
 	const { loading, toDos } = useTracker(() => {
 		const subHandle = toDoApi.subscribe('toDoList', filter, {
 			sort
@@ -78,16 +80,16 @@ const ToDoListController = () => {
 
 		toDoApi.update(doc, (e: IMeteorError) => {
 			if (e) {
-				ShowNotification({
+				showNotification({
 					type: 'error',
 					title: 'Operação não realizada!',
 					message: `Erro ao realizar a operação: ${e.reason}`
 				});
 			} else {
-				ShowNotification({
+				showNotification({
 					type: 'success',
 					title: 'Operação realizada!',
-					message: 'O estágio da tarefa foi atualizado com sucesso com sucesso!'
+					message: 'O estágio da tarefa foi atualizado com sucesso!'
 				});
 			}
 		});
@@ -97,16 +99,16 @@ const ToDoListController = () => {
 		doc.state = 'cadastrada';
 		toDoApi.update(doc, (e: IMeteorError) => {
 			if (e) {
-				ShowNotification({
+				showNotification({
 					type: 'error',
 					title: 'Operação não realizada!',
 					message: `Erro ao realizar a operação: ${e.reason}`
 				});
 			} else {
-				ShowNotification({
+				showNotification({
 					type: 'success',
 					title: 'Operação realizada!',
-					message: 'O estágio da tarefa foi resetado com sucesso!'
+					message: 'O tarefa foi passada para o estagio "cadastrada".'
 				});
 			}
 		});
