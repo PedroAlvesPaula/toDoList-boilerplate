@@ -1,8 +1,8 @@
 import { ElementType } from 'react';
 import { styled } from '@mui/material/styles';
-import  Box,{ BoxProps } from '@mui/material/Box';
+import Box, { BoxProps } from '@mui/material/Box';
 import { sysSizing } from '/imports/ui/materialui/styles';
-import {SysSectionPaddingXY} from "/imports/ui/layoutComponents/sysLayoutComponents";
+import { SysSectionPaddingXY } from '/imports/ui/layoutComponents/sysLayoutComponents';
 
 interface IToDoListStyles {
 	Container: ElementType<BoxProps>;
@@ -15,12 +15,12 @@ const ToDoListStyles: IToDoListStyles = {
 		display: 'flex',
 		flexDirection: 'column',
 		justifyContent: 'flex-start',
-		alignItems: 'flex-start',
+		alignItems: 'center',
 		width: '100%',
 		height: '100vh',
 		overflow: 'auto',
 		gap: sysSizing.spacingFixedMd,
-    marginBottom: sysSizing.contentFabDistance
+		marginBottom: sysSizing.contentFabDistance
 	})),
 	LoadingContainer: styled(Box)(({ theme }) => ({
 		width: '100%',
