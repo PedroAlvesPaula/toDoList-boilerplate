@@ -4,7 +4,7 @@
 // login page overrides the form’s submit event and call Meteor’s loginWithPassword()
 // Authentication errors modify the component’s state to be displayed
 import React from 'react';
-import { Link, NavigateFunction, useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Container from '@mui/material/Container';
 import Button from '@mui/material/Button';
 import { userprofileApi } from '../../../modules/userprofile/api/userProfileApi';
@@ -25,32 +25,10 @@ export const SignUp = (props: ISignUp) => {
 	const { showNotification } = props;
 	const navigate = useNavigate();
 
-	const handleSubmit = (doc: {
-		email: string;
-		password: string;
-		username: string;
-		dateOfBirth: Date;
-		gender: string;
-		companyWorks: string;
-		profileImage?: string;
-	}) => {
-		const { email, password, username, dateOfBirth, gender, companyWorks, profileImage } = doc;
+	const handleSubmit = (doc: { email: string; password: string; username: string }) => {
+		const { email, password, username } = doc;
 
-		const parsedDateOfBirth = dateOfBirth ? new Date(dateOfBirth) : undefined;
-
-		const data = {
-			email,
-			password,
-			username,
-			profile: {
-				dateOfBirth: parsedDateOfBirth ? parsedDateOfBirth.toISOString() : undefined,
-				gender,
-				companyWorks,
-				profileImage
-			}
-		};
-
-		userprofileApi.registrarUserProfileNoMeteor(data, (err, r) => {
+		userprofileApi.insertNewUser({ username: username, email, password }, (err, r) => {
 			if (err) {
 				console.log('Login err', err);
 				showNotification &&
@@ -87,32 +65,6 @@ export const SignUp = (props: ISignUp) => {
 					placeholder="Digite seu nome"
 				/>
 				<SysTextField id="Email" label="Email" fullWidth name="email" type="email" placeholder="Digite um email" />
-				<SysTextField
-					id="dateOfBirth"
-					label="Data de nascimento"
-					fullWidth
-					name="dateOfBirth"
-					type="date"
-					placeholder="00/00/0000"
-				/>
-				<SysTextField
-					id="Gender"
-					label="Gênero"
-					fullWidth
-					name="gender"
-					type="text"
-					placeholder="Masculino | Feminino"
-				/>
-				<SysTextField
-					id="CompanyWorks"
-					label="Empresa onde trabalha"
-					fullWidth
-					name="companyWorks"
-					type="text"
-					placeholder="ex: Synergia"
-				/>
-				{/* Genero */}
-				<SysTextField id="ProfileImage" label="Imagem de perfil" fullWidth name="profileImage" type="file" />
 				<SysTextField
 					id="Senha"
 					label="Senha"

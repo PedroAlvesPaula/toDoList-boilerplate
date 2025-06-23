@@ -4,6 +4,13 @@ import { ISchema } from '../../../typings/ISchema';
 import User = Meteor.User;
 
 export const userProfileSch: ISchema<IUserProfile> = {
+	photo: {
+		type: String,
+		label: 'Photo',
+		defaultValue: '',
+		optional: true,
+		isImage: true
+	},
 	username: {
 		type: String,
 		label: 'Username',
@@ -22,41 +29,54 @@ export const userProfileSch: ISchema<IUserProfile> = {
 			return undefined;
 		}
 	},
-	password: {
+	phone: {
 		type: String,
-		label: 'Senha',
-		optional: false
+		label: 'Telefone',
+		defaultValue: '',
+		optional: true,
+		mask: '(##) ####-####'
 	},
-	dateOfBirth: {
-		type: Date,
-		label: 'Data de nascimento',
-		optional: false
+	roles: {
+		type: [String],
+		label: 'Perfil de acesso',
+		defaultValue: [],
+		optional: true,
+		options: () => [
+			{
+				value: ['Administrador'],
+				label: 'Admnistrador'
+			},
+			{
+				value: ['Usuario'],
+				label: 'Usuário'
+			}
+		]
 	},
-	gender: {
-		type: String,
-		label: 'Gênero',
-		optional: false
-	},
-	companyWorks: {
-		type: String,
-		label: 'Empresa onde trabalha',
-		optional: false
-	},
-	profileImage: {
-		type: String,
-		label: 'Imagem de perfil',
-		optional: true
+	status: {
+		type: [String],
+		label: 'Status',
+		defaultValue: 'disabled',
+		optional: true,
+		options: () => [
+			{
+				value: 'active',
+				label: 'Ativo'
+			},
+			{
+				value: 'disabled',
+				label: 'Desativado'
+			}
+		]
 	}
 };
 
 export interface IUserProfile extends IDoc {
+	photo?: string;
+	phone?: string;
 	username: string;
 	email: string;
-	password: string;
-	dateOfBirth: Date;
-	gender: string;
-	companyWorks: string;
-	profileImage?: string;
+	roles?: string[];
+	status?: string;
 }
 
 export interface IMeteorUser extends User {
@@ -79,11 +99,97 @@ export interface IMeteorUser extends User {
 		verified: boolean; // Email verificado ou não
 	}>;
 	profile?: {
-		username: string;
-		email: string;
-		dateOfBirth: Date;
-		gender: string;
-		companyWorks: string;
-		profileImage?: string;
+		name: string; // Nome do perfil
+		email: string; // Email no perfil
 	};
 }
+
+// import { validarEmail } from '../../../libs/validaEmail';
+// import { IDoc } from '../../../typings/IDoc';
+// import { ISchema } from '../../../typings/ISchema';
+// import User = Meteor.User;
+
+// export const userProfileSch: ISchema<IUserProfile> = {
+// 	username: {
+// 		type: String,
+// 		label: 'Username',
+// 		defaultValue: '',
+// 		optional: false
+// 	},
+// 	email: {
+// 		type: String,
+// 		label: 'Email',
+// 		defaultValue: '',
+// 		optional: false,
+// 		validationFunction: (value: string) => {
+// 			if (!value) return undefined;
+// 			const email = validarEmail(value);
+// 			if (!email) return 'Email inválido';
+// 			return undefined;
+// 		}
+// 	},
+// 	password: {
+// 		type: String,
+// 		label: 'Senha',
+// 		optional: false
+// 	},
+// 	dateOfBirth: {
+// 		type: Date,
+// 		label: 'Data de nascimento',
+// 		optional: true
+// 	},
+// 	gender: {
+// 		type: String,
+// 		label: 'Gênero',
+// 		optional: true
+// 	},
+// 	companyWorks: {
+// 		type: String,
+// 		label: 'Empresa onde trabalha',
+// 		optional: true
+// 	},
+// 	profileImage: {
+// 		type: String,
+// 		label: 'Imagem de perfil',
+// 		optional: true
+// 	}
+// };
+
+// export interface IUserProfile extends IDoc {
+// 	username: string;
+// 	email: string;
+// 	password: string;
+// 	dateOfBirth: Date;
+// 	gender: string;
+// 	companyWorks: string;
+// 	profileImage?: string;
+// }
+
+// export interface IMeteorUser extends User {
+// 	services?: {
+// 		password: {
+// 			bcrypt: string; // Senha criptografada (bcrypt hash)
+// 		};
+// 		resume: {
+// 			loginTokens: Array<{
+// 				// Array de tokens de login
+// 				when: Date;
+// 				hashedToken: string;
+// 			}>;
+// 		};
+// 		username: string; // Nome de usuário
+// 	};
+// 	emails: Array<{
+// 		// Array de emails associados ao usuário
+// 		address: string; // Endereço de email
+// 		verified: boolean; // Email verificado ou não
+// 	}>;
+// 	profile?: {
+// 		username: string;
+// 		email: string;
+// 		dateOfBirth: Date;
+// 		gender: string;
+// 		companyWorks: string;
+// 		profileImage?: string;
+// 	};
+// }
