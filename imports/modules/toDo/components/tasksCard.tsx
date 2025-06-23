@@ -32,7 +32,7 @@ export const TasksCard: React.FC<TasksCardProps> = ({ tasks, onDelete, onEdit, o
 							secondary={
 								<React.Fragment>
 									<Typography component={'span'} variant="body2">
-										{task.owner}
+										{task.ownerName || 'Sem nome'}
 									</Typography>
 									<br />
 									<Typography component={'span'} variant="body2">
