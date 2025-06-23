@@ -8,12 +8,15 @@ import { IToDo } from '../../api/toDoSch';
 import { toDoApi } from '../../api/toDoApi';
 import { IMeteorError } from '/imports/typings/IMeteorError';
 import AppLayoutContext from '/imports/app/appLayoutProvider/appLayoutContext';
+import { set } from 'lodash';
 
 interface IInitialConfig {
 	sortProperties: { field: string; sortAscending: boolean };
 	filter: Object;
 	searchBy: string | null;
 	viewComplexTable: boolean;
+	page: number;
+	limit?: number;
 }
 
 interface IToDoListContollerContext {
@@ -26,6 +29,8 @@ interface IToDoListContollerContext {
 	onChangeCategory: (event: React.ChangeEvent<HTMLInputElement>) => void;
 	onChangeStateButtonClick: (doc: IToDo) => void;
 	onResetStateClick: (doc: Partial<IToDo>) => void;
+	setConfig: React.Dispatch<React.SetStateAction<IInitialConfig>>;
+	config: IInitialConfig;
 }
 
 export const ToDoListControllerContext = React.createContext<IToDoListContollerContext>(
@@ -36,7 +41,8 @@ const initialConfig = {
 	sortProperties: { field: 'createdat', sortAscending: true },
 	filter: {},
 	searchBy: null,
-	viewComplexTable: false
+	viewComplexTable: false,
+	page: 0
 };
 
 const ToDoListController = () => {
@@ -54,10 +60,14 @@ const ToDoListController = () => {
 	const { showNotification } = React.useContext(AppLayoutContext);
 
 	const { loading, toDos } = useTracker(() => {
-		const subHandle = toDoApi.subscribe('toDoList', filter, {
-			sort
-		});
+		const subHandle =
+			toDoApi.subscribe('toDoList', filter, {
+				sort: sort,
+				page: config.page
+			}) ?? null;
+
 		const toDos = subHandle?.ready() ? toDoApi.find(filter, { sort }).fetch() : [];
+
 		return {
 			toDos,
 			loading: !!subHandle && !subHandle.ready(),
@@ -150,7 +160,9 @@ const ToDoListController = () => {
 			onChangeTextField,
 			onChangeCategory: onSelectedCategory,
 			onChangeStateButtonClick: onChangeStateButtonClick,
-			onResetStateClick: onResetStateClick
+			onResetStateClick: onResetStateClick,
+			setConfig: setConfig,
+			config: config
 		}),
 		[toDos, loading]
 	);

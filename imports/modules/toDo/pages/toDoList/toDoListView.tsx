@@ -7,6 +7,9 @@ import SysIcon from '/imports/ui/components/sysIcon/sysIcon';
 import { TasksCard } from '/imports/modules/toDo/components/tasksCard';
 import SysTextField from '/imports/ui/components/sysFormFields/sysTextField/sysTextField';
 import { SysSelectField } from '/imports/ui/components/sysFormFields/sysSelectField/sysSelectField';
+import NavigateNextIcon from '@mui/icons-material/NavigateNext';
+import NavigateBeforeIcon from '@mui/icons-material/NavigateBefore';
+import { IconButton, Stack, Tooltip } from '@mui/material';
 
 const ToDoListView = () => {
 	const controller = React.useContext(ToDoListControllerContext);
@@ -45,6 +48,30 @@ const ToDoListView = () => {
 				fixed={true}
 				onClick={controller.onAddButtonClick}
 			/>
+			<Stack direction="row" spacing={2} justifyContent="center" alignItems="center" mt={2}>
+				<Tooltip title="Voltar uma página">
+					<IconButton
+						onClick={() =>
+							controller.setConfig((prev) => ({
+								...prev,
+								page: Math.max(0, prev.page - 1)
+							}))
+						}>
+						<NavigateBeforeIcon />
+					</IconButton>
+				</Tooltip>
+				<Tooltip title="Próxima página">
+					<IconButton
+						onClick={() =>
+							controller.setConfig((prev) => ({
+								...prev,
+								page: prev.page + 1
+							}))
+						}>
+						<NavigateNextIcon />
+					</IconButton>
+				</Tooltip>
+			</Stack>
 		</Container>
 	);
 };

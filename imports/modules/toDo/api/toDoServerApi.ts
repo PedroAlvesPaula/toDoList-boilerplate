@@ -3,6 +3,7 @@ import { Recurso } from '../config/recursos';
 import { toDoSch, IToDo } from './toDoSch';
 import { userprofileServerApi } from '/imports/modules/userprofile/api/userProfileServerApi';
 import { ProductServerBase } from '/imports/api/productServerBase';
+import { Description } from '@mui/icons-material';
 
 // endregion
 
@@ -16,7 +17,7 @@ class ToDoServerApi extends ProductServerBase<IToDo> {
 		const self = this;
 
 		this.addTransformedPublication(
-			'toDoList',
+			'toDoListDetail',
 			(filter = {}) => {
 				return this.defaultListCollectionPublication(filter, {
 					projection: { title: 1, state: 1, isPrivate: 1, createdat: 1 }
@@ -28,16 +29,54 @@ class ToDoServerApi extends ProductServerBase<IToDo> {
 			}
 		);
 
-		this.addPublication('toDoDetail', (filter = {}) => {
-			return this.defaultDetailCollectionPublication(filter, {
-				projection: {
-					title: 1,
-					description: 1,
-					state: 1,
-					isPrivate: 1
+		this.addTransformedPublication(
+			'toDoList',
+			async (filter = {}, options: { page?: number }) => {
+				const page = options.page ?? 0;
+				const limit = 4;
+				const skip: number = page * limit;
+
+				return this.defaultListCollectionPublication(
+					{
+						...filter
+					},
+					{
+						...options,
+						limit: limit,
+						skip: skip,
+						sort: { createdat: -1 },
+						projection: {
+							title: 1,
+							state: 1,
+							isPrivate: 1,
+							createdat: 1,
+							ownerId: 1,
+							Description: 1
+						}
+					}
+				);
+			},
+			async (doc: IToDo) => {
+				const user = await userprofileServerApi.findOne({ _id: doc.ownerId });
+
+				if (user) {
+					doc.ownerName = user.username;
 				}
-			});
-		});
+
+				return doc;
+			}
+		);
+
+		// this.addPublication('toDoDetail', (filter = {}) => {
+		// 	return this.defaultDetailCollectionPublication(filter, {
+		// 		projection: {
+		// 			title: 1,
+		// 			description: 1,
+		// 			state: 1,
+		// 			isPrivate: 1
+		// 		}
+		// 	});
+		// });
 
 		this.registerMethod('countTasks', this.countTasks.bind(this));
 
