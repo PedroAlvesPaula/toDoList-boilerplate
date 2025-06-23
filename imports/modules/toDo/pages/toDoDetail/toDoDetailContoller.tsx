@@ -8,6 +8,7 @@ import { IToDo } from '../../api/toDoSch';
 import { ISchema } from '/imports/typings/ISchema';
 import { IMeteorError } from '/imports/typings/BoilerplateDefaultTypings';
 import AppLayoutContext from '/imports/app/appLayoutProvider/appLayoutContext';
+import AuthContext from '/imports/app/authProvider/authContext';
 
 interface IToDoDetailContollerContext {
 	closePage: () => void;
@@ -26,6 +27,7 @@ const ToDoDetailController = () => {
 	const navigate = useNavigate();
 	const { id, state } = useContext(ToDoModuleContext);
 	const { showNotification } = useContext(AppLayoutContext);
+	const { user } = useContext(AuthContext);
 
 	const { document, loading } = useTracker(() => {
 		const subHandle = !!id ? toDoApi.subscribe('toDoDetail', { _id: id }) : null;
@@ -44,6 +46,7 @@ const ToDoDetailController = () => {
 	}, []);
 
 	const onSubmit = useCallback((doc: IToDo) => {
+		doc.owner = user?.username ?? '';
 		const selectedAction = state === 'create' ? 'insert' : 'update';
 		toDoApi[selectedAction](doc, (e: IMeteorError) => {
 			if (!e) {
