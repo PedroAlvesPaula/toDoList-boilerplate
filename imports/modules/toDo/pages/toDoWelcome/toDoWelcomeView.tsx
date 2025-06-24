@@ -1,52 +1,44 @@
 import React from 'react';
 import toDoWelcomeStyles from './toDoWelcomeStyles';
 import { toDoWelcomeControlerContext } from './toDoWelcomeController';
+import AssignmentIcon from '@mui/icons-material/Assignment';
+import { ListItem, ListItemText } from '@mui/material';
+import { SysButton } from '/imports/ui/components/SimpleFormFields/SysButton/SysButton';
 
 const ToDoWelcomeView = () => {
 	const context = React.useContext(toDoWelcomeControlerContext);
 
 	const { Container, Card, CardContent, InformationCard, Title, Count, Description } = toDoWelcomeStyles;
 
-	const data = [
-		{
-			tite: 'Tarefas Registradas',
-			count: context.registeredTasks,
-			description: 'Tarefas que foram registradas mas ainda não iniciadas.'
-		},
-		{
-			tite: 'Tarefas em Progresso',
-			count: context.inProgressTasks,
-			description: 'Tarefas que estão atualmente em andamento.'
-		},
-		{
-			tite: 'Tarefas Concluídas',
-			count: context.completedTasks,
-			description: 'Tarefas que foram concluídas com sucesso.'
-		}
-	];
+	console.log('ToDoWelcomeView context', context);
 
 	return (
 		<Container>
-			{data.map((item, index) => (
+			<Title variant="h2">Atividades recentes</Title>
+			<SysButton size="small" onClick={() => context.navigate('/toDo/tasks')} sx={{ marginTop: '16px' }}>
+				Minhas tarefas
+			</SysButton>
+			{context.fiveLastTasks.map((item, index) => (
 				<Card key={index}>
 					<CardContent>
-						<InformationCard>
-							<Title variant="h5">{item.tite}</Title>
-							<Count variant="h6">{item.count}</Count>
-							<Description variant="body1">{item.description}</Description>
-						</InformationCard>
+						<AssignmentIcon fontSize="large" />
+						<ListItem sx={{ textAlign: 'center' }}>
+							<ListItemText
+								primary={
+									<Title variant="h5" component="div">
+										{item.title}
+									</Title>
+								}
+								secondary={
+									<Description variant="body2" color="text.secondary">
+										{item.state}
+									</Description>
+								}
+							/>
+						</ListItem>
 					</CardContent>
 				</Card>
 			))}
-			<Card>
-				<CardContent>
-					<InformationCard>
-						<Title variant="h5">Ir para as tarefas</Title>
-						<Count variant="h6">clique aqui</Count>
-						<Description variant="body1">Clique para visualizar todas tarefas</Description>
-					</InformationCard>
-				</CardContent>
-			</Card>
 		</Container>
 	);
 };

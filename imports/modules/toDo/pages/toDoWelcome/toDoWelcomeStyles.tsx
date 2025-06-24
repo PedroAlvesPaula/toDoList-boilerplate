@@ -10,10 +10,11 @@ import {
 	TypographyProps
 } from '@mui/material';
 import styled from '@emotion/styled';
+import { Theme } from '@mui/material/styles';
 
 interface IToDoWelcomeStyles {
 	Container: ElementType<GridProps>;
-	Card: ElementType<GridProps>;
+	Card: ElementType<CardProps>;
 	CardContent: ElementType<CardProps>;
 	InformationCard: ElementType<CardContentProps>;
 	Title: ElementType<TypographyProps>;
@@ -30,9 +31,16 @@ const toDoWelcomeStyles: IToDoWelcomeStyles = {
 		flexDirection: 'column' as const,
 		marginTop: '32px'
 	})),
-
-	Card: styled(Grid)(() => ({
-		width: '50vw'
+	Card: styled(Card)(({ theme }) => ({
+		width: '50vw',
+		display: 'flex',
+		flexDirection: 'row',
+		[theme.breakpoints.down('sm')]: {
+			width: '80vw'
+		},
+		boxShadow: 'none',
+		borderRadius: '0px',
+		border: 'none'
 	})),
 
 	CardContent: styled(Card)({
@@ -40,9 +48,10 @@ const toDoWelcomeStyles: IToDoWelcomeStyles = {
 		minHeight: 150,
 		display: 'flex',
 		alignItems: 'center',
-		justifyContent: 'center',
-		flexDirection: 'column' as const,
-		margin: '16px 0 16px 0'
+		justifyContent: 'space-between',
+		flexDirection: 'row' as const,
+		margin: '16px 0 16px 0',
+		textAlign: 'right' as const
 	}),
 
 	InformationCard: styled(CardContent)(() => ({

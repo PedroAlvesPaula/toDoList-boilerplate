@@ -1,14 +1,15 @@
 import React, { useMemo } from 'react';
 
 import { toDoApi } from '../../api/toDoApi';
-import { register } from 'module';
 
 import ToDoWelcomeView from './toDoWelcomeView';
+import { useTracker } from 'meteor/react-meteor-data';
+import { IToDo } from '../../api/toDoSch';
+import { useNavigate, NavigateFunction } from 'react-router-dom';
 
 interface IToDoWelcomeControllerContext {
-	registeredTasks: number;
-	inProgressTasks: number;
-	completedTasks: number;
+	fiveLastTasks: IToDo[];
+	navigate: NavigateFunction;
 }
 
 const toDoWelcomeControlerContext = React.createContext<IToDoWelcomeControllerContext>(
@@ -16,22 +17,19 @@ const toDoWelcomeControlerContext = React.createContext<IToDoWelcomeControllerCo
 );
 
 export const ToDoWelcomeController = () => {
-	const countTasks = (state: any) => {
-		const subHandle = toDoApi.subscribe('toDoCount', state);
-		return toDoApi.find({ state: { $eq: state } }).count();
-	};
-
-	const registeredTasks = countTasks('cadastrada');
-	const inProgressTasks = countTasks('em andamento');
-	const completedTasks = countTasks('councluida');
+	const navigate = useNavigate();
+	const fiveLastTasks = useTracker(() => {
+		const handle = toDoApi.subscribe('toDoLastFive', {});
+		const tasks = handle?.ready() ? toDoApi.find({}).fetch() : [];
+		return tasks;
+	}, []);
 
 	const providerValues: IToDoWelcomeControllerContext = useMemo(
 		() => ({
-			registeredTasks,
-			inProgressTasks,
-			completedTasks
+			fiveLastTasks: fiveLastTasks,
+			navigate: navigate
 		}),
-		[registeredTasks, inProgressTasks, completedTasks]
+		[fiveLastTasks, navigate]
 	);
 
 	return (
