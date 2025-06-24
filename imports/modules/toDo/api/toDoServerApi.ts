@@ -4,6 +4,7 @@ import { toDoSch, IToDo } from './toDoSch';
 import { userprofileServerApi } from '/imports/modules/userprofile/api/userProfileServerApi';
 import { ProductServerBase } from '/imports/api/productServerBase';
 import { Description } from '@mui/icons-material';
+import { create, last } from 'lodash';
 
 // endregion
 
@@ -17,14 +18,27 @@ class ToDoServerApi extends ProductServerBase<IToDo> {
 		const self = this;
 
 		this.addTransformedPublication(
-			'toDoListDetail',
+			'toDoDetail',
 			(filter = {}) => {
 				return this.defaultListCollectionPublication(filter, {
-					projection: { title: 1, state: 1, isPrivate: 1, createdat: 1 }
+					projection: { title: 1, state: 1, isPrivate: 1, createdat: 1, description: 1 }
 				});
 			},
 			(doc: IToDo & { nomeUsuario: string }) => {
 				const userProfileDoc = userprofileServerApi.getCollectionInstance().findOneAsync({ _id: doc.createdby });
+				return { ...doc };
+			}
+		);
+
+		this.addTransformedPublication(
+			'toDoLastFive',
+			(filter = {}) => {
+				return this.defaultListCollectionPublication(filter, {
+					sort: { lastupdate: -1, createdat: -1 },
+					limit: 5
+				});
+			},
+			(doc: IToDo) => {
 				return { ...doc };
 			}
 		);
