@@ -46,7 +46,7 @@ const ToDoDetailController = () => {
 	}, []);
 
 	const onSubmit = useCallback((doc: IToDo) => {
-		doc.owner = user?.username ?? '';
+		doc.ownerName = user?.username ?? '';
 		const selectedAction = state === 'create' ? 'insert' : 'update';
 		toDoApi[selectedAction](doc, (e: IMeteorError) => {
 			if (!e) {
