@@ -4,7 +4,7 @@ import ListAltIcon from '@mui/icons-material/ListAlt';
 
 export const toDoMenuItemList: (IAppMenu | null)[] = [
 	{
-		path: '/toDo/tasks',
+		path: '/toDo/welcome',
 		name: 'Lista de Tareas',
 		icon: <ListAltIcon />
 	}
