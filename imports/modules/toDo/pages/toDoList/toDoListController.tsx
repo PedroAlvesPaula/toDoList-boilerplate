@@ -38,7 +38,7 @@ export const ToDoListControllerContext = React.createContext<IToDoListContollerC
 );
 
 const initialConfig = {
-	sortProperties: { field: 'createdat', sortAscending: true },
+	sortProperties: { field: 'createdat', sortAscending: false },
 	filter: {},
 	searchBy: null,
 	viewComplexTable: false,
