@@ -8,7 +8,7 @@ import { SysButton } from '/imports/ui/components/SimpleFormFields/SysButton/Sys
 const ToDoWelcomeView = () => {
 	const context = React.useContext(toDoWelcomeControlerContext);
 
-	const { Container, Card, CardContent, InformationCard, Title, Count, Description } = toDoWelcomeStyles;
+	const { Container, Card, CardContent, Title, Description } = toDoWelcomeStyles;
 
 	console.log('ToDoWelcomeView context', context);
 
@@ -31,7 +31,7 @@ const ToDoWelcomeView = () => {
 								}
 								secondary={
 									<Description variant="body2" color="text.secondary">
-										{item.state}
+										{item.isCompleted}
 									</Description>
 								}
 							/>
