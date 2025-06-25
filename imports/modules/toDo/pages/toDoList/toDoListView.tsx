@@ -15,14 +15,14 @@ const ToDoListView = () => {
 	const controller = React.useContext(ToDoListControllerContext);
 	const navigate = useNavigate();
 	const { Container, SearchContainer } = ToDoListStyles;
-	const options = [{ value: '', label: 'Nenhum' }, ...(controller.schema.state.options?.() ?? [])];
+	const options = [{ value: '', label: 'Nenhum' }, ...(controller.schema.isCompleted.options?.() ?? [])];
 
 	return (
 		<Container>
 			<SearchContainer>
 				<SysTextField
 					name="search"
-					placeholder="Pesquisar por nome"
+					placeholder="Pesquisar pela descrição"
 					onChange={controller.onChangeTextField}
 					startAdornment={<SysIcon name={'search'} />}
 				/>
@@ -37,9 +37,10 @@ const ToDoListView = () => {
 			<TasksCard
 				tasks={controller.todoList}
 				onDelete={controller.onDeleteButtonClick}
-				onEdit={(task) => navigate('/toDo/view/' + task._id)}
+				onEdit={(task) => navigate('/toDo/edit/' + task._id)}
 				onChangeState={controller.onChangeStateButtonClick}
 				onResetState={controller.onResetStateClick}
+				onTaskClick={controller.onTaskClick ?? (() => {})}
 			/>
 			<SysFab
 				variant="extended"
