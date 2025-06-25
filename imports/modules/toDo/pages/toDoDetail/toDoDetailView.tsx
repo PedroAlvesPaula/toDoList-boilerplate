@@ -51,7 +51,7 @@ const ToDoDetailView = () => {
 											isCompleted: {
 												type: Boolean,
 												label: 'Tarefa concluída?',
-												defaultValue: 'Não concluída',
+												defaultValue: false,
 												readOnly: true,
 												optional: false,
 												options: () => [
