@@ -6,27 +6,17 @@ import tasksCardStyles from './tasksCardStyles';
 import AssignmentIcon from '@mui/icons-material/Assignment';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
-import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
-import RestartAltIcon from '@mui/icons-material/RestartAlt';
-import { countsCollection } from '/imports/api/countCollection';
+import CheckBoxField from '/imports/ui/components/SimpleFormFields/CheckBoxField/CheckBoxField';
 
 interface TasksCardProps {
 	tasks: IToDo[];
 	onDelete: (task: IToDo) => void;
 	onEdit: (task: IToDo) => void;
-	onChangeState: (task: IToDo) => void;
-	onResetState: (task: Partial<IToDo>) => void;
+	onChangeIsCompleted: (task: IToDo) => void;
 	onTaskClick: (task: any) => void;
 }
 
-export const TasksCard: React.FC<TasksCardProps> = ({
-	tasks,
-	onDelete,
-	onEdit,
-	onChangeState,
-	onResetState,
-	onTaskClick
-}) => {
+export const TasksCard: React.FC<TasksCardProps> = ({ tasks, onDelete, onEdit, onChangeIsCompleted, onTaskClick }) => {
 	const { ButtonToClick } = tasksCardStyles;
 	return (
 		<Box sx={{ width: '95%' }}>
@@ -36,6 +26,7 @@ export const TasksCard: React.FC<TasksCardProps> = ({
 						<ListItemAvatar>
 							<AssignmentIcon fontSize="large" sx={{ color: 'rgb(103, 104, 242)' }} />
 						</ListItemAvatar>
+						<CheckBoxField value={task.isCompleted} onChange={() => onChangeIsCompleted(task)} />
 						<ListItemText
 							onClick={() => onTaskClick(task)}
 							primary={task.description}
@@ -46,45 +37,20 @@ export const TasksCard: React.FC<TasksCardProps> = ({
 									</Typography>
 									<br />
 									<Typography component={'span'} variant="body2">
-										{task.isPrivate === 'sim' ? 'Pessoal' : 'Pública'}
+										{task.isPrivate ? 'Pessoal' : 'Pública'}
 									</Typography>
 								</React.Fragment>
 							}
-							sx={{ display: 'inline' }}
+							sx={{ display: 'inline', textDecorationLine: task.isCompleted ? 'line-through' : 'none' }}
 						/>
 
 						<>
-							<Tooltip title="Deletar tarefa">
-								<ButtonToClick onClick={() => onDelete && onDelete(task)}>
-									<DeleteIcon />
-								</ButtonToClick>
-							</Tooltip>
-
-							<Tooltip title="Editar tarefa">
-								<ButtonToClick onClick={() => onEdit && onEdit(task)}>
-									<EditIcon />
-								</ButtonToClick>
-							</Tooltip>
-
-							<Tooltip title="Resetar tarefa">
-								<span>
-									<ButtonToClick
-										onClick={() => onResetState && onResetState(task)}
-										disabled={task.isCompleted === 'Não concluída' ? true : false}>
-										<RestartAltIcon />
-									</ButtonToClick>
-								</span>
-							</Tooltip>
-
-							<Tooltip title="Avançar 1 estado">
-								<span>
-									<ButtonToClick
-										onClick={() => onChangeState && onChangeState(task)}
-										disabled={task.isCompleted === 'Concluída' ? true : false}>
-										<ArrowForwardIosIcon />
-									</ButtonToClick>
-								</span>
-							</Tooltip>
+							<ButtonToClick onClick={() => onDelete && onDelete(task)} disabled={task.isCompleted}>
+								<DeleteIcon />
+							</ButtonToClick>
+							<ButtonToClick onClick={() => onEdit && onEdit(task)} disabled={task.isCompleted}>
+								<EditIcon />
+							</ButtonToClick>
 						</>
 					</ListItem>
 					<Divider variant="inset" component="li" sx={{ listStyle: 'none' }} />
