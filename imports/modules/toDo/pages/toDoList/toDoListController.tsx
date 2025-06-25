@@ -31,6 +31,7 @@ interface IToDoListContollerContext {
 	onResetStateClick: (doc: Partial<IToDo>) => void;
 	setConfig: React.Dispatch<React.SetStateAction<IInitialConfig>>;
 	config: IInitialConfig;
+	onTaskClick?: (task: any) => void;
 }
 
 export const ToDoListControllerContext = React.createContext<IToDoListContollerContext>(
@@ -48,8 +49,8 @@ const initialConfig = {
 const ToDoListController = () => {
 	const [config, setConfig] = React.useState<IInitialConfig>(initialConfig);
 
-	const { title, state, isPrivate } = toDoApi.getSchema();
-	const toDoSchReduzido = { title, state, isPrivate, createdat: { type: Date, label: 'Criado em' } };
+	const { title, isCompleted, isPrivate } = toDoApi.getSchema();
+	const toDoSchReduzido = { title, isCompleted, isPrivate, createdat: { type: Date, label: 'Criado em' } };
 	const navigate = useNavigate();
 
 	const { sortProperties, filter } = config;
@@ -57,7 +58,7 @@ const ToDoListController = () => {
 		[sortProperties.field]: sortProperties.sortAscending ? 1 : -1
 	};
 
-	const { showNotification } = React.useContext(AppLayoutContext);
+	const { showNotification, showModal, closeModal } = React.useContext(AppLayoutContext);
 
 	const { loading, toDos } = useTracker(() => {
 		const subHandle =
@@ -85,8 +86,7 @@ const ToDoListController = () => {
 	}, []);
 
 	const onChangeStateButtonClick = useCallback((doc: IToDo) => {
-		if (doc.state === 'cadastrada') doc.state = 'em andamento';
-		else if (doc.state === 'em andamento') doc.state = 'concluida';
+		if (doc.isCompleted === 'Não concluída') doc.isCompleted = 'Concluída';
 
 		toDoApi.update(doc, (e: IMeteorError) => {
 			if (e) {
@@ -106,7 +106,7 @@ const ToDoListController = () => {
 	}, []);
 
 	const onResetStateClick = useCallback((doc: Partial<IToDo>) => {
-		doc.state = 'cadastrada';
+		doc.isCompleted = 'Não concluída';
 		toDoApi.update(doc, (e: IMeteorError) => {
 			if (e) {
 				showNotification({
@@ -129,7 +129,7 @@ const ToDoListController = () => {
 		const delayedSearch = setTimeout(() => {
 			setConfig((prev) => ({
 				...prev,
-				filter: { ...prev.filter, title: { $regex: value.trim(), $options: 'i' } }
+				filter: { ...prev.filter, description: { $regex: value.trim(), $options: 'i' } }
 			}));
 		}, 1000);
 		return () => clearTimeout(delayedSearch);
@@ -142,12 +142,34 @@ const ToDoListController = () => {
 				...prev,
 				filter: {
 					...prev.filter,
-					state: { $ne: null }
+					isCompleted: { $ne: null }
 				}
 			}));
 			return;
 		}
-		setConfig((prev) => ({ ...prev, filter: { ...prev.filter, state: value } }));
+		setConfig((prev) => ({ ...prev, filter: { ...prev.filter, isCompleted: value } }));
+	}, []);
+
+	const onTaskClick = useCallback((task: any) => {
+		showModal({
+			title: 'Editar grupo de sensores',
+			urlPath: '/toDo/view/' + task._id,
+			sx: {
+				width: '90%',
+				maxWidth: '727px',
+				height: '90vh',
+				maxHeight: '856px',
+				overflowY: 'auto',
+				borderRadius: '10px',
+				position: 'fixed',
+				top: '50%',
+				left: '50%',
+				transform: 'translate(-50%, -50%)',
+				display: 'flex',
+				flexDirection: 'column'
+			},
+			onClose: () => closeModal()
+		});
 	}, []);
 
 	const providerValues: IToDoListContollerContext = useMemo(
@@ -162,7 +184,8 @@ const ToDoListController = () => {
 			onChangeStateButtonClick: onChangeStateButtonClick,
 			onResetStateClick: onResetStateClick,
 			setConfig: setConfig,
-			config: config
+			config: config,
+			onTaskClick: onTaskClick
 		}),
 		[toDos, loading]
 	);
