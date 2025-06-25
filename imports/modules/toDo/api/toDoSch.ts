@@ -12,22 +12,17 @@ export const toDoSch: ISchema<IToDo> = {
 		type: String,
 		label: 'Descrição',
 		defaultValue: '',
-		optional: true
+		optional: false
 	},
-	state: {
+	isCompleted: {
 		type: String,
 		label: 'Estágio',
-		defaultValue: '',
+		defaultValue: 'Não concluída',
 		optional: false,
 		options: () => [
-			{ value: 'cadastrada', label: 'cadastrada' },
-			{ value: 'em andamento', label: 'em andamento' },
-			{ value: 'concluida', label: 'concluida' }
-		],
-		visibilityFunction(doc) {
-			if (doc.state === 'create') return false;
-			return true;
-		}
+			{ value: 'Não concluída', label: 'Não concluída' },
+			{ value: 'Concluída', label: 'Concluída' }
+		]
 	},
 	isPrivate: {
 		type: String,
@@ -37,13 +32,17 @@ export const toDoSch: ISchema<IToDo> = {
 			{ value: 'sim', label: 'Sim' },
 			{ value: 'nao', label: 'Não' }
 		]
+	},
+	ownerId: {
+		type: String,
+		optional: true
 	}
 };
 
 export interface IToDo extends IDoc {
 	title: string;
 	description: string;
-	state: string;
+	isCompleted: string;
 	isPrivate: string;
 	ownerId: string;
 	ownerName: string;
