@@ -10,41 +10,9 @@ import { IMeteorError } from '/imports/typings/BoilerplateDefaultTypings';
 class UserProfileApi extends OfflineBaseApi {
 	constructor() {
 		super('userprofile', userProfileSch);
-		this.registrarUserProfileNoMeteor = this.registrarUserProfileNoMeteor.bind(this);
-		this.serverInsert = this.serverInsert.bind(this);
 		this.noImagePath = `${Meteor.absoluteUrl()}images/wireframe/user_no_photo.png`;
 		// @ts-ignore
 		userprofileData.collectionInstance = this.collectionInstance; //create globalvar userprofileData
-	}
-
-	registrarUserProfileNoMeteor(
-		userData: {
-			username: string;
-			email: string;
-			password?: string;
-			profile: { dateOfBirth?: string; gender?: string; companyWorks?: string; profileImage?: string };
-		},
-		callback = (e: Error, r: any) => {
-			console.log(e, r);
-		}
-	) {
-		this.callMethod('registrarUserProfileNoMeteor', userData, callback);
-	}
-
-	serverInsert(
-		dataObj: {
-			username: string;
-			email: string;
-			password?: string;
-			profile: { dateOfBirth?: string; gender?: string; companyWorks?: string; profileImage?: string };
-		},
-		callback = (e: IMeteorError, r: any) => {
-			console.log('Erro no server insert');
-			console.log(e, r);
-		}
-	) {
-		console.log('passou pelo serverInsert');
-		this.callMethod('serverInsert', dataObj, callback);
 	}
 
 	insertNewUser(
@@ -54,11 +22,9 @@ class UserProfileApi extends OfflineBaseApi {
 			password: string;
 		},
 		callback = (e: IMeteorError, r: any) => {
-			console.log('Erro no insertNewUser');
 			console.log(e, r);
 		}
 	) {
-		console.log('passou pelo insertNewUser');
 		return this.callMethod('insert', userData, callback);
 	}
 
