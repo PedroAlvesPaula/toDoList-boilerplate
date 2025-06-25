@@ -15,22 +15,22 @@ export const toDoSch: ISchema<IToDo> = {
 		optional: false
 	},
 	isCompleted: {
-		type: String,
+		type: Boolean,
 		label: 'Estágio',
 		defaultValue: 'Não concluída',
 		optional: false,
 		options: () => [
-			{ value: 'Não concluída', label: 'Não concluída' },
-			{ value: 'Concluída', label: 'Concluída' }
+			{ value: false, label: 'Não concluída' },
+			{ value: true, label: 'Concluída' }
 		]
 	},
 	isPrivate: {
-		type: String,
+		type: Boolean,
 		label: 'Tarefa pessoal?',
 		optional: false,
 		options: () => [
-			{ value: 'sim', label: 'Sim' },
-			{ value: 'nao', label: 'Não' }
+			{ value: true, label: 'Sim' },
+			{ value: false, label: 'Não' }
 		]
 	},
 	ownerId: {
@@ -42,8 +42,8 @@ export const toDoSch: ISchema<IToDo> = {
 export interface IToDo extends IDoc {
 	title: string;
 	description: string;
-	isCompleted: string;
-	isPrivate: string;
+	isCompleted: boolean;
+	isPrivate: boolean;
 	ownerId: string;
 	ownerName: string;
 }
