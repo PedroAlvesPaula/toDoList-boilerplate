@@ -198,8 +198,6 @@ export class UserProfileServerApi extends ProductServerBase<IUserProfile> {
 			//aj foi
 			this._includeAuditData(dataObj, 'insert');
 
-			console.log('2 >>', dataObj);
-
 			if (await this.beforeInsert(dataObj, context)) {
 				await this.registrarUserProfileNoMeteor(dataObj);
 				delete dataObj.password;
