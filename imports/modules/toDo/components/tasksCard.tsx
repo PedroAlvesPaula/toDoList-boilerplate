@@ -8,16 +8,25 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import RestartAltIcon from '@mui/icons-material/RestartAlt';
+import { countsCollection } from '/imports/api/countCollection';
 
 interface TasksCardProps {
 	tasks: IToDo[];
-	onDelete?: (task: IToDo) => void;
-	onEdit?: (task: IToDo) => void;
-	onChangeState?: (task: IToDo) => void;
-	onResetState?: (task: Partial<IToDo>) => void;
+	onDelete: (task: IToDo) => void;
+	onEdit: (task: IToDo) => void;
+	onChangeState: (task: IToDo) => void;
+	onResetState: (task: Partial<IToDo>) => void;
+	onTaskClick: (task: any) => void;
 }
 
-export const TasksCard: React.FC<TasksCardProps> = ({ tasks, onDelete, onEdit, onChangeState, onResetState }) => {
+export const TasksCard: React.FC<TasksCardProps> = ({
+	tasks,
+	onDelete,
+	onEdit,
+	onChangeState,
+	onResetState,
+	onTaskClick
+}) => {
 	const { ButtonToClick } = tasksCardStyles;
 	return (
 		<Box sx={{ width: '95%' }}>
@@ -28,7 +37,8 @@ export const TasksCard: React.FC<TasksCardProps> = ({ tasks, onDelete, onEdit, o
 							<AssignmentIcon fontSize="large" sx={{ color: 'rgb(103, 104, 242)' }} />
 						</ListItemAvatar>
 						<ListItemText
-							primary={task.title}
+							onClick={() => onTaskClick(task)}
+							primary={task.description}
 							secondary={
 								<React.Fragment>
 									<Typography component={'span'} variant="body2">
@@ -60,7 +70,7 @@ export const TasksCard: React.FC<TasksCardProps> = ({ tasks, onDelete, onEdit, o
 								<span>
 									<ButtonToClick
 										onClick={() => onResetState && onResetState(task)}
-										disabled={task.state === 'cadastrada' ? true : false}>
+										disabled={task.isCompleted === 'Não concluída' ? true : false}>
 										<RestartAltIcon />
 									</ButtonToClick>
 								</span>
@@ -70,7 +80,7 @@ export const TasksCard: React.FC<TasksCardProps> = ({ tasks, onDelete, onEdit, o
 								<span>
 									<ButtonToClick
 										onClick={() => onChangeState && onChangeState(task)}
-										disabled={task.state === 'concluida' ? true : false}>
+										disabled={task.isCompleted === 'Concluída' ? true : false}>
 										<ArrowForwardIosIcon />
 									</ButtonToClick>
 								</span>
