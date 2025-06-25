@@ -38,8 +38,7 @@ const ToDoListView = () => {
 				tasks={controller.todoList}
 				onDelete={controller.onDeleteButtonClick}
 				onEdit={(task) => navigate('/toDo/edit/' + task._id)}
-				onChangeState={controller.onChangeStateButtonClick}
-				onResetState={controller.onResetStateClick}
+				onChangeIsCompleted={controller.onChangeIsCompletedButtonClick}
 				onTaskClick={controller.onTaskClick ?? (() => {})}
 			/>
 			<SysFab
@@ -49,29 +48,35 @@ const ToDoListView = () => {
 				fixed={true}
 				onClick={controller.onAddButtonClick}
 			/>
-			<Stack direction="row" spacing={2} justifyContent="center" alignItems="center" mt={2}>
-				<Tooltip title="Voltar uma página">
-					<IconButton
-						onClick={() =>
-							controller.setConfig((prev) => ({
-								...prev,
-								page: Math.max(0, prev.page - 1)
-							}))
-						}>
-						<NavigateBeforeIcon />
-					</IconButton>
-				</Tooltip>
-				<Tooltip title="Próxima página">
-					<IconButton
-						onClick={() =>
-							controller.setConfig((prev) => ({
-								...prev,
-								page: prev.page + 1
-							}))
-						}>
-						<NavigateNextIcon />
-					</IconButton>
-				</Tooltip>
+			<Stack
+				direction="row"
+				spacing={2}
+				justifyContent="center"
+				alignItems="center"
+				mt={2}
+				sx={{ width: '90%', justifyContent: 'space-between' }}>
+				<IconButton
+					onClick={() =>
+						controller.setConfig((prev) => ({
+							...prev,
+							page: Math.max(0, prev.page - 1)
+						}))
+					}
+					disabled={controller.config.page === 0}
+					sx={{ fontSize: '16px' }}>
+					<NavigateBeforeIcon fontSize="large" /> Anterior
+				</IconButton>
+				<IconButton
+					onClick={() =>
+						controller.setConfig((prev) => ({
+							...prev,
+							page: prev.page + 1
+						}))
+					}
+					disabled={controller.todoList.length < 4}
+					sx={{ fontSize: '16px' }}>
+					Próxima <NavigateNextIcon fontSize="large" />
+				</IconButton>
 			</Stack>
 		</Container>
 	);
