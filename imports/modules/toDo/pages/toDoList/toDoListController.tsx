@@ -27,8 +27,7 @@ interface IToDoListContollerContext {
 	loading: boolean;
 	onChangeTextField: (event: React.ChangeEvent<HTMLInputElement>) => void;
 	onChangeCategory: (event: React.ChangeEvent<HTMLInputElement>) => void;
-	onChangeStateButtonClick: (doc: IToDo) => void;
-	onResetStateClick: (doc: Partial<IToDo>) => void;
+	onChangeIsCompletedButtonClick: (doc: IToDo) => void;
 	setConfig: React.Dispatch<React.SetStateAction<IInitialConfig>>;
 	config: IInitialConfig;
 	onTaskClick?: (task: any) => void;
@@ -85,8 +84,9 @@ const ToDoListController = () => {
 		toDoApi.remove(row);
 	}, []);
 
-	const onChangeStateButtonClick = useCallback((doc: IToDo) => {
-		if (doc.isCompleted === 'Não concluída') doc.isCompleted = 'Concluída';
+	const onChangeIsCompletedButtonClick = useCallback((doc: IToDo) => {
+		if (!doc.isCompleted) doc.isCompleted = true;
+		else doc.isCompleted = false;
 
 		toDoApi.update(doc, (e: IMeteorError) => {
 			if (e) {
@@ -100,25 +100,6 @@ const ToDoListController = () => {
 					type: 'success',
 					title: 'Operação realizada!',
 					message: 'O estágio da tarefa foi atualizado com sucesso!'
-				});
-			}
-		});
-	}, []);
-
-	const onResetStateClick = useCallback((doc: Partial<IToDo>) => {
-		doc.isCompleted = 'Não concluída';
-		toDoApi.update(doc, (e: IMeteorError) => {
-			if (e) {
-				showNotification({
-					type: 'error',
-					title: 'Operação não realizada!',
-					message: `Erro ao realizar a operação: ${e.reason}`
-				});
-			} else {
-				showNotification({
-					type: 'success',
-					title: 'Operação realizada!',
-					message: 'O tarefa foi passada para o estagio "cadastrada".'
 				});
 			}
 		});
@@ -181,8 +162,7 @@ const ToDoListController = () => {
 			loading,
 			onChangeTextField,
 			onChangeCategory: onSelectedCategory,
-			onChangeStateButtonClick: onChangeStateButtonClick,
-			onResetStateClick: onResetStateClick,
+			onChangeIsCompletedButtonClick: onChangeIsCompletedButtonClick,
 			setConfig: setConfig,
 			config: config,
 			onTaskClick: onTaskClick
