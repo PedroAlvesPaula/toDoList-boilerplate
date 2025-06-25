@@ -21,7 +21,7 @@ class ToDoServerApi extends ProductServerBase<IToDo> {
 			'toDoDetail',
 			(filter = {}) => {
 				return this.defaultListCollectionPublication(filter, {
-					projection: { title: 1, state: 1, isPrivate: 1, createdat: 1, description: 1 }
+					projection: { title: 1, isCompleted: 1, isPrivate: 1, createdat: 1, description: 1 }
 				});
 			},
 			(doc: IToDo & { nomeUsuario: string }) => {
@@ -61,17 +61,19 @@ class ToDoServerApi extends ProductServerBase<IToDo> {
 						sort: { createdat: -1 },
 						projection: {
 							title: 1,
-							state: 1,
+							isCompleted: 1,
 							isPrivate: 1,
 							createdat: 1,
 							ownerId: 1,
-							Description: 1
+							description: 1
 						}
 					}
 				);
 			},
 			async (doc: IToDo) => {
 				const user = await userprofileServerApi.findOne({ _id: doc.ownerId });
+
+				console.log('User', user);
 
 				if (user) {
 					doc.ownerName = user.username;
@@ -91,8 +93,6 @@ class ToDoServerApi extends ProductServerBase<IToDo> {
 		// 		}
 		// 	});
 		// });
-
-		this.registerMethod('countTasks', this.countTasks.bind(this));
 
 		// this.addRestEndpoint(
 		// 	'view',
