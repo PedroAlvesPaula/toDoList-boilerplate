@@ -11,6 +11,7 @@ import { SysSelectField } from '/imports/ui/components/sysFormFields/sysSelectFi
 import { SysRadioButton } from '/imports/ui/components/sysFormFields/sysRadioButton/sysRadioButton';
 import SysFormButton from '/imports/ui/components/sysFormFields/sysFormButton/sysFormButton';
 import SysIcon from '/imports/ui/components/sysIcon/sysIcon';
+import ViewTask from '../../components/viewTask';
 
 const ToDoDetailView = () => {
 	const controller = useContext(ToDoDetailControllerContext);
@@ -21,70 +22,72 @@ const ToDoDetailView = () => {
 	const { Container, Body, Header, Footer, FormColumn } = ToDoDetailStyles;
 
 	return (
-		<Container>
-			<Body>
-				<Header>
-					{isView && (
-						<IconButton onClick={controller.closePage}>
-							<SysIcon name={'arrowBack'} />
-						</IconButton>
-					)}
-					<Typography variant="h5" sx={{ flexGrow: 1 }}>
-						{isCreate ? 'Adicionar tarefa' : isEdit ? 'Editar tarefa' : controller.document.title}
-					</Typography>
-					<IconButton
-						onClick={!isView ? controller.closePage : () => controller.changeToEdit(controller.document._id || '')}>
-						{!isView ? <SysIcon name={'close'} /> : <SysIcon name={'edit'} />}
-					</IconButton>
-				</Header>
-				<SysForm
-					mode={state as 'create' | 'view' | 'edit'}
-					schema={
-						state === 'edit'
-							? controller.schema
-							: {
-									...controller.schema,
-									state: {
-										type: String,
-										label: 'Estágio',
-										defaultValue: 'cadastrada',
-										readOnly: true,
-										optional: false,
-										options: () => [
-											{ value: 'cadastrada', label: 'cadastrada' },
-											{ value: 'em andamento', label: 'em andamento' },
-											{ value: 'concluida', label: 'concluida' }
-										]
-									}
-								}
-					}
-					doc={controller.document}
-					onSubmit={controller.onSubmit}
-					loading={controller.loading}>
-					<FormColumn>
-						<SysTextField name="title" placeholder="Ex.: Item XX" />
-						<SysSelectField name="state" placeholder="Selecionar" />
-						<SysTextField
-							name="description"
-							placeholder="Acrescente informações sobre o item (3 linhas)"
-							multiline
-							rows={3}
-							showNumberCharactersTyped
-							max={200}
-						/>
-						<SysRadioButton name="isPrivate" childrenAlignment="row" size="small" />
-					</FormColumn>
-					<Footer>
-						{!isView && (
-							<Button variant="outlined" startIcon={<SysIcon name={'close'} />} onClick={controller.closePage}>
-								Cancelar
-							</Button>
-						)}
-						<SysFormButton>Salvar</SysFormButton>
-					</Footer>
-				</SysForm>
-			</Body>
-		</Container>
+		<>
+			{isView ? (
+				<ViewTask
+					closePage={controller.closePage}
+					schema={controller.schema}
+					document={controller.document}
+					loading={controller.loading}
+				/>
+			) : (
+				<Container>
+					<Body>
+						<Header>
+							<Typography variant="h5" sx={{ flexGrow: 1 }}>
+								{isCreate ? 'Adicionar tarefa' : isEdit ? 'Editar tarefa' : controller.document.title}
+							</Typography>
+							<IconButton onClick={() => controller.changeToEdit(controller.document._id || '')}>
+								<SysIcon name={'edit'} />
+							</IconButton>
+						</Header>
+						<SysForm
+							mode={state as 'create' | 'edit'}
+							schema={
+								isEdit
+									? controller.schema
+									: {
+											...controller.schema,
+											isCompleted: {
+												type: Boolean,
+												label: 'Tarefa concluída?',
+												defaultValue: 'Não concluída',
+												readOnly: true,
+												optional: false,
+												options: () => [
+													{ value: 'Não concluída', label: 'Não concluída' },
+													{ value: 'Concluída', label: 'Concluída' }
+												]
+											}
+										}
+							}
+							doc={controller.document}
+							onSubmit={controller.onSubmit}
+							loading={controller.loading}>
+							<FormColumn>
+								<SysTextField name="title" placeholder="Ex.: Item XX" />
+								<SysSelectField name="isCompleted" placeholder="Selecionar" />
+								<SysTextField
+									name="description"
+									placeholder="Acrescente informações sobre o item (3 linhas)"
+									multiline
+									rows={3}
+									showNumberCharactersTyped
+									max={200}
+								/>
+								<SysRadioButton name="isPrivate" childrenAlignment="row" size="small" />
+							</FormColumn>
+							<Footer>
+								<Button variant="outlined" startIcon={<SysIcon name={'close'} />} onClick={controller.closePage}>
+									Cancelar
+								</Button>
+								<SysFormButton>Salvar</SysFormButton>
+							</Footer>
+						</SysForm>
+					</Body>
+				</Container>
+			)}
+		</>
 	);
 };
 
