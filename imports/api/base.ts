@@ -194,9 +194,6 @@ export class ApiBase<Doc extends IDoc> {
 	 * @param  {Function} callback - Callback Function
 	 */
 	insert(docObj: any, callback: any) {
-		if (docObj.hasOwnProperty('isPrivate')) {
-			docObj.isPrivate = docObj.isPrivate === 'true';
-		}
 		{
 			const newObj: { [key: string]: any } = { _id: docObj._id };
 			const schema = this.getSchema();

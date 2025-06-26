@@ -28,9 +28,10 @@ export const toDoSch: ISchema<IToDo> = {
 		type: Boolean,
 		label: 'Tarefa pessoal?',
 		optional: false,
+		defaultValue: true,
 		options: () => [
-			{ value: 'true', label: 'Sim' },
-			{ value: 'false', label: 'Não' }
+			{ value: true, label: 'Sim' },
+			{ value: false, label: 'Não' }
 		]
 	},
 	ownerId: {
