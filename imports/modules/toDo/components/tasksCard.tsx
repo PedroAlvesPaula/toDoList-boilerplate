@@ -67,7 +67,7 @@ export const TasksCard: React.FC<TasksCardProps> = ({
 							open={Boolean(anchorEl[task._id ?? ''])}
 							onClose={() => handleCloseMenu(task._id || '')}>
 							<MenuItem>
-								<ButtonToClick onClick={() => onDelete && onDelete(task)} sx={{ fontSize: '14px' }}>
+								<ButtonToClick onClick={() => onDelete(task)} sx={{ fontSize: '16px' }}>
 									Deletar
 									<SysIcon name="delete" sx={{ marginLeft: 1 }} />
 								</ButtonToClick>
@@ -78,7 +78,7 @@ export const TasksCard: React.FC<TasksCardProps> = ({
 										onEdit(task);
 									}}
 									disabled={task.isCompleted}
-									sx={{ fontSize: '14px' }}>
+									sx={{ fontSize: '16px' }}>
 									Editar
 									<SysIcon name="edit" sx={{ marginLeft: 1 }} />
 								</ButtonToClick>
