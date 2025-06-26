@@ -29,19 +29,17 @@ const ToDoListView = () => {
 
 	return (
 		<Container>
+			<IconButton
+				sx={{ alignSelf: 'flex-start', fontSize: '16px', color: 'rgb(103, 104, 242)' }}
+				onClick={() => navigate('/toDo/welcome')}>
+				<SysIcon name="arrowBack" sx={{ marginRight: '8px' }} /> Voltar a tela inicial
+			</IconButton>
 			<SearchContainer>
 				<SysTextField
 					name="search"
 					placeholder="Pesquisar pela descrição"
 					onChange={controller.onChangeTextField}
 					startAdornment={<SysIcon name={'search'} />}
-				/>
-				<SysSelectField
-					name="Category"
-					label="Estágio"
-					options={options}
-					placeholder="Selecionar"
-					onChange={controller.onChangeCategory}
 				/>
 			</SearchContainer>
 			<TasksCard
