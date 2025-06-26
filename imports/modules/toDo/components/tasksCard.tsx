@@ -45,7 +45,7 @@ export const TasksCard: React.FC<TasksCardProps> = ({ tasks, onDelete, onEdit, o
 						/>
 
 						<>
-							<ButtonToClick onClick={() => onDelete && onDelete(task)} disabled={task.isCompleted}>
+							<ButtonToClick onClick={() => onDelete && onDelete(task)}>
 								<DeleteIcon />
 							</ButtonToClick>
 							<ButtonToClick onClick={() => onEdit && onEdit(task)} disabled={task.isCompleted}>
