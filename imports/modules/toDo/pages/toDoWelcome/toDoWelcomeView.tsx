@@ -10,8 +10,6 @@ const ToDoWelcomeView = () => {
 
 	const { Container, Card, CardContent, Title, Description } = toDoWelcomeStyles;
 
-	console.log('ToDoWelcomeView context', context);
-
 	return (
 		<Container>
 			<Title variant="h2">Atividades recentes</Title>
@@ -31,7 +29,7 @@ const ToDoWelcomeView = () => {
 								}
 								secondary={
 									<Description variant="body2" color="text.secondary">
-										{item.isCompleted}
+										{item.isCompleted ? 'Tarefa concluída' : 'Tarefa pendente'}
 									</Description>
 								}
 							/>
