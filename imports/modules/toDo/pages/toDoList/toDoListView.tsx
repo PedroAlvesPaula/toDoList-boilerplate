@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { SysFab } from '/imports/ui/components/sysFab/sysFab';
 import { ToDoListControllerContext } from './toDoListController';
 import { useNavigate } from 'react-router-dom';
@@ -9,13 +9,23 @@ import SysTextField from '/imports/ui/components/sysFormFields/sysTextField/sysT
 import { SysSelectField } from '/imports/ui/components/sysFormFields/sysSelectField/sysSelectField';
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 import NavigateBeforeIcon from '@mui/icons-material/NavigateBefore';
-import { IconButton, Stack, Tooltip } from '@mui/material';
+import { IconButton, Stack } from '@mui/material';
 
 const ToDoListView = () => {
 	const controller = React.useContext(ToDoListControllerContext);
 	const navigate = useNavigate();
 	const { Container, SearchContainer } = ToDoListStyles;
 	const options = [{ value: '', label: 'Nenhum' }, ...(controller.schema.isCompleted.options?.() ?? [])];
+
+	const [anchorEl, setAnchorEl] = useState<{ [key: string]: null | HTMLElement }>({});
+
+	const handleOpenMenu = (event: React.MouseEvent<HTMLButtonElement>, taskId: string) => {
+		setAnchorEl({ ...anchorEl, [taskId]: event.currentTarget });
+	};
+
+	const handleCloseMenu = (taskId: string) => {
+		setAnchorEl({ ...anchorEl, [taskId]: null });
+	};
 
 	return (
 		<Container>
@@ -40,6 +50,9 @@ const ToDoListView = () => {
 				onEdit={(task) => navigate('/toDo/edit/' + task._id)}
 				onChangeIsCompleted={controller.onChangeIsCompletedButtonClick}
 				onTaskClick={controller.onTaskClick ?? (() => {})}
+				handleCloseMenu={handleCloseMenu}
+				handleOpenMenu={handleOpenMenu}
+				anchorEl={anchorEl}
 			/>
 			<SysFab
 				variant="extended"
