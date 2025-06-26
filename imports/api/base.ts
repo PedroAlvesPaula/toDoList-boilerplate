@@ -194,18 +194,23 @@ export class ApiBase<Doc extends IDoc> {
 	 * @param  {Function} callback - Callback Function
 	 */
 	insert(docObj: any, callback: any) {
-		const newObj: { [key: string]: any } = { _id: docObj._id };
-		const schema = this.getSchema();
-		Object.keys(docObj).forEach((key) => {
-			if (
-				!!schema[key] &&
-				((!schema[key].isImage && !schema[key].isAvatar) ||
-					(docObj[key] && docObj[key].indexOf('/img/') === -1 && docObj[key].indexOf('/thumbnail/') === -1))
-			) {
-				newObj[key] = docObj[key];
-			}
-		});
-		this.callMethod('insert', newObj, callback);
+		if (docObj.hasOwnProperty('isPrivate')) {
+			docObj.isPrivate = docObj.isPrivate === 'true';
+		}
+		{
+			const newObj: { [key: string]: any } = { _id: docObj._id };
+			const schema = this.getSchema();
+			Object.keys(docObj).forEach((key) => {
+				if (
+					!!schema[key] &&
+					((!schema[key].isImage && !schema[key].isAvatar) ||
+						(docObj[key] && docObj[key].indexOf('/img/') === -1 && docObj[key].indexOf('/thumbnail/') === -1))
+				) {
+					newObj[key] = docObj[key];
+				}
+			});
+			this.callMethod('insert', newObj, callback);
+		}
 	}
 
 	/**
@@ -322,7 +327,7 @@ export class ApiBase<Doc extends IDoc> {
 	 * @param param
 	 */
 	subscribe(
-		api = 'default',
+		api: string = 'default',
 		...param: any[]
 	): {
 		total: number;
