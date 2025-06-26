@@ -12,6 +12,7 @@ import { SysRadioButton } from '/imports/ui/components/sysFormFields/sysRadioBut
 import SysFormButton from '/imports/ui/components/sysFormFields/sysFormButton/sysFormButton';
 import SysIcon from '/imports/ui/components/sysIcon/sysIcon';
 import ViewTask from '../../components/viewTask';
+import SysSwitch from '/imports/ui/components/sysFormFields/sysSwitch/sysSwitch';
 
 const ToDoDetailView = () => {
 	const controller = useContext(ToDoDetailControllerContext);
@@ -75,7 +76,7 @@ const ToDoDetailView = () => {
 									rows={3}
 									max={200}
 								/>
-								<SysRadioButton name="isPrivate" childrenAlignment="row" size="small" />
+								<SysSwitch name="isPrivate" size="small" />
 							</FormColumn>
 							<Footer>
 								<Button variant="outlined" startIcon={<SysIcon name={'close'} />} onClick={controller.closePage}>
