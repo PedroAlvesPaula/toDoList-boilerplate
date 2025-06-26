@@ -17,7 +17,7 @@ export const toDoSch: ISchema<IToDo> = {
 	isCompleted: {
 		type: Boolean,
 		label: 'Estágio',
-		defaultValue: 'Não concluída',
+		defaultValue: false,
 		optional: false,
 		options: () => [
 			{ value: false, label: 'Não concluída' },
@@ -29,8 +29,8 @@ export const toDoSch: ISchema<IToDo> = {
 		label: 'Tarefa pessoal?',
 		optional: false,
 		options: () => [
-			{ value: true, label: 'Sim' },
-			{ value: false, label: 'Não' }
+			{ value: 'true', label: 'Sim' },
+			{ value: 'false', label: 'Não' }
 		]
 	},
 	ownerId: {
