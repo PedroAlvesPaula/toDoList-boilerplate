@@ -8,7 +8,7 @@ interface IToDoListStyles {
 
 const ToDoListStyles: IToDoListStyles = {
 	ButtonToClick: styled(IconButton)(() => ({
-		marginLeft: '10px',
+		margin: '8px',
 		'&:hover': {
 			cursor: 'pointer'
 		},
