@@ -1,12 +1,10 @@
 import React from 'react';
 import { IToDo } from 'imports/modules/toDo/api/toDoSch';
-import { Box, Divider, ListItem, ListItemAvatar, ListItemText, Tooltip, Typography } from '@mui/material';
+import { Box, Divider, ListItem, ListItemAvatar, ListItemText, Menu, MenuItem, Typography } from '@mui/material';
 import tasksCardStyles from './tasksCardStyles';
-
-import AssignmentIcon from '@mui/icons-material/Assignment';
-import DeleteIcon from '@mui/icons-material/Delete';
-import EditIcon from '@mui/icons-material/Edit';
 import CheckBoxField from '/imports/ui/components/SimpleFormFields/CheckBoxField/CheckBoxField';
+import SysIcon from '/imports/ui/components/sysIcon/sysIcon';
+import MenuIcon from '@mui/icons-material/Menu';
 
 interface TasksCardProps {
 	tasks: IToDo[];
@@ -14,17 +12,33 @@ interface TasksCardProps {
 	onEdit: (task: IToDo) => void;
 	onChangeIsCompleted: (task: IToDo) => void;
 	onTaskClick: (task: any) => void;
+	handleOpenMenu: (event: React.MouseEvent<HTMLButtonElement>, taskId: string) => void;
+	handleCloseMenu: (taskId: string) => void;
+	anchorEl: { [key: string]: null | HTMLElement };
 }
 
-export const TasksCard: React.FC<TasksCardProps> = ({ tasks, onDelete, onEdit, onChangeIsCompleted, onTaskClick }) => {
+export const TasksCard: React.FC<TasksCardProps> = ({
+	tasks,
+	onDelete,
+	onEdit,
+	onChangeIsCompleted,
+	onTaskClick,
+	handleCloseMenu,
+	handleOpenMenu,
+	anchorEl = {}
+}) => {
 	const { ButtonToClick } = tasksCardStyles;
 	return (
 		<Box sx={{ width: '95%' }}>
 			{tasks.map((task, index) => (
 				<React.Fragment key={task._id}>
-					<ListItem alignItems="flex-start">
+					<ListItem alignItems="center">
 						<ListItemAvatar>
-							<AssignmentIcon fontSize="large" sx={{ color: 'rgb(103, 104, 242)' }} />
+							{task.isCompleted ? (
+								<SysIcon fontSize="large" name="task" color="success" />
+							) : (
+								<SysIcon fontSize="large" name="schedule" sx={{ color: 'rgb(103, 104, 242)' }} />
+							)}
 						</ListItemAvatar>
 						<CheckBoxField value={task.isCompleted} onChange={() => onChangeIsCompleted(task)} />
 						<ListItemText
@@ -43,15 +57,28 @@ export const TasksCard: React.FC<TasksCardProps> = ({ tasks, onDelete, onEdit, o
 							}
 							sx={{ display: 'inline', textDecorationLine: task.isCompleted ? 'line-through' : 'none' }}
 						/>
+						<ButtonToClick
+							onClick={(event: React.MouseEvent<HTMLButtonElement>) => handleOpenMenu(event, task._id || '')}>
+							<MenuIcon />
+						</ButtonToClick>
 
-						<>
-							<ButtonToClick onClick={() => onDelete && onDelete(task)}>
-								<DeleteIcon />
-							</ButtonToClick>
-							<ButtonToClick onClick={() => onEdit && onEdit(task)} disabled={task.isCompleted}>
-								<EditIcon />
-							</ButtonToClick>
-						</>
+						<Menu
+							anchorEl={anchorEl[task._id ?? '']}
+							open={Boolean(anchorEl[task._id ?? ''])}
+							onClose={() => handleCloseMenu(task._id || '')}>
+							<MenuItem>
+								<ButtonToClick onClick={() => onDelete && onDelete(task)} sx={{ fontSize: '14px' }}>
+									Deletar
+									<SysIcon name="delete" sx={{ marginLeft: 1 }} />
+								</ButtonToClick>
+							</MenuItem>
+							<MenuItem>
+								<ButtonToClick onClick={() => onEdit(task)} disabled={task.isCompleted} sx={{ fontSize: '14px' }}>
+									Editar
+									<SysIcon name="edit" sx={{ marginLeft: 1 }} />
+								</ButtonToClick>
+							</MenuItem>
+						</Menu>
 					</ListItem>
 					<Divider variant="inset" component="li" sx={{ listStyle: 'none' }} />
 				</React.Fragment>
