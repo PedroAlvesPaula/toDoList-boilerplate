@@ -46,16 +46,28 @@ const ToDoDetailController = () => {
 	}, []);
 
 	const onSubmit = useCallback((doc: IToDo) => {
-		doc.ownerId = user?._id ?? '';
-
 		const selectedAction = state === 'create' ? 'insert' : 'update';
+
+		if (selectedAction === 'insert') {
+			doc.ownerId = user?._id ?? '';
+		}
+
+		if (selectedAction === 'update' && doc.ownerId !== user?._id) {
+			showNotification({
+				type: 'error',
+				title: 'Não foi possível editar a tarefa!',
+				message: 'Somente quem criou a tarefa consegue editá-la!'
+			});
+			return;
+		}
+
 		toDoApi[selectedAction](doc, (e: IMeteorError) => {
 			if (!e) {
 				closePage();
 				showNotification({
 					type: 'success',
 					title: 'Operação realizada!',
-					message: `A tarefa foi ${selectedAction === 'update' ? 'atualizado' : 'cadastrado'} com sucesso!`
+					message: `A tarefa foi ${selectedAction === 'update' ? 'atualizada' : 'cadastrada'} com sucesso!`
 				});
 			} else {
 				showNotification({
