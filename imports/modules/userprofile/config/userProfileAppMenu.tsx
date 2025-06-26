@@ -3,9 +3,9 @@ import { IAppMenu } from '../../../modules/modulesTypings';
 import SysIcon from '../../../ui/components/sysIcon/sysIcon';
 
 export const userProfileMenuItemList: (IAppMenu | null)[] = [
-	{
-		path: '/userProfile',
-		name: 'Usuários',
-		icon: <SysIcon name={'groups'} />
-	}
+	// {
+	// 	path: '/userProfile',
+	// 	name: 'Usuários',
+	// 	icon: <SysIcon name={'groups'} />
+	// }
 ];
