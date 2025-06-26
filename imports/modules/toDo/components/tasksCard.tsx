@@ -73,7 +73,12 @@ export const TasksCard: React.FC<TasksCardProps> = ({
 								</ButtonToClick>
 							</MenuItem>
 							<MenuItem>
-								<ButtonToClick onClick={() => onEdit(task)} disabled={task.isCompleted} sx={{ fontSize: '14px' }}>
+								<ButtonToClick
+									onClick={() => {
+										onEdit(task);
+									}}
+									disabled={task.isCompleted}
+									sx={{ fontSize: '14px' }}>
 									Editar
 									<SysIcon name="edit" sx={{ marginLeft: 1 }} />
 								</ButtonToClick>

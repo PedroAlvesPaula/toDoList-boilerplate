@@ -27,7 +27,7 @@ class ToDoServerApi extends ProductServerBase<IToDo> {
 						$or: [{ ownerId: userId }, { isPrivate: false }]
 					},
 					{
-						projection: { title: 1, isCompleted: 1, isPrivate: 1, createdat: 1, description: 1 }
+						projection: { title: 1, isCompleted: 1, isPrivate: 1, createdat: 1, description: 1, ownerId: 1 }
 					}
 				);
 			},
