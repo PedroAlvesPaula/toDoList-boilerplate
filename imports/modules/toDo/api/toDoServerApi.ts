@@ -20,10 +20,11 @@ class ToDoServerApi extends ProductServerBase<IToDo> {
 		this.addTransformedPublication(
 			'toDoDetail',
 			(filter = {}) => {
+				const userId = Meteor.userId();
 				return this.defaultListCollectionPublication(
 					{
 						...filter,
-						$or: [{ ownerId: Meteor.userId }, { isPrivate: false }]
+						$or: [{ ownerId: userId }, { isPrivate: false }]
 					},
 					{
 						projection: { title: 1, isCompleted: 1, isPrivate: 1, createdat: 1, description: 1 }
@@ -39,10 +40,11 @@ class ToDoServerApi extends ProductServerBase<IToDo> {
 		this.addTransformedPublication(
 			'toDoLastFive',
 			(filter = {}) => {
+				const userId = Meteor.userId();
 				return this.defaultListCollectionPublication(
 					{
 						...filter,
-						$or: [{ ownerId: Meteor.userId }, { isPrivate: false }]
+						$or: [{ ownerId: userId }, { isPrivate: false }]
 					},
 					{
 						sort: { lastupdate: -1, createdat: -1 },
@@ -62,10 +64,12 @@ class ToDoServerApi extends ProductServerBase<IToDo> {
 				const limit = 4;
 				const skip: number = page * limit;
 
+				const userId = Meteor.userId();
+
 				return this.defaultListCollectionPublication(
 					{
 						...filter,
-						$or: [{ ownerId: Meteor.userId }, { isPrivate: false }]
+						$or: [{ ownerId: userId }, { isPrivate: false }]
 					},
 					{
 						...options,
