@@ -55,8 +55,8 @@ const ToDoDetailView = () => {
 												readOnly: true,
 												optional: false,
 												options: () => [
-													{ value: 'Não concluída', label: 'Não concluída' },
-													{ value: 'Concluída', label: 'Concluída' }
+													{ value: false, label: 'Não concluída' },
+													{ value: true, label: 'Concluída' }
 												]
 											}
 										}
@@ -71,8 +71,8 @@ const ToDoDetailView = () => {
 									name="description"
 									placeholder="Acrescente informações sobre o item (3 linhas)"
 									multiline
-									rows={3}
 									showNumberCharactersTyped
+									rows={3}
 									max={200}
 								/>
 								<SysRadioButton name="isPrivate" childrenAlignment="row" size="small" />
