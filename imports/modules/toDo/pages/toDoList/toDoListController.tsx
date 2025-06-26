@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo } from 'react';
+import React, { useCallback, useContext, useMemo } from 'react';
 import ToDoListView from './toDoListView';
 import { nanoid } from 'nanoid';
 import { useNavigate } from 'react-router-dom';
@@ -8,7 +8,7 @@ import { IToDo } from '../../api/toDoSch';
 import { toDoApi } from '../../api/toDoApi';
 import { IMeteorError } from '/imports/typings/IMeteorError';
 import AppLayoutContext from '/imports/app/appLayoutProvider/appLayoutContext';
-import { set } from 'lodash';
+import AuthContext from '/imports/app/authProvider/authContext';
 
 interface IInitialConfig {
 	sortProperties: { field: string; sortAscending: boolean };
@@ -52,6 +52,8 @@ const ToDoListController = () => {
 	const toDoSchReduzido = { title, isCompleted, isPrivate, createdat: { type: Date, label: 'Criado em' } };
 	const navigate = useNavigate();
 
+	const { user } = useContext(AuthContext);
+
 	const { sortProperties, filter } = config;
 	const sort = {
 		[sortProperties.field]: sortProperties.sortAscending ? 1 : -1
@@ -81,7 +83,14 @@ const ToDoListController = () => {
 	}, []);
 
 	const onDeleteButtonClick = useCallback((row: any) => {
-		toDoApi.remove(row);
+		if (row.ownerId === user?._id) toDoApi.remove(row);
+		else {
+			showNotification({
+				type: 'error',
+				title: 'Não é possível excluir a tarefa!',
+				message: 'Somente quem criou a tarefa consergue excluíla!'
+			});
+		}
 	}, []);
 
 	const onChangeIsCompletedButtonClick = useCallback((doc: IToDo) => {
