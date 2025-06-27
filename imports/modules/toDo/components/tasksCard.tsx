@@ -47,7 +47,7 @@ export const TasksCard: React.FC<TasksCardProps> = ({
 							secondary={
 								<React.Fragment>
 									<Typography component={'span'} variant="body2">
-										{task.ownerName || 'Sem nome'}
+										Criada por: {task.ownerName || ' Sem nome'}
 									</Typography>
 									<br />
 									<Typography component={'span'} variant="body2">
