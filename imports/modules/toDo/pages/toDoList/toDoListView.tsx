@@ -24,6 +24,8 @@ const ToDoListView = () => {
 	};
 
 	const handleCloseMenu = (taskId: string) => {
+		const active = document.activeElement as HTMLElement | null;
+		if (active) active.blur();
 		setAnchorEl({ ...anchorEl, [taskId]: null });
 	};
 
