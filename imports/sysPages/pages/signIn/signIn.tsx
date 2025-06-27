@@ -41,25 +41,16 @@ const SignInPage: React.FC = () => {
 	return (
 		<Container>
 			<Content>
-				<Typography variant="h1" display={'inline-flex'} gap={1}>
-					<Typography variant="inherit" color={(theme) => theme.palette.sysText?.tertiary}>
-						{'{'}
-					</Typography>
-					Boilerplate
-					<Typography variant="inherit" color="sysText.tertiary">
-						{'}'}
-					</Typography>
+				<Typography variant="h1" display={'inline-flex'} gap={1} textAlign="center">
+					Seja bem vindo!
 				</Typography>
 
 				<FormContainer>
-					<Typography variant="h5">Acesse o sistema</Typography>
+					<Typography variant="h5">Faça login</Typography>
 					<SysForm schema={signInSchema} onSubmit={handleSubmit} debugAlerts={false}>
 						<FormWrapper>
 							<SysTextField name="email" label="Email" fullWidth placeholder="Digite seu email" />
 							<SysTextField label="Senha" fullWidth name="password" placeholder="Digite sua senha" type="password" />
-							<Button variant="text" sx={{ alignSelf: 'flex-end' }} onClick={handleForgotPassword}>
-								<Typography variant="link">Esqueci minha senha</Typography>
-							</Button>
 							<Box />
 						</FormWrapper>
 						<SysFormButton variant="contained" color="primary" endIcon={<SysIcon name={'arrowForward'} />}>
@@ -67,8 +58,6 @@ const SignInPage: React.FC = () => {
 						</SysFormButton>
 					</SysForm>
 				</FormContainer>
-
-				<Box component="img" src="/images/wireframe/synergia-logo.svg" sx={{ width: '100%', maxWidth: '400px' }} />
 			</Content>
 		</Container>
 	);

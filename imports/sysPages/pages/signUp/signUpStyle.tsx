@@ -14,31 +14,74 @@
 
  */
 
-import { Padding } from '@mui/icons-material';
-import shadows from '@mui/material/styles/shadows';
+import React from 'react';
+import Paper from '@mui/material/Paper';
+import { styled } from '@mui/material/styles';
+import Box from '@mui/material/Box';
+import { sysSizing } from '../../../ui/materialui/styles';
 
-export const signUpStyle = {
-	containerSignUp: {
+interface ISignUpStyles {
+	Container: React.ElementType;
+	Content: React.ElementType;
+	FormContainer: React.ElementType;
+	FormWrapper: React.ElementType;
+	HasAccount: React.ElementType;
+}
+
+export const signUpStyle: ISignUpStyles = {
+	Container: styled(Box)(({ theme }) => ({
+		minHeight: '100vh',
 		width: '100%',
-		maxWidth: 400,
-		marginTop: 64
-	},
-	labelRegisterSystem: {
-		textAlign: 'center',
+		backgroundColor: theme.palette.primary.main,
+		color: theme.palette.primary.contrastText,
+		position: 'relative',
+
+		[theme.breakpoints.up('md')]: {
+			backgroundImage: 'url(/images/wireframe/background-synergia.svg)',
+			backgroundSize: 'cover',
+			backgroundPosition: 'right'
+		}
+	})),
+	Content: styled(Box)(({ theme }) => ({
+		width: '100%',
+		height: '100%',
+		display: 'flex',
+		flexDirection: 'column',
+		justifyContent: 'space-evenly',
+		alignItems: 'center',
+		gap: theme.spacing(6),
+		padding: `${sysSizing.spacingFixedLg} ${sysSizing.spacingFixedXl}`,
+
+		[theme.breakpoints.up('md')]: {
+			width: 'auto',
+			height: 'auto',
+			position: 'absolute',
+			top: '50%',
+			left: '10%',
+			transform: 'translateY(-50%)'
+		}
+	})),
+	FormContainer: styled(Paper)(({ theme }) => ({
+		width: '100%',
+		padding: `${sysSizing.spacingFixedLg} ${sysSizing.spacingFixedXl}`,
+		borderRadius: sysSizing.radiusLg,
+		boxShadow: theme.shadows[3],
+		gap: sysSizing.spacingFixedXl,
+		display: 'flex',
+		flexDirection: 'column',
+		justifyContent: 'flex-start',
+		alignItems: 'center',
+		maxWidth: '400px'
+	})),
+	FormWrapper: styled(Box)(({ theme }) => ({
+		width: '100%',
 		display: 'flex',
 		flexDirection: 'column',
 		justifyContent: 'center',
 		alignItems: 'center',
-		Padding: '16px'
-	},
-	containerButtonOptions: {
-		display: 'flex',
-		flexDirection: 'row',
-		justifyContent: 'space-around',
-		margin: '16px 0'
-	},
-	containerRouterSignIn: {
-		color: '#444',
+		gap: theme.spacing(2)
+	})),
+	HasAccount: styled(Box)(({ theme }) => ({
 		textAlign: 'center'
-	}
+	}))
 };

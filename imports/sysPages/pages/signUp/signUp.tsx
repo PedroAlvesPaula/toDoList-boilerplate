@@ -15,6 +15,9 @@ import { signUpStyle } from './signUpStyle';
 import Box from '@mui/material/Box';
 import { IUserProfile } from '/imports/modules/userprofile/api/userProfileSch';
 import schema from './signUpSchema';
+import { Typography } from '@mui/material';
+import SysForm from '/imports/ui/components/sysForm/sysForm';
+import SysFormButton from '/imports/ui/components/sysFormFields/sysFormButton/sysFormButton';
 
 interface ISignUp {
 	showNotification: (options?: Object) => void;
@@ -24,6 +27,8 @@ interface ISignUp {
 export const SignUp = (props: ISignUp) => {
 	const { showNotification } = props;
 	const navigate = useNavigate();
+
+	const { Container, Content, FormContainer, FormWrapper, HasAccount } = signUpStyle;
 
 	const handleSubmit = (doc: { email: string; password: string; username: string }) => {
 		const { email, password, username } = doc;
@@ -51,41 +56,51 @@ export const SignUp = (props: ISignUp) => {
 	};
 
 	return (
-		<Container style={signUpStyle.containerSignUp}>
-			<Box sx={signUpStyle.labelRegisterSystem}>
-				<h2>Crie sua conta e aproveite!</h2>
-			</Box>
-			<SimpleForm schema={schema} onSubmit={handleSubmit}>
-				<SysTextField
-					id="Username"
-					label="Nome do usuario"
-					fullWidth
-					name="username"
-					type="text"
-					placeholder="Digite seu nome"
-				/>
-				<SysTextField id="Email" label="Email" fullWidth name="email" type="email" placeholder="Digite um email" />
-				<SysTextField
-					id="Senha"
-					label="Senha"
-					fullWidth
-					name="password"
-					placeholder="Digite uma senha"
-					type="password"
-				/>
-
-				<Box sx={signUpStyle.containerButtonOptions}>
-					<Button color={'primary'} variant={'outlined'} id="submit">
-						Cadastrar
-					</Button>
-				</Box>
-			</SimpleForm>
-			<Box sx={signUpStyle.containerRouterSignIn}>
-				Já tem uma conta? Faça login clicando{' '}
-				<Link to="/signin" color={'secondary'}>
-					aqui
-				</Link>
-			</Box>
+		<Container>
+			<Content>
+				<Typography variant="h1" display={'inline-flex'} gap={1} textAlign="center" fontSize="28px">
+					Crie sua conta e aproveite
+				</Typography>
+				<FormContainer>
+					<SysForm schema={schema} onSubmit={handleSubmit}>
+						<FormWrapper>
+							<SysTextField
+								id="Username"
+								label="Nome do usuario"
+								fullWidth
+								name="username"
+								type="text"
+								placeholder="Digite seu nome"
+							/>
+							<SysTextField
+								id="Email"
+								label="Email"
+								fullWidth
+								name="email"
+								type="email"
+								placeholder="Digite um email"
+							/>
+							<SysTextField
+								id="Senha"
+								label="Senha"
+								fullWidth
+								name="password"
+								placeholder="Digite uma senha"
+								type="password"
+							/>
+						</FormWrapper>
+						<SysFormButton variant="contained" color="primary">
+							Entrar
+						</SysFormButton>
+					</SysForm>
+				</FormContainer>
+				<HasAccount>
+					Já tem uma conta? Faça login clicando{' '}
+					<Link to="/signin" color={'secondary'}>
+						aqui
+					</Link>
+				</HasAccount>
+			</Content>
 		</Container>
 	);
 };
