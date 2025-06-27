@@ -64,7 +64,7 @@ const ToDoDetailController = () => {
 
 		toDoApi[selectedAction](doc, (e: IMeteorError) => {
 			if (!e) {
-				closeModal();
+				closePage();
 				showNotification({
 					type: 'success',
 					title: 'Operação realizada!',
@@ -72,6 +72,7 @@ const ToDoDetailController = () => {
 					sxMap: { container: { width: { xs: '90%', sm: '90%' }, minWidth: '300px' } }
 				});
 			} else {
+				closePage();
 				showNotification({
 					type: 'error',
 					title: 'Operação não realizada!',
