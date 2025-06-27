@@ -13,9 +13,6 @@ const ToDoWelcomeView = () => {
 	return (
 		<Container>
 			<Title variant="h2">Atividades recentes</Title>
-			<SysButton size="small" onClick={() => context.navigate('/toDo/tasks')} sx={{ marginTop: '16px' }}>
-				Minhas tarefas
-			</SysButton>
 			{context.fiveLastTasks.map((item, index) => (
 				<Card key={index}>
 					<CardContent>
@@ -28,7 +25,7 @@ const ToDoWelcomeView = () => {
 									</Title>
 								}
 								secondary={
-									<Description variant="body2" color="text.secondary">
+									<Description variant="body2" color="text.secondary" component={'span'}>
 										{item.isCompleted ? 'Tarefa concluída' : 'Tarefa pendente'}
 									</Description>
 								}
