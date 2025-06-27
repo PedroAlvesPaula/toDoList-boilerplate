@@ -24,7 +24,15 @@ const ToDoDetailView = () => {
 	return (
 		<>
 			{isView ? (
-				<ViewTask closePage={controller.closePage} document={controller.document} />
+				<ViewTask
+					closePage={() => {
+						if (document.activeElement instanceof HTMLElement) {
+							document.activeElement.blur();
+						}
+						controller.closePage();
+					}}
+					document={controller.document}
+				/>
 			) : (
 				<Container>
 					<Body>
