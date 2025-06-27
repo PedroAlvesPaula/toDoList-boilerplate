@@ -90,7 +90,11 @@ export const ViewTask: React.FC<IViewTaskProps> = ({ ...props }: IViewTaskProps)
 					</Table>
 				</TableContainer>
 			</PaperContainer>
-			<IconButton onClick={() => closePage()} sx={{ alignSelf: 'left', fontSize: '16px' }}>
+			<IconButton
+				onClick={() => {
+					closePage();
+				}}
+				sx={{ alignSelf: 'left', fontSize: '16px' }}>
 				<SysIcon name="close" /> Fechar
 			</IconButton>
 		</Container>
