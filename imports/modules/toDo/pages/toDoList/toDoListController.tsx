@@ -127,8 +127,15 @@ const ToDoListController = () => {
 	}, []);
 
 	const onDeleteButtonClick = useCallback((row: any) => {
-		if (row.ownerId === user?._id) toDoApi.remove(row);
-		else {
+		if (row.ownerId === user?._id) {
+			toDoApi.remove(row);
+			showNotification({
+				type: 'success',
+				title: 'Tarefa excluída com sucesso!',
+				message: 'A tarefa foi excluída com sucesso!',
+				sxMap: { container: { width: { xs: '90%', sm: '90%' }, minWidth: '300px' } }
+			});
+		} else {
 			showNotification({
 				type: 'error',
 				title: 'Não é possível excluir a tarefa!',
