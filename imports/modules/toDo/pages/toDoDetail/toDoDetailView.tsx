@@ -29,14 +29,9 @@ const ToDoDetailView = () => {
 				<Container>
 					<Body>
 						<Header>
-							<Typography variant="h5" sx={{ flexGrow: 1 }}>
+							<Typography variant="h5" sx={{ flexGrow: 1 }} textAlign="center">
 								{isCreate ? 'Adicionar tarefa' : 'Editar tarefa'}
 							</Typography>
-							{isEdit && (
-								<IconButton onClick={() => controller.changeToEdit(controller.document._id || '')}>
-									<SysIcon name={'edit'} />
-								</IconButton>
-							)}
 						</Header>
 						<SysForm
 							mode={state as 'create' | 'edit'}
