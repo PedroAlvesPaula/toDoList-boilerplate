@@ -33,7 +33,7 @@ export const TasksCard: React.FC<TasksCardProps> = ({
 			{tasks.map((task, index) => (
 				<React.Fragment key={task._id}>
 					<ListItem alignItems="center">
-						<ListItemAvatar>
+						<ListItemAvatar sx={{ width: '40px' }}>
 							{task.isCompleted ? (
 								<SysIcon fontSize="large" name="task" color="success" />
 							) : (
