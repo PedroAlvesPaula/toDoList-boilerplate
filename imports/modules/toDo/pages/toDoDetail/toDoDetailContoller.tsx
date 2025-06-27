@@ -56,7 +56,8 @@ const ToDoDetailController = () => {
 			showNotification({
 				type: 'error',
 				title: 'Não foi possível editar a tarefa!',
-				message: 'Somente quem criou a tarefa consegue editá-la!'
+				message: 'Somente quem criou a tarefa consegue editá-la!',
+				sxMap: { container: { width: { xs: '90%', sm: '90%' }, minWidth: '300px' } }
 			});
 			return;
 		}
@@ -67,13 +68,15 @@ const ToDoDetailController = () => {
 				showNotification({
 					type: 'success',
 					title: 'Operação realizada!',
-					message: `A tarefa foi ${selectedAction === 'update' ? 'atualizada' : 'cadastrada'} com sucesso!`
+					message: `A tarefa foi ${selectedAction === 'update' ? 'atualizada' : 'cadastrada'} com sucesso!`,
+					sxMap: { container: { width: { xs: '90%', sm: '90%' }, minWidth: '300px' } }
 				});
 			} else {
 				showNotification({
 					type: 'error',
 					title: 'Operação não realizada!',
-					message: `Erro ao realizar a operação: ${e.reason}`
+					message: `Erro ao realizar a operação: ${e.reason}`,
+					sxMap: { container: { width: { xs: '90%', sm: '90%' }, minWidth: '300px' } }
 				});
 			}
 		});

@@ -132,7 +132,8 @@ const ToDoListController = () => {
 			showNotification({
 				type: 'error',
 				title: 'Não é possível excluir a tarefa!',
-				message: 'Somente quem criou a tarefa consergue excluíla!'
+				message: 'Somente quem criou a tarefa consergue excluíla!',
+				sxMap: { container: { width: { xs: '90%', sm: '90%' }, minWidth: '300px' } }
 			});
 		}
 	}, []);
@@ -146,13 +147,15 @@ const ToDoListController = () => {
 				showNotification({
 					type: 'error',
 					title: 'Operação não realizada!',
-					message: `Erro ao realizar a operação: ${e.reason}`
+					message: `Erro ao realizar a operação: ${e.reason}`,
+					sxMap: { container: { width: { xs: '90%', sm: '90%' }, minWidth: '300px' } }
 				});
 			} else {
 				showNotification({
 					type: 'success',
 					title: 'Operação realizada!',
-					message: 'O estágio da tarefa foi atualizado com sucesso!'
+					message: 'O estágio da tarefa foi atualizado com sucesso!',
+					sxMap: { container: { width: { xs: '90%', sm: '90%' }, minWidth: '300px' } }
 				});
 			}
 		});
