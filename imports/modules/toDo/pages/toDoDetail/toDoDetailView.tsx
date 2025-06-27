@@ -8,10 +8,9 @@ import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
 import { SysSelectField } from '/imports/ui/components/sysFormFields/sysSelectField/sysSelectField';
-import { SysRadioButton } from '/imports/ui/components/sysFormFields/sysRadioButton/sysRadioButton';
 import SysFormButton from '/imports/ui/components/sysFormFields/sysFormButton/sysFormButton';
 import SysIcon from '/imports/ui/components/sysIcon/sysIcon';
-import ViewTask from '../../components/viewTask';
+import { ViewTask } from '../../components/viewTask';
 import SysSwitch from '/imports/ui/components/sysFormFields/sysSwitch/sysSwitch';
 
 const ToDoDetailView = () => {
@@ -25,22 +24,19 @@ const ToDoDetailView = () => {
 	return (
 		<>
 			{isView ? (
-				<ViewTask
-					closePage={controller.closePage}
-					schema={controller.schema}
-					document={controller.document}
-					loading={controller.loading}
-				/>
+				<ViewTask closePage={controller.closePage} document={controller.document} />
 			) : (
 				<Container>
 					<Body>
 						<Header>
 							<Typography variant="h5" sx={{ flexGrow: 1 }}>
-								{isCreate ? 'Adicionar tarefa' : isEdit ? 'Editar tarefa' : controller.document.title}
+								{isCreate ? 'Adicionar tarefa' : 'Editar tarefa'}
 							</Typography>
-							<IconButton onClick={() => controller.changeToEdit(controller.document._id || '')}>
-								<SysIcon name={'edit'} />
-							</IconButton>
+							{isEdit && (
+								<IconButton onClick={() => controller.changeToEdit(controller.document._id || '')}>
+									<SysIcon name={'edit'} />
+								</IconButton>
+							)}
 						</Header>
 						<SysForm
 							mode={state as 'create' | 'edit'}

@@ -31,6 +31,7 @@ interface IToDoListContollerContext {
 	setConfig: React.Dispatch<React.SetStateAction<IInitialConfig>>;
 	config: IInitialConfig;
 	onTaskClick?: (task: any) => void;
+	onEditButtonClick: (task: IToDo) => void;
 }
 
 export const ToDoListControllerContext = React.createContext<IToDoListContollerContext>(
@@ -77,9 +78,52 @@ const ToDoListController = () => {
 		};
 	}, [config]);
 
+	const sx = {
+		width: {
+			xs: '90%',
+			sm: '90%'
+			// md: '60%',
+			// lg: '60%'
+		},
+		maxWidth: '600px',
+		maxHeight: '800px',
+		overflowY: 'auto',
+		borderRadius: '10px',
+		position: 'fixed',
+		top: '50%',
+		left: '50%',
+		transform: 'translate(-50%, -50%)',
+		display: 'flex',
+		flexDirection: 'column',
+		margin: 0
+	};
+
 	const onAddButtonClick = useCallback(() => {
 		const newDocumentId = nanoid();
-		navigate(`/toDo/create/${newDocumentId}`);
+		showModal({
+			title: 'Editar grupo de sensores',
+			urlPath: `/toDo/create/${newDocumentId}`,
+			sx: sx,
+			onClose: () => closeModal()
+		});
+	}, []);
+
+	const onTaskClick = useCallback((task: any) => {
+		showModal({
+			title: 'Editar grupo de sensores',
+			urlPath: '/toDo/view/' + task._id,
+			sx: sx,
+			onClose: () => closeModal()
+		});
+	}, []);
+
+	const onEditButtonClick = useCallback((task: IToDo) => {
+		showModal({
+			title: 'Editar grupo de sensores',
+			urlPath: `/toDo/edit/${task._id}`,
+			sx: sx,
+			onClose: () => closeModal()
+		});
 	}, []);
 
 	const onDeleteButtonClick = useCallback((row: any) => {
@@ -140,28 +184,6 @@ const ToDoListController = () => {
 		setConfig((prev) => ({ ...prev, filter: { ...prev.filter, isCompleted: value } }));
 	}, []);
 
-	const onTaskClick = useCallback((task: any) => {
-		showModal({
-			title: 'Editar grupo de sensores',
-			urlPath: '/toDo/view/' + task._id,
-			sx: {
-				width: '90%',
-				maxWidth: '727px',
-				height: '90vh',
-				maxHeight: '856px',
-				overflowY: 'auto',
-				borderRadius: '10px',
-				position: 'fixed',
-				top: '50%',
-				left: '50%',
-				transform: 'translate(-50%, -50%)',
-				display: 'flex',
-				flexDirection: 'column'
-			},
-			onClose: () => closeModal()
-		});
-	}, []);
-
 	const providerValues: IToDoListContollerContext = useMemo(
 		() => ({
 			onAddButtonClick,
@@ -174,7 +196,8 @@ const ToDoListController = () => {
 			onChangeIsCompletedButtonClick: onChangeIsCompletedButtonClick,
 			setConfig: setConfig,
 			config: config,
-			onTaskClick: onTaskClick
+			onTaskClick: onTaskClick,
+			onEditButtonClick: onEditButtonClick
 		}),
 		[toDos, loading]
 	);

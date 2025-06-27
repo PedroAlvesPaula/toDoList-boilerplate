@@ -26,7 +26,7 @@ export const ToDoDetailControllerContext = createContext<IToDoDetailContollerCon
 const ToDoDetailController = () => {
 	const navigate = useNavigate();
 	const { id, state } = useContext(ToDoModuleContext);
-	const { showNotification } = useContext(AppLayoutContext);
+	const { showNotification, closeModal } = useContext(AppLayoutContext);
 	const { user } = useContext(AuthContext);
 
 	const { document, loading } = useTracker(() => {
@@ -39,7 +39,7 @@ const ToDoDetailController = () => {
 	}, [id]);
 
 	const closePage = useCallback(() => {
-		navigate('/toDo/tasks');
+		closeModal();
 	}, []);
 	const changeToEdit = useCallback((id: string) => {
 		navigate(`/toDo/edit/${id}`);
@@ -63,7 +63,7 @@ const ToDoDetailController = () => {
 
 		toDoApi[selectedAction](doc, (e: IMeteorError) => {
 			if (!e) {
-				closePage();
+				closeModal();
 				showNotification({
 					type: 'success',
 					title: 'Operação realizada!',

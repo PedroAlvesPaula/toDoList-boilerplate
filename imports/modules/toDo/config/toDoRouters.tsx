@@ -8,7 +8,8 @@ export const toDoRouterList: (IRoute | null)[] = [
 		path: '/toDo/:screenState/:toDoId',
 		component: ToDoContainer,
 		isProtected: true,
-		resources: [Recurso.TODO_VIEW]
+		resources: [Recurso.TODO_VIEW],
+		templateVariant: 'None'
 	},
 	{
 		path: '/toDo/:screenState',

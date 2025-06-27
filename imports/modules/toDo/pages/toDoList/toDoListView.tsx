@@ -45,7 +45,7 @@ const ToDoListView = () => {
 			<TasksCard
 				tasks={controller.todoList}
 				onDelete={controller.onDeleteButtonClick}
-				onEdit={(task) => navigate('/toDo/edit/' + task._id)}
+				onEdit={controller.onEditButtonClick}
 				onChangeIsCompleted={controller.onChangeIsCompletedButtonClick}
 				onTaskClick={controller.onTaskClick ?? (() => {})}
 				handleCloseMenu={handleCloseMenu}

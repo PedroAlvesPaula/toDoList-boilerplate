@@ -18,7 +18,8 @@ const ToDoDetailStyles: IToDoDetailStyles = {
 		flexDirection: 'column',
 		justifyContent: 'center',
 		alignItems: 'center',
-		width: '100vw',
+		width: '100%',
+		height: '100%',
 		gap: sysSizing.spacingFixedMd
 	})),
 	Header: styled(Box)({

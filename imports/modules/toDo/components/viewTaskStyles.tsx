@@ -1,58 +1,49 @@
-import { ElementType } from 'react';
-import { styled } from '@mui/material/styles';
+import React from 'react';
 import Box, { BoxProps } from '@mui/material/Box';
-import { sysSizing } from '/imports/ui/materialui/styles';
-import { SysSectionPaddingXY } from '/imports/ui/layoutComponents/sysLayoutComponents';
+import { styled } from '@mui/material/styles';
+import { PaperProps, TableCell, TableCellProps, TableRow, TableRowProps } from '@mui/material';
+import Paper from '@mui/material/Paper';
 
-interface IToDoDetailStyles {
-	Container: ElementType<BoxProps>;
-	Header: ElementType<BoxProps>;
-	Body: ElementType<BoxProps>;
-	Footer: ElementType<BoxProps>;
-	FormColumn: ElementType<BoxProps>;
+interface IViewTaskStyles {
+	Container: React.ElementType<BoxProps>;
+	PaperContainer: React.ElementType<PaperProps>;
+	TableContainer: React.ElementType<BoxProps>;
+	RowTable: React.ElementType<TableRowProps>;
+	CellTable: React.ElementType<TableCellProps>;
 }
 
-const ToDoDetailStyles: IToDoDetailStyles = {
-	Container: styled(SysSectionPaddingXY)(() => ({
-		display: 'flex',
-		flexDirection: 'column',
-		justifyContent: 'center',
-		alignItems: 'center',
-		width: '100vw',
-		gap: sysSizing.spacingFixedMd
-	})),
-	Header: styled(Box)({
-		display: 'flex',
-		flexDirection: 'row',
-		justifyContent: 'space-between',
-		alignItems: 'center',
-		width: '100%'
-	}),
-	Body: styled(Box)(({ theme }) => ({
-		display: 'flex',
-		flexDirection: 'column',
-		justifyContent: 'flex-start',
-		alignItems: 'flex-start',
-		maxwidth: '600px',
-		gap: sysSizing.spacingFixedMd
-	})),
-	Footer: styled(Box)({
-		display: 'flex',
-		flexDirection: 'row',
-		justifyContent: 'flex-end',
-		alignItems: 'center',
-		maxwidth: '600px',
-		gap: sysSizing.spacingRemMd,
-		marginTop: '40px'
-	}),
-	FormColumn: styled(Box)({
+const ViewTaskStyles: IViewTaskStyles = {
+	Container: styled(Box)(({ theme }) => ({
 		width: '100%',
 		display: 'flex',
 		flexDirection: 'column',
-		justifyContent: 'flex-start',
-		alignItems: 'flex-start',
-		gap: sysSizing.spacingFixedLg
-	})
+		alignItems: 'center',
+		margin: '32px 0 32px 0'
+	})),
+
+	PaperContainer: styled(Paper)(({ theme }) => ({
+		minWidth: 450,
+		margin: 'auto',
+		m: 4,
+		p: 3,
+		borderRadius: 3,
+		[theme.breakpoints.down('sm')]: {
+			minWidth: '90%'
+		},
+		boxShadow: 'none',
+		border: 'none'
+	})),
+	TableContainer: styled(Box)(({ theme }) => ({
+		display: 'flex',
+		flexDirection: 'column',
+		alignItems: 'center',
+		gap: 2
+	})),
+	RowTable: styled(TableRow)(({ theme }) => ({
+		width: '100%',
+		justifyContent: 'space-between'
+	})),
+	CellTable: styled(TableCell)(({ theme }) => ({}))
 };
 
-export default ToDoDetailStyles;
+export default ViewTaskStyles;
