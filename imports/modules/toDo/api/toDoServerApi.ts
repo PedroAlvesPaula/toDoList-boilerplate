@@ -90,8 +90,6 @@ class ToDoServerApi extends ProductServerBase<IToDo> {
 			async (doc: IToDo) => {
 				const user = await userprofileServerApi.findOne({ _id: doc.ownerId });
 
-				console.log('User', user);
-
 				if (user) {
 					doc.ownerName = user.username;
 				}
