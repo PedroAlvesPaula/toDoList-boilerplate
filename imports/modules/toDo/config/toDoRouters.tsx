@@ -24,7 +24,7 @@ export const toDoRouterList: (IRoute | null)[] = [
 		resources: [Recurso.TODO_VIEW]
 	},
 	{
-		path: '/toDo/welcome',
+		path: '/',
 		component: ToDoWelcomeController,
 		isProtected: true,
 		resources: [Recurso.TODO_VIEW]
