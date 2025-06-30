@@ -23,13 +23,14 @@ interface IToDoWelcomeStyles {
 }
 
 const toDoWelcomeStyles: IToDoWelcomeStyles = {
-	Container: styled(Grid)(() => ({
+	Container: styled(Grid)(({ theme }) => ({
 		boxSizing: 'border-box' as const,
 		width: '100vw',
 		display: 'flex',
 		alignItems: 'center',
 		flexDirection: 'column' as const,
-		marginTop: '32px'
+		paddingTop: '32px',
+		backgroundColor: theme.palette.secondary.light
 	})),
 	Card: styled(Card)(({ theme }) => ({
 		width: '50vw',
@@ -40,10 +41,11 @@ const toDoWelcomeStyles: IToDoWelcomeStyles = {
 		},
 		boxShadow: 'none',
 		borderRadius: '0px',
-		border: 'none'
+		border: 'none',
+		backgroundColor: theme.palette.secondary.light
 	})),
 
-	CardContent: styled(Card)({
+	CardContent: styled(Card)(({ theme }) => ({
 		width: 'stretch',
 		minHeight: 150,
 		display: 'flex',
@@ -51,8 +53,10 @@ const toDoWelcomeStyles: IToDoWelcomeStyles = {
 		justifyContent: 'space-between',
 		flexDirection: 'row' as const,
 		margin: '16px 0 16px 0',
-		textAlign: 'right' as const
-	}),
+		textAlign: 'right' as const,
+		color: theme.palette.text.primary,
+		boxShadow: 'none'
+	})),
 
 	InformationCard: styled(CardContent)(() => ({
 		textAlign: 'center' as const,

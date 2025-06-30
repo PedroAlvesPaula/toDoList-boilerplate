@@ -17,13 +17,15 @@ const ToDoWelcomeView = () => {
 				onClick={() => context.navigate('/toDo/tasks')}
 				size="small"
 				sx={{ margin: '32px 0 16px 0' }}
-				stylevariant="primary">
+				stylevariant="secondary">
 				Minhas tarefas
 			</SysButton>
 			{context.fiveLastTasks.map((item, index) => (
 				<Card key={index}>
-					<CardContent>
-						<AssignmentIcon fontSize="large" />
+					<CardContent
+						sx={(theme) => ({
+							backgroundColor: item.isCompleted ? theme.palette.tertiary.light : theme.palette.secondary.main
+						})}>
 						<ListItem sx={{ textAlign: 'center' }}>
 							<ListItemText
 								primary={

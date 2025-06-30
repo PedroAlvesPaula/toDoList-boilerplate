@@ -10,7 +10,7 @@ export const toDoMenuItemList: (IAppMenu | null)[] = [
 		icon: <ListAltIcon />
 	},
 	{
-		path: '/toDo/welcome',
+		path: '/',
 		name: 'Início',
 		icon: <Home />
 	}

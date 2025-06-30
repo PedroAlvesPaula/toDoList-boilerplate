@@ -11,7 +11,7 @@ interface IToDoListStyles {
 }
 
 const ToDoListStyles: IToDoListStyles = {
-	Container: styled(SysSectionPaddingXY)(() => ({
+	Container: styled(SysSectionPaddingXY)(({ theme }) => ({
 		display: 'flex',
 		flexDirection: 'column',
 		justifyContent: 'flex-start',
@@ -20,7 +20,8 @@ const ToDoListStyles: IToDoListStyles = {
 		height: '100vh',
 		overflow: 'auto',
 		gap: sysSizing.spacingFixedMd,
-		marginBottom: sysSizing.contentFabDistance
+		marginBottom: sysSizing.contentFabDistance,
+		backgroundColor: theme.palette.secondary.light
 	})),
 	LoadingContainer: styled(Box)(({ theme }) => ({
 		width: '100%',
@@ -29,7 +30,8 @@ const ToDoListStyles: IToDoListStyles = {
 		justifyContent: 'center',
 		alignItems: 'center',
 		flexDirection: 'column',
-		gap: theme.spacing(2)
+		gap: theme.spacing(2),
+		backgroundColor: theme.palette.secondary.light
 	})),
 	SearchContainer: styled(Box)(({ theme }) => ({
 		width: '100%',
@@ -41,7 +43,8 @@ const ToDoListStyles: IToDoListStyles = {
 		gap: sysSizing.spacingFixedMd,
 		[theme.breakpoints.down('sm')]: {
 			flexDirection: 'column'
-		}
+		},
+		backgroundColor: theme.palette.secondary.light
 	}))
 };
 
