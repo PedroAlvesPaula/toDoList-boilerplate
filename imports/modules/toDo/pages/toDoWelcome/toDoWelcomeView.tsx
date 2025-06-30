@@ -13,7 +13,11 @@ const ToDoWelcomeView = () => {
 	return (
 		<Container>
 			<Title variant="h2">Atividades recentes</Title>
-			<SysButton onClick={() => context.navigate('/toDo/tasks')} size="small" sx={{ marginTop: '32px' }}>
+			<SysButton
+				onClick={() => context.navigate('/toDo/tasks')}
+				size="small"
+				sx={{ margin: '32px 0 16px 0' }}
+				stylevariant="primary">
 				Minhas tarefas
 			</SysButton>
 			{context.fiveLastTasks.map((item, index) => (

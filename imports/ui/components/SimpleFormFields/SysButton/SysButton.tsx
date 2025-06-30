@@ -14,7 +14,7 @@ interface ISysButtonProps extends MuiButtonProps {
 	 * Propridade exclusiva, gera botões personlizados com base no tema do projeto.
 	 * @default primary
 	 */
-	styleVariant?: 'primary' | 'secondary' | 'none';
+	stylevariant?: 'primary' | 'secondary' | 'none';
 	/**Texto a ser exibido */
 	text?: string;
 	/**
