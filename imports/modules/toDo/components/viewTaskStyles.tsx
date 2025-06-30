@@ -31,13 +31,15 @@ const ViewTaskStyles: IViewTaskStyles = {
 			minWidth: '90%'
 		},
 		boxShadow: 'none',
-		border: 'none'
+		border: 'none',
+		backgroundColor: theme.palette.secondary.light
 	})),
 	TableContainer: styled(Box)(({ theme }) => ({
 		display: 'flex',
 		flexDirection: 'column',
 		alignItems: 'center',
-		gap: 2
+		gap: 2,
+		backgroundColor: theme.palette.secondary.light
 	})),
 	RowTable: styled(TableRow)(({ theme }) => ({
 		width: '100%',
