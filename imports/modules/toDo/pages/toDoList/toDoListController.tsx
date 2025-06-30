@@ -78,7 +78,7 @@ const ToDoListController = () => {
 		};
 	}, [config]);
 
-	const sx = {
+	const sx = (theme: any) => ({
 		width: {
 			xs: '90%',
 			sm: '90%'
@@ -95,8 +95,9 @@ const ToDoListController = () => {
 		transform: 'translate(-50%, -50%)',
 		display: 'flex',
 		flexDirection: 'column',
-		margin: 0
-	};
+		margin: 0,
+		backgroundColor: theme.palette.secondary.light
+	});
 
 	const onAddButtonClick = useCallback(() => {
 		const newDocumentId = nanoid();

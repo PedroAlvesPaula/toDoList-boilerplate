@@ -37,6 +37,9 @@ const ToDoListView = () => {
 					placeholder="Pesquisar pela descrição"
 					onChange={controller.onChangeTextField}
 					startAdornment={<SysIcon name={'search'} />}
+					sxMap={{
+						textField: { '& .MuiInputBase-root': { backgroundColor: (theme) => theme.palette.secondary.light } }
+					}}
 				/>
 			</SearchContainer>
 			<TasksCard

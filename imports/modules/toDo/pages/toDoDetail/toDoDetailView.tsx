@@ -65,8 +65,23 @@ const ToDoDetailView = () => {
 							onSubmit={controller.onSubmit}
 							loading={controller.loading}>
 							<FormColumn>
-								<SysTextField name="title" placeholder="Ex.: Item XX" />
-								<SysSelectField name="isCompleted" placeholder="Selecionar" />
+								<SysTextField
+									name="title"
+									placeholder="Ex.: Item XX"
+									sxMap={{
+										textField: { '& .MuiInputBase-root': { backgroundColor: (theme) => theme.palette.secondary.light } }
+									}}
+								/>
+								<SysSelectField
+									name="isCompleted"
+									placeholder="Selecionar"
+									sxMap={{
+										container: {
+											'& .MuiInputBase-root': { backgroundColor: (theme) => theme.palette.secondary.light }
+										},
+										menuProps: { '& .MuiPaper-root': { backgroundColor: (theme) => theme.palette.secondary.light } }
+									}}
+								/>
 								<SysTextField
 									name="description"
 									placeholder="Acrescente informações sobre o item (3 linhas)"
@@ -74,6 +89,9 @@ const ToDoDetailView = () => {
 									showNumberCharactersTyped
 									rows={3}
 									max={200}
+									sxMap={{
+										textField: { '& .MuiInputBase-root': { backgroundColor: (theme) => theme.palette.secondary.light } }
+									}}
 								/>
 								<SysSwitch name="isPrivate" size="small" />
 							</FormColumn>
