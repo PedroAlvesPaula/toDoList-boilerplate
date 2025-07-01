@@ -30,16 +30,16 @@ interface ISignUpStyles {
 
 export const signUpStyle: ISignUpStyles = {
 	Container: styled(Box)(({ theme }) => ({
-		minHeight: '100vh',
 		width: '100%',
-		backgroundColor: theme.palette.primary.main,
+		backgroundColor: theme.palette.tertiary.main,
 		color: theme.palette.primary.contrastText,
 		position: 'relative',
 
 		[theme.breakpoints.up('md')]: {
-			backgroundImage: 'url(/images/wireframe/background-synergia.svg)',
+			backgroundImage: 'url(/images/backgroundToDo.png)',
 			backgroundSize: 'cover',
-			backgroundPosition: 'right'
+			backgroundPosition: 'right',
+			minHeight: '100vh'
 		}
 	})),
 	Content: styled(Box)(({ theme }) => ({
@@ -51,6 +51,7 @@ export const signUpStyle: ISignUpStyles = {
 		alignItems: 'center',
 		gap: theme.spacing(6),
 		padding: `${sysSizing.spacingFixedLg} ${sysSizing.spacingFixedXl}`,
+		color: theme.palette.primary.contrastText,
 
 		[theme.breakpoints.up('md')]: {
 			width: 'auto',
@@ -71,7 +72,8 @@ export const signUpStyle: ISignUpStyles = {
 		flexDirection: 'column',
 		justifyContent: 'flex-start',
 		alignItems: 'center',
-		maxWidth: '400px'
+		maxWidth: '400px',
+		backgroundColor: theme.palette.tertiary.light
 	})),
 	FormWrapper: styled(Box)(({ theme }) => ({
 		width: '100%',
@@ -82,6 +84,42 @@ export const signUpStyle: ISignUpStyles = {
 		gap: theme.spacing(2)
 	})),
 	HasAccount: styled(Box)(({ theme }) => ({
-		textAlign: 'center'
+		textAlign: 'center',
+		color: theme.palette.tertiary.contrastText
 	}))
+};
+
+export const sxButton = {
+	color: (theme: any) => theme.palette.tertiary.contrastText,
+	backgroundColor: (theme: any) => theme.palette.tertiary.main,
+	borderColor: (theme: any) => theme.palette.tertiary.main,
+	'&:hover': {
+		backgroundColor: (theme: any) => theme.palette.tertiary.dark,
+		borderColor: (theme: any) => theme.palette.tertiary.dark
+	},
+	'&.Mui-disabled': {
+		backgroundColor: (theme: any) => theme.palette.tertiary.light,
+		borderColor: (theme: any) => theme.palette.tertiary.light
+	},
+	'&:Mui-focused': {
+		backgroundColor: (theme: any) => theme.palette.tertiary.main,
+		borderColor: (theme: any) => theme.palette.tertiary.main
+	}
+};
+
+export const sxTextField = {
+	textField: {
+		'& .MuiInputBase-root': { backgroundColor: (theme: any) => theme.palette.tertiary.light },
+		'& .MuiFilledInput-root': {
+			'&:hover': {
+				backgroundColor: (theme: any) => theme.palette.tertiary.light
+			},
+			'&.Mui-focused': {
+				backgroundColor: (theme: any) => theme.palette.tertiary.light
+			},
+			'&:hover.Mui-focused': {
+				backgroundColor: (theme: any) => theme.palette.tertiary.light
+			}
+		}
+	}
 };

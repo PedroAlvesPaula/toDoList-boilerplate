@@ -5,14 +5,10 @@
 // Authentication errors modify the component’s state to be displayed
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import Container from '@mui/material/Container';
-import Button from '@mui/material/Button';
 import { userprofileApi } from '../../../modules/userprofile/api/userProfileApi';
-import SimpleForm from '/imports/ui/components/SimpleForm/SimpleForm';
 import SysTextField from '../../../ui/components/sysFormFields/sysTextField/sysTextField';
 
-import { signUpStyle } from './signUpStyle';
-import Box from '@mui/material/Box';
+import { signUpStyle, sxButton, sxTextField } from './signUpStyle';
 import { IUserProfile } from '/imports/modules/userprofile/api/userProfileSch';
 import schema from './signUpSchema';
 import { Typography } from '@mui/material';
@@ -58,8 +54,8 @@ export const SignUp = (props: ISignUp) => {
 	return (
 		<Container>
 			<Content>
-				<Typography variant="h1" display={'inline-flex'} gap={1} textAlign="center" fontSize="28px">
-					Crie sua conta e aproveite
+				<Typography variant="h1" display={'inline-flex'} gap={1} textAlign="center" color="#2e2e38">
+					Crie sua conta e aproveite!
 				</Typography>
 				<FormContainer>
 					<SysForm schema={schema} onSubmit={handleSubmit}>
@@ -71,6 +67,7 @@ export const SignUp = (props: ISignUp) => {
 								name="username"
 								type="text"
 								placeholder="Digite seu nome"
+								sxMap={sxTextField}
 							/>
 							<SysTextField
 								id="Email"
@@ -79,6 +76,7 @@ export const SignUp = (props: ISignUp) => {
 								name="email"
 								type="email"
 								placeholder="Digite um email"
+								sxMap={sxTextField}
 							/>
 							<SysTextField
 								id="Senha"
@@ -87,17 +85,18 @@ export const SignUp = (props: ISignUp) => {
 								name="password"
 								placeholder="Digite uma senha"
 								type="password"
+								sxMap={sxTextField}
 							/>
 						</FormWrapper>
-						<SysFormButton variant="contained" color="primary">
-							Entrar
+						<SysFormButton variant="contained" color="primary" sx={sxButton}>
+							Cadastrar
 						</SysFormButton>
 					</SysForm>
 				</FormContainer>
 				<HasAccount>
-					Já tem uma conta? Faça login clicando{' '}
-					<Link to="/signin" color={'secondary'}>
-						aqui
+					Já tem uma conta? Faça login{' '}
+					<Link to="/signIn" color={'secondary'}>
+						clicando aqui
 					</Link>
 				</HasAccount>
 			</Content>
