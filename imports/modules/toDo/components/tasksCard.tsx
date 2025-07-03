@@ -8,24 +8,38 @@ import MenuIcon from '@mui/icons-material/Menu';
 
 interface TasksCardProps {
 	tasks: IToDo[];
-	onDelete: (task: IToDo) => void;
-	onEdit: (task: IToDo) => void;
-	onChangeIsCompleted: (task: IToDo) => void;
-	onTaskClick: (task: any) => void;
-	handleOpenMenu: (event: React.MouseEvent<HTMLButtonElement>, taskId: string) => void;
-	handleCloseMenu: (taskId: string) => void;
-	anchorEl: { [key: string]: null | HTMLElement };
+	onDelete?: (task: IToDo) => void;
+	onEdit?: (task: IToDo) => void;
+	onChangeIsCompleted?: (task: IToDo) => void;
+	onTaskClick?: (task: any) => void;
+	handleOpenMenu?: (event: React.MouseEvent<HTMLButtonElement>, taskId: string) => void;
+	handleCloseMenu?: (taskId: string) => void;
+	anchorEl?: { [key: string]: null | HTMLElement };
+	hideMenu?: boolean;
 }
 
 export const TasksCard: React.FC<TasksCardProps> = ({
 	tasks,
-	onDelete,
-	onEdit,
-	onChangeIsCompleted,
-	onTaskClick,
-	handleCloseMenu,
-	handleOpenMenu,
-	anchorEl = {}
+	onDelete = () => {
+		undefined;
+	},
+	onEdit = () => {
+		undefined;
+	},
+	onChangeIsCompleted = () => {
+		undefined;
+	},
+	onTaskClick = () => {
+		undefined;
+	},
+	handleCloseMenu = () => {
+		undefined;
+	},
+	handleOpenMenu = () => {
+		undefined;
+	},
+	anchorEl = {},
+	hideMenu = true
 }) => {
 	const { ButtonToClick } = tasksCardStyles;
 	return (
@@ -55,10 +69,16 @@ export const TasksCard: React.FC<TasksCardProps> = ({
 									</Typography>
 								</React.Fragment>
 							}
-							sx={{ display: 'inline', textDecorationLine: task.isCompleted ? 'line-through' : 'none' }}
+							sx={{
+								display: 'inline',
+								textDecorationLine: task.isCompleted ? 'line-through' : 'none',
+								'&:hover': { cursor: 'pointer' }
+							}}
 						/>
+
 						<ButtonToClick
-							onClick={(event: React.MouseEvent<HTMLButtonElement>) => handleOpenMenu(event, task._id || '')}>
+							onClick={(event: React.MouseEvent<HTMLButtonElement>) => handleOpenMenu(event, task._id || '')}
+							disabled={hideMenu}>
 							<MenuIcon />
 						</ButtonToClick>
 
