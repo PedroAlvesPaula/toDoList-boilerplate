@@ -9,12 +9,13 @@ import SysTextField from '/imports/ui/components/sysFormFields/sysTextField/sysT
 import { SysSelectField } from '/imports/ui/components/sysFormFields/sysSelectField/sysSelectField';
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 import NavigateBeforeIcon from '@mui/icons-material/NavigateBefore';
-import { IconButton, Stack } from '@mui/material';
+import { Button, IconButton, Stack, Switch, Typography } from '@mui/material';
+import SysSwitch from '/imports/ui/components/sysFormFields/sysSwitch/sysSwitch';
 
 const ToDoListView = () => {
 	const controller = React.useContext(ToDoListControllerContext);
 	const navigate = useNavigate();
-	const { Container, SearchContainer } = ToDoListStyles;
+	const { Container, SearchContainer, ContainerSwitch, NavigateButtonsContainer, ButtonsNavigate } = ToDoListStyles;
 	const options = [{ value: '', label: 'Nenhum' }, ...(controller.schema.isCompleted.options?.() ?? [])];
 
 	const [anchorEl, setAnchorEl] = useState<{ [key: string]: null | HTMLElement }>({});
@@ -31,6 +32,30 @@ const ToDoListView = () => {
 
 	return (
 		<Container>
+			<NavigateButtonsContainer>
+				<ButtonsNavigate
+					variant={controller.config.showPersonalTasks ? 'contained' : 'outlined'}
+					sx={{ borderRadius: '8px 0 0 8px' }}
+					onClick={() =>
+						controller.setConfig((prev) => ({
+							...prev,
+							showPersonalTasks: true
+						}))
+					}>
+					Minhas tarefas
+				</ButtonsNavigate>
+				<ButtonsNavigate
+					variant={!controller.config.showPersonalTasks ? 'contained' : 'outlined'}
+					sx={{ borderRadius: '0 8px 8px 0' }}
+					onClick={() =>
+						controller.setConfig((prev) => ({
+							...prev,
+							showPersonalTasks: false
+						}))
+					}>
+					Tarefas do time
+				</ButtonsNavigate>
+			</NavigateButtonsContainer>
 			<SearchContainer>
 				<SysTextField
 					name="search"
@@ -41,6 +66,21 @@ const ToDoListView = () => {
 						textField: { '& .MuiInputBase-root': { backgroundColor: (theme) => theme.palette.secondary.light } }
 					}}
 				/>
+				<ContainerSwitch>
+					<Typography component="p">
+						{controller.config.hideCompletedTasks ? 'Tarefas pendentes' : 'Tarefas concluídas'}
+					</Typography>
+					<Switch
+						name="hideCompletedTasks"
+						value={controller.config.hideCompletedTasks}
+						onChange={(e) =>
+							controller.setConfig((prev) => ({
+								...prev,
+								hideCompletedTasks: e.target.checked
+							}))
+						}
+					/>
+				</ContainerSwitch>
 			</SearchContainer>
 			<TasksCard
 				tasks={controller.todoList}
@@ -51,13 +91,7 @@ const ToDoListView = () => {
 				handleCloseMenu={handleCloseMenu}
 				handleOpenMenu={handleOpenMenu}
 				anchorEl={anchorEl}
-			/>
-			<SysFab
-				variant="extended"
-				text="Adicionar"
-				startIcon={<SysIcon name={'add'} />}
-				fixed={true}
-				onClick={controller.onAddButtonClick}
+				hideMenu={false}
 			/>
 			<Stack
 				direction="row"
@@ -89,6 +123,12 @@ const ToDoListView = () => {
 					Próxima <NavigateNextIcon fontSize="large" />
 				</IconButton>
 			</Stack>
+			<SysFab
+				variant="extended"
+				text="Adicionar"
+				startIcon={<SysIcon name={'add'} />}
+				onClick={controller.onAddButtonClick}
+			/>
 		</Container>
 	);
 };

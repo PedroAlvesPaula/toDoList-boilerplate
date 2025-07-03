@@ -18,6 +18,7 @@ interface IInitialConfig {
 	page: number;
 	limit?: number;
 	hideCompletedTasks: boolean;
+	showPersonalTasks: boolean;
 }
 
 interface IToDoListContollerContext {
@@ -45,7 +46,8 @@ const initialConfig = {
 	searchBy: null,
 	viewComplexTable: false,
 	page: 0,
-	hideCompletedTasks: true
+	hideCompletedTasks: true,
+	showPersonalTasks: true
 };
 
 const ToDoListController = () => {
@@ -69,7 +71,8 @@ const ToDoListController = () => {
 			toDoApi.subscribe('toDoList', filter, {
 				sort: sort,
 				page: config.page,
-				hideCompletedTasks: config.hideCompletedTasks
+				hideCompletedTasks: config.hideCompletedTasks,
+				showPersonalTasks: config.showPersonalTasks
 			}) ?? null;
 
 		const toDos = subHandle?.ready() ? toDoApi.find(filter, { sort }).fetch() : [];

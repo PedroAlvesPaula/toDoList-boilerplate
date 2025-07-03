@@ -128,7 +128,7 @@ const sysLightPalette: PaletteOptions = {
 	secondary: {
 		light: sysPurpleColors[97],
 		main: sysPurpleColors[90]!,
-		dark: sysPurpleColors[60],
+		dark: sysPurpleColors[50],
 		contrastText: sysPurpleColors[50]
 	},
 

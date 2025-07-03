@@ -64,7 +64,7 @@ class ToDoServerApi extends ProductServerBase<IToDo> {
 
 		this.addTransformedPublication(
 			'toDoList',
-			async (filter = {}, options: { page?: number; hideCompletedTasks: boolean }) => {
+			async (filter = {}, options: { page?: number; hideCompletedTasks: boolean; showPersonalTasks: boolean }) => {
 				const page = options.page ?? 0;
 				const limit = 4;
 				const skip: number = page * limit;
@@ -75,7 +75,8 @@ class ToDoServerApi extends ProductServerBase<IToDo> {
 					{
 						...filter,
 						$or: [{ ownerId: userId }, { isPrivate: false }],
-						...(options.hideCompletedTasks ? { isCompleted: { $ne: true } } : { isCompleted: { $ne: false } })
+						isPrivate: options.showPersonalTasks ? { $eq: true } : { $eq: false },
+						isCompleted: options.hideCompletedTasks ? { $ne: true } : { $ne: false }
 					},
 					{
 						...options,
