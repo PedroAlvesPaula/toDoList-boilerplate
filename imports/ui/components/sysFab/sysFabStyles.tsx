@@ -23,7 +23,8 @@ export const SysFabStyled = styled(({ fixed, ...otherProps }: ISysFabProps) => <
 		display: 'flex',
 		justifyContent: 'center',
 		alignItems: 'center',
-		gap: sysSizing.componentsButtonGap
+		gap: sysSizing.componentsButtonGap,
+		marginBottom: '16px'
 	};
 
 	const fixedStyle = {
