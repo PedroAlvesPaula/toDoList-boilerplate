@@ -3,8 +3,6 @@ import { Recurso } from '../config/recursos';
 import { toDoSch, IToDo } from './toDoSch';
 import { userprofileServerApi } from '/imports/modules/userprofile/api/userProfileServerApi';
 import { ProductServerBase } from '/imports/api/productServerBase';
-import { Description } from '@mui/icons-material';
-import { create, last } from 'lodash';
 
 // endregion
 

@@ -6,11 +6,9 @@ import ToDoListStyles from './toDoListStyles';
 import SysIcon from '/imports/ui/components/sysIcon/sysIcon';
 import { TasksCard } from '/imports/modules/toDo/components/tasksCard';
 import SysTextField from '/imports/ui/components/sysFormFields/sysTextField/sysTextField';
-import { SysSelectField } from '/imports/ui/components/sysFormFields/sysSelectField/sysSelectField';
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 import NavigateBeforeIcon from '@mui/icons-material/NavigateBefore';
-import { Button, IconButton, Stack, Switch, Typography } from '@mui/material';
-import SysSwitch from '/imports/ui/components/sysFormFields/sysSwitch/sysSwitch';
+import { IconButton, Stack, Switch, Typography } from '@mui/material';
 
 const ToDoListView = () => {
 	const controller = React.useContext(ToDoListControllerContext);

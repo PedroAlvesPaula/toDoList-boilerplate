@@ -1,11 +1,7 @@
 import React from 'react';
-import { Avatar, IconButton, SxProps, Table, TableBody, Theme } from '@mui/material';
+import { IconButton, Table, TableBody } from '@mui/material';
 import Typography from '@mui/material/Typography';
 import ViewTaskStyles from './viewTaskStyles';
-import EmailIcon from '@mui/icons-material/Email';
-import CakeIcon from '@mui/icons-material/Cake';
-import WcIcon from '@mui/icons-material/Wc';
-import BusinessIcon from '@mui/icons-material/Business';
 import { IToDo } from '../api/toDoSch';
 import SysIcon from '/imports/ui/components/sysIcon/sysIcon';
 

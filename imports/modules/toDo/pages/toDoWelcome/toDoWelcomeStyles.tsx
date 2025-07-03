@@ -1,18 +1,6 @@
 import { ElementType } from 'react';
-import {
-	Grid,
-	Card,
-	CardContent,
-	Typography,
-	GridProps,
-	CardProps,
-	CardContentProps,
-	TypographyProps,
-	BoxProps,
-	Box
-} from '@mui/material';
+import { Grid, Card, CardContent, GridProps, CardProps, CardContentProps, BoxProps, Box } from '@mui/material';
 import styled from '@emotion/styled';
-import { Theme } from '@mui/material/styles';
 
 interface IToDoWelcomeStyles {
 	Container: ElementType<GridProps>;

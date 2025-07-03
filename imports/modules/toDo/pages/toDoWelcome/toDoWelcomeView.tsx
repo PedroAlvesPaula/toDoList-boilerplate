@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React from 'react';
 import toDoWelcomeStyles from './toDoWelcomeStyles';
 import { toDoWelcomeControlerContext } from './toDoWelcomeController';
-import { Box, Divider, ListItem, ListItemText, Typography } from '@mui/material';
+import { Divider, Typography } from '@mui/material';
 import { SysButton } from '/imports/ui/components/SimpleFormFields/SysButton/SysButton';
 import AuthContext from '/imports/app/authProvider/authContext';
 import { TasksCard } from '../../components/tasksCard';
