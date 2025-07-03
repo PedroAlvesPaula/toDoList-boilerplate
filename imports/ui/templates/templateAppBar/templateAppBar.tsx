@@ -13,7 +13,7 @@ export interface ITemplateAppBar extends ISysTemplateProps {
 export const TemplateAppBar: React.FC<ITemplateAppBar> = ({ children, menuOptions, logo, containerProps }) => {
 	return (
 		<TemplateAppBarStyles.container>
-			<SysAppBar logo={<AssignmentIcon fontSize="large" />} menuOptions={menuOptions} />
+			<SysAppBar logo={'ToDo List'} menuOptions={menuOptions} />
 			<TemplateAppBarStyles.contentWrapper>
 				<TemplateAppBarStyles.contentContainer {...containerProps}>{children}</TemplateAppBarStyles.contentContainer>
 			</TemplateAppBarStyles.contentWrapper>
