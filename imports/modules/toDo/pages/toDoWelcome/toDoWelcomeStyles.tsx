@@ -7,7 +7,9 @@ import {
 	GridProps,
 	CardProps,
 	CardContentProps,
-	TypographyProps
+	TypographyProps,
+	BoxProps,
+	Box
 } from '@mui/material';
 import styled from '@emotion/styled';
 import { Theme } from '@mui/material/styles';
@@ -17,9 +19,10 @@ interface IToDoWelcomeStyles {
 	Card: ElementType<CardProps>;
 	CardContent: ElementType<CardProps>;
 	InformationCard: ElementType<CardContentProps>;
-	Title: ElementType<TypographyProps>;
-	Count: ElementType<TypographyProps>;
-	Description: ElementType<TypographyProps>;
+	HeaderContainer: ElementType<BoxProps>;
+	TasksContainer: ElementType<BoxProps>;
+	LastAdded: ElementType<BoxProps>;
+	LastAddedTask: ElementType<BoxProps>;
 }
 
 const toDoWelcomeStyles: IToDoWelcomeStyles = {
@@ -62,9 +65,34 @@ const toDoWelcomeStyles: IToDoWelcomeStyles = {
 		textAlign: 'center' as const,
 		width: '100%'
 	})),
-	Title: styled(Typography)(() => ({})),
-	Count: styled(Typography)(() => ({})),
-	Description: styled(Typography)(() => ({}))
+	HeaderContainer: styled(Box)(({ theme }) => ({
+		width: '90%'
+	})),
+	TasksContainer: styled(Box)(({ theme }) => ({
+		width: '70%',
+		[theme.breakpoints.down('md')]: {
+			width: '90%'
+		}
+	})),
+	LastAdded: styled(Box)(({ theme }) => ({
+		width: '100%',
+		display: 'flex',
+		flexDirection: 'row',
+		justifyContent: 'space-between',
+		alignItems: 'center',
+		marginBottom: '32px',
+		[theme.breakpoints.down('md')]: {
+			flexDirection: 'column',
+			margin: '16px 0 0 0'
+		}
+	})),
+	LastAddedTask: styled(Box)(({ theme }) => ({
+		width: '70%',
+		[theme.breakpoints.down('md')]: {
+			width: '100%',
+			gap: '16px'
+		}
+	}))
 };
 
 export default toDoWelcomeStyles;
