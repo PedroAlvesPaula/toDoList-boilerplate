@@ -55,7 +55,6 @@ const ToDoListController = () => {
 
 	const { title, isCompleted, isPrivate } = toDoApi.getSchema();
 	const toDoSchReduzido = { title, isCompleted, isPrivate, createdat: { type: Date, label: 'Criado em' } };
-	const navigate = useNavigate();
 
 	const { user } = useContext(AuthContext);
 
@@ -88,8 +87,6 @@ const ToDoListController = () => {
 		width: {
 			xs: '90%',
 			sm: '90%'
-			// md: '60%',
-			// lg: '60%'
 		},
 		maxWidth: '600px',
 		maxHeight: '800px',
