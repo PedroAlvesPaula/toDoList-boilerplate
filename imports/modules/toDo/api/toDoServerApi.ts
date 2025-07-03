@@ -39,7 +39,7 @@ class ToDoServerApi extends ProductServerBase<IToDo> {
 
 		this.addTransformedPublication(
 			'toDoLastFive',
-			(filter = {}) => {
+			async (filter = {}) => {
 				const userId = Meteor.userId();
 				return this.defaultListCollectionPublication(
 					{
@@ -52,14 +52,19 @@ class ToDoServerApi extends ProductServerBase<IToDo> {
 					}
 				);
 			},
-			(doc: IToDo) => {
-				return { ...doc };
+			async (doc: IToDo) => {
+				const user = await userprofileServerApi.findOne({ _id: doc.ownerId });
+
+				if (user) {
+					doc.ownerName = user.username;
+				}
+				return doc;
 			}
 		);
 
 		this.addTransformedPublication(
 			'toDoList',
-			async (filter = {}, options: { page?: number }) => {
+			async (filter = {}, options: { page?: number; hideCompletedTasks: boolean }) => {
 				const page = options.page ?? 0;
 				const limit = 4;
 				const skip: number = page * limit;
@@ -69,7 +74,8 @@ class ToDoServerApi extends ProductServerBase<IToDo> {
 				return this.defaultListCollectionPublication(
 					{
 						...filter,
-						$or: [{ ownerId: userId }, { isPrivate: false }]
+						$or: [{ ownerId: userId }, { isPrivate: false }],
+						...(options.hideCompletedTasks ? { isCompleted: { $ne: true } } : { isCompleted: { $ne: false } })
 					},
 					{
 						...options,
@@ -82,7 +88,8 @@ class ToDoServerApi extends ProductServerBase<IToDo> {
 							isPrivate: 1,
 							createdat: 1,
 							ownerId: 1,
-							description: 1
+							description: 1,
+							lastupdate: 1
 						}
 					}
 				);
