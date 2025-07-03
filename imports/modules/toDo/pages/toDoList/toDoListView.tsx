@@ -57,15 +57,6 @@ const ToDoListView = () => {
 				</ButtonsNavigate>
 			</NavigateButtonsContainer>
 			<SearchContainer>
-				<SysTextField
-					name="search"
-					placeholder="Pesquisar pela descrição"
-					onChange={controller.onChangeTextField}
-					startAdornment={<SysIcon name={'search'} />}
-					sxMap={{
-						textField: { '& .MuiInputBase-root': { backgroundColor: (theme) => theme.palette.secondary.light } }
-					}}
-				/>
 				<ContainerSwitch>
 					<Typography component="p">
 						{controller.config.hideCompletedTasks ? 'Tarefas pendentes' : 'Tarefas concluídas'}
@@ -81,6 +72,15 @@ const ToDoListView = () => {
 						}
 					/>
 				</ContainerSwitch>
+				<SysTextField
+					name="search"
+					placeholder="Pesquisar tarefas pela descrição"
+					onChange={controller.onChangeTextField}
+					startAdornment={<SysIcon name={'search'} />}
+					sxMap={{
+						textField: { '& .MuiInputBase-root': { backgroundColor: (theme) => theme.palette.secondary.light } }
+					}}
+				/>
 			</SearchContainer>
 			<TasksCard
 				tasks={controller.todoList}
