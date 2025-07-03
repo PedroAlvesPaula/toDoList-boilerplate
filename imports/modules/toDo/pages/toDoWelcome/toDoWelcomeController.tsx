@@ -8,7 +8,8 @@ import { IToDo } from '../../api/toDoSch';
 import { useNavigate, NavigateFunction } from 'react-router-dom';
 
 interface IToDoWelcomeControllerContext {
-	fiveLastTasks: IToDo[];
+	lastTasks: IToDo[];
+	lastTaskAdded: IToDo;
 	navigate: NavigateFunction;
 }
 
@@ -18,18 +19,21 @@ const toDoWelcomeControlerContext = React.createContext<IToDoWelcomeControllerCo
 
 export const ToDoWelcomeController = () => {
 	const navigate = useNavigate();
-	const fiveLastTasks = useTracker(() => {
+	const { lastTasks, lastTaskAdded } = useTracker(() => {
 		const handle = toDoApi.subscribe('toDoLastFive', {});
-		const tasks = handle?.ready() ? toDoApi.find({}).fetch() : [];
-		return tasks;
+		const lastTasks = handle?.ready() ? toDoApi.find({}).fetch() : [];
+		const lastTaskAdded = lastTasks.length > 0 ? lastTasks.shift() : [];
+
+		return { lastTasks, lastTaskAdded };
 	}, []);
 
 	const providerValues: IToDoWelcomeControllerContext = useMemo(
 		() => ({
-			fiveLastTasks: fiveLastTasks,
+			lastTasks: lastTasks,
+			lastTaskAdded: lastTaskAdded,
 			navigate: navigate
 		}),
-		[fiveLastTasks, navigate]
+		[lastTasks, lastTaskAdded, navigate]
 	);
 
 	return (
